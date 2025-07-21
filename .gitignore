@@ -14,6 +14,7 @@ out/
 # Environnement local
 *.env
 .env.local
+next-env.d.ts
 
 # Logs & caches divers
 npm-debug.log*
@@ -26,4 +27,4 @@ lerna-debug.log*
 *.gz
 dist/
 tsconfig.tsbuildinfo
-tsbuildinfo
+.tsbuildinfo
