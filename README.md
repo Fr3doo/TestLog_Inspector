@@ -26,7 +26,9 @@ pnpm dev              # API NestJS → http://localhost:3001
 ### 🧪 Exécuter la suite de tests
 
 ```bash
-pnpm test             # Jest + React Testing Library
+pnpm lint                               # vérifie la qualité du code
+pnpm test                               # Jest + React Testing Library
+pnpm turbo run test --filter <workspace> # cible uniquement un package ou une app
 ```
 
 ### 🏗️ Build & exécution production
