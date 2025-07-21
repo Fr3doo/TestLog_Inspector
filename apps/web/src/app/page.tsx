@@ -4,7 +4,7 @@ import { useState } from "react";
 import FileDropzone from "../components/FileDropzone";
 import Dashboard from "../components/Dashboard";
 import PdfButton from "../components/PdfButton";
-import { ParsedLog } from "@testlog-inspector/log-parser/src/types";
+import { ParsedLog } from "@testlog-inspector/log-parser";
 
 export default function HomePage() {
   const [result, setResult] = useState<ParsedLog | null>(null);

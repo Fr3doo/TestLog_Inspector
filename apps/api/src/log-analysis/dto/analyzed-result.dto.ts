@@ -1,4 +1,4 @@
-import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
+import { ParsedLog } from '@testlog-inspector/log-parser';
 
 /**
  * DTO de sortie pour l’analyse d’un log.

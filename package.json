@@ -33,9 +33,9 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
     "turbo": "^2.5.5",
-    "typescript": "^5.8.3",
-    "ts-node": "^10.9.2"
+    "typescript": "^5.8.3"
   },
   "lint-staged": {
     "*.{ts,tsx,js,json,md}": "prettier --write"
@@ -43,5 +43,9 @@
   "overrides": {
     "multer": "^2.0.2",
     "esbuild": "^0.25.0"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "jspdf-autotable": "^5.0.2"
   }
 }

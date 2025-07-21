@@ -1,7 +1,7 @@
 'use client';
 
-import { Card } from '@ui/Card';
-import { TestContext } from '@testlog-inspector/log-parser/src/types';
+import { Card } from '@testlog-inspector/ui-components';
+import { TestContext } from '@testlog-inspector/log-parser';
 
 interface Props {
   context: TestContext;

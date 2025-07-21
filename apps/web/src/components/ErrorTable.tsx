@@ -2,11 +2,9 @@
 
 import * as React from 'react';
 import { ColumnDef } from '@tanstack/react-table';
-import { LogError } from '@testlog-inspector/log-parser/src/types';
+import { LogError } from '@testlog-inspector/log-parser';
 
-import { DataTable } from '@ui/DataTable';
-import { Button } from '@ui/Button';
-import { Card } from '@ui/Card';
+import { DataTable, Button, Card } from '@testlog-inspector/ui-components';
 
 interface Props {
   errors: LogError[];

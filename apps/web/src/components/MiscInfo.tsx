@@ -1,8 +1,7 @@
 'use client';
 
-import { Card } from '@ui/Card';
-import { Badge } from '@ui/Badge';
-import { MiscInfo as Misc } from '@testlog-inspector/log-parser/src/types';
+import { Card, Badge } from '@testlog-inspector/ui-components';
+import { MiscInfo as Misc } from '@testlog-inspector/log-parser';
 
 interface Props {
   misc: Misc;

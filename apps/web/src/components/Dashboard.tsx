@@ -1,6 +1,6 @@
 'use client';
 
-import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
+import { ParsedLog } from '@testlog-inspector/log-parser';
 
 import SummaryCard from './SummaryCard';
 import ContextTable from './ContextTable';

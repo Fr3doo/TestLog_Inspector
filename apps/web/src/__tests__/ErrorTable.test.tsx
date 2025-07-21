@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
 import ErrorTable from '@/components/ErrorTable';
-import { LogError } from '@testlog-inspector/log-parser/src/types';
+import { LogError } from '@testlog-inspector/log-parser';
 
 /* ---------- fixtures ---------- */
 const errors: LogError[] = [

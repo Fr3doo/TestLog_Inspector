@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
+import { ParsedLog } from '@testlog-inspector/log-parser';
 
 /**
  * Génère un PDF récapitulatif et déclenche immédiatement le

@@ -1,8 +1,8 @@
 'use client';
 
-import { Card } from '@ui/Card';
+import { Card } from '@testlog-inspector/ui-components';
 import { useState } from 'react';
-import { Button } from '@ui/Button';
+import { Button } from '@testlog-inspector/ui-components';
 
 interface SummaryCardProps {
   text: string; // < 300 mots garanti côté parser

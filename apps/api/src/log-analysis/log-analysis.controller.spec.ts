@@ -5,7 +5,7 @@ import { MulterModule } from '@nestjs/platform-express';
 
 import { LogAnalysisModule } from './log-analysis.module';
 import { LogAnalysisService } from './log-analysis.service';
-import { ParsedLog } from '@testlog-inspector/log-parser/dist/types';
+import { ParsedLog } from '@testlog-inspector/log-parser';
 
 /* ---------- Mock service & fixture ------------------ */
 const parsedStub: ParsedLog = {

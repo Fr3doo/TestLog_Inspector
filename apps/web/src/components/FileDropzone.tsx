@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useUpload } from "../hooks/useUpload";
-import { ParsedLog } from "@testlog-inspector/log-parser/src/types";
-import { Card } from "@/components/ui/card";
+import { ParsedLog } from "@testlog-inspector/log-parser";
+import { Card } from "@testlog-inspector/ui-components";
 
 export default function FileDropzone({
   onAnalyzed,

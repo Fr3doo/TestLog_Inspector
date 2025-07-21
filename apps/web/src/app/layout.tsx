@@ -1,4 +1,4 @@
-import '@/global.css'; // styles Tailwind + app-wide
+import '../global.css'; // styles Tailwind + app-wide
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';

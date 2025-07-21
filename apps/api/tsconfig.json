@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "noUnusedLocals": false,
-    "types": ["node", "multer"]
+    "types": ["node", "multer", "jest", "supertest"]
   },
 
   "include": ["src/**/*.ts"],
