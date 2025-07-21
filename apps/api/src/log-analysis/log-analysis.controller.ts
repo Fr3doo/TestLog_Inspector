@@ -13,6 +13,7 @@ import {
 } from '@nestjs/platform-express';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import type { Express } from 'express';
 
 import { LogAnalysisService } from './log-analysis.service';
 import { AnalyzeLogDto } from './dto/analyze-log.dto';
@@ -21,20 +22,20 @@ import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
 /**
  * POST /analyze
  * -------------
- * Reçoit un ou plusieurs fichiers `.txt/.log` via multipart‑form‑data
- *   champ « files » : Express.Multer.File[]
+ * Accepts one or more `.txt` or `.log` files via multipart-form-data
+ *   field "files": Express.Multer.File[]
  *
- * Renvoie un tableau de ParsedLog (un résultat par fichier).
+ * Returns an array of ParsedLog (one result per file).
  */
 @Controller()
 export class LogAnalysisController {
   constructor(private readonly service: LogAnalysisService) {}
 
   /**
-   * Intercepteur Multer :
-   *   • champ `files`
-   *   • max 10 fichiers (arbitraire)
-   *   • taille déjà limitée à 50 Mo via config globale
+   * Multer interceptor:
+   *   - field `files`
+   *   - max 10 files (arbitrary)
+   *   - size already limited to 50MB via global config
    */
   @Post('analyze')
   @HttpCode(HttpStatus.OK)

@@ -1,10 +1,10 @@
 /**
- * Point d’entrée de la librairie UI :
- * – Ré‑exporte quelques composants shadcn/ui fréquemment utilisés
- * – Expose notre composant DataTable générique
+ * Library entry point:
+ * - Re-exports common shadcn/ui components
+ * - Exposes our generic DataTable component
  *
- * Remarque : les composants shadcn sont copiés (via `npx shadcn-ui@latest add …`)
- * dans l’app Next.js ; on les re‑mappe ici pour mutualiser.
+ * The shadcn components are copied via `npx shadcn-ui@latest add …` in the
+ * Next.js app and re-mapped here for sharing.
  */
 
 export { Button } from "./shadcn/Button";

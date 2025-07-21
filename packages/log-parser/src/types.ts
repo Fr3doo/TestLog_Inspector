@@ -33,6 +33,6 @@ export interface ParsedLog {
 }
 
 export interface IParsingStrategy {
-  canHandle(lines: string[]): boolean;
-  parse(lines: string[]): ParsedLog;
+  canHandle(_lines: string[]): boolean;
+  parse(_lines: string[]): ParsedLog;
 }

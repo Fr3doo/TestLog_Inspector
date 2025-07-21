@@ -6,8 +6,8 @@ export interface RegexMatchWithPos extends RegExpMatchArray {
 }
 
 export abstract class BaseStrategy implements IParsingStrategy {
-  abstract canHandle(lines: string[]): boolean;
-  abstract parse(lines: string[]): ParsedLog;
+  abstract canHandle(_lines: string[]): boolean;
+  abstract parse(_lines: string[]): ParsedLog;
 
   protected execSummaryFrom(lines: string[]): string {
     const first100 = lines.slice(0, 100).join(" ");

@@ -12,8 +12,12 @@ module.exports = {
       testMatch: ['<rootDir>/**/*.spec.ts'],
       moduleFileExtensions: ['ts', 'js', 'json'],
       transform: {
-        '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.json' }],
+        '^.+\\.ts$': [
+          'ts-jest',
+          { tsconfig: '<rootDir>/tsconfig.json', useESM: true }
+        ],
       },
+      extensionsToTreatAsEsm: ['.ts'],
       preset: 'ts-jest',
       testEnvironment: 'node',
       setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],

@@ -11,7 +11,7 @@ import { LogAnalysisService } from './log-analysis.service';
  */
 @Module({
   imports: [
-    // Multer module local (hérite déjà de la config globale 50 Mo)
+    // Local Multer module (inherits the global 50MB limit)
     MulterModule,
   ],
   controllers: [LogAnalysisController],

@@ -8,7 +8,7 @@ import {
 import { BaseStrategy } from "./base-strategy";
 
 export class DefaultStrategy extends BaseStrategy {
-  canHandle(lines: string[]): boolean {
+  canHandle(_lines: string[]): boolean {
     // fallback strategy → always true
     return true;
   }
@@ -30,7 +30,7 @@ export class DefaultStrategy extends BaseStrategy {
     /* 3. Erreurs/Exceptions ------------------------------------- */
     const errorMatches = this.matchRegex(
       lines,
-      /(ERROR|Exception)\s*[:\-]\s*(.+)/
+      /(ERROR|Exception)\s*[:-]\s*(.+)/
     );
     const errors: LogError[] = errorMatches.map((m) => {
       const idx = m.index;

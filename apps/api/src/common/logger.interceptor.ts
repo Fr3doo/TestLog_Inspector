@@ -9,11 +9,11 @@ import { Observable, tap } from 'rxjs';
 import { Request, Response } from 'express';
 
 /**
- * Intercepteur de logging global.
- *  - Log l’URL, la méthode et la durée d’exécution.
- *  - Capture et log les erreurs non gérées.
+ * Global logging interceptor.
+ *  - Logs URL, method and execution time.
+ *  - Captures and logs unhandled errors.
  *
- *  Respecte la loi de Déméter : ne connaît que Request/Response.
+ *  Follows the Law of Demeter: knows only Request/Response.
  */
 @Injectable()
 export class LoggerInterceptor implements NestInterceptor {

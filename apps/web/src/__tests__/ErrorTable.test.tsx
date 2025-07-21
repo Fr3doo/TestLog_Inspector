@@ -49,7 +49,7 @@ describe('<ErrorTable />', () => {
     render(<ErrorTable errors={errors} />);
     const user = userEvent.setup();
 
-    // Tape "B" => ne garde que l’erreur « B issue »
+  // Type "B" -> should only keep error "B issue"
     const filterInput = screen.getByPlaceholderText(/Filtrer…/i);
     await user.type(filterInput, 'B');
 

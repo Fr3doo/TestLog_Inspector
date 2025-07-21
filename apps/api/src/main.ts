@@ -11,14 +11,14 @@ async function bootstrap() {
     bufferLogs: true,
   });
 
-  /* ---------- Sécurité & middlewares ---------- */
+  /* ---------- Security & middlewares ---------- */
   app.use(helmet());
 
-  // 50 Mo pour correspondre à la contrainte d’upload max
+  // 50MB limit to match upload constraint
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
 
-  /* ---------- Validation globale (class‑validator) ---------- */
+  /* ---------- Global validation (class-validator) ---------- */
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,            // retire props inconnues
@@ -28,7 +28,7 @@ async function bootstrap() {
     }),
   );
 
-  /* ---------- CORS (Next.js sur :3000) ---------- */
+  /* ---------- CORS (Next.js on :3000) ---------- */
   app.enableCors({
     origin: process.env.CORS_ORIGIN ?? 'http://localhost:3000',
     credentials: true,
@@ -40,8 +40,7 @@ async function bootstrap() {
 }
 
 bootstrap().catch((err) => {
-  // Fail‑fast logging
-  // eslint-disable-next-line no-console
+  // Fail-fast logging
   console.error('Fatal bootstrap error:', err);
   process.exit(1);
 });
