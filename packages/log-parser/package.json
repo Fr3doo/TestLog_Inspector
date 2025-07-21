@@ -19,15 +19,15 @@
     },
     "./*": "./dist/*"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json -w --preserveWatchOutput",
     "lint": "eslint src --max-warnings=0"
   },
-  "peerDependencies": {},
-  "dependencies": {},
   "devDependencies": {
-    "typescript": "^5.4.0"
+    "typescript": "^5.8.3"
   }
 }
