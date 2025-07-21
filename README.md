@@ -1,5 +1,9 @@
-````markdown
 # TestLog Inspector
+
+[![CI](https://github.com/Fr3doo/TestLog_Inspector/actions/workflows/ci.yml/badge.svg)](https://github.com/Fr3doo/TestLog_Inspector/actions/workflows/ci.yml)
+[![Lint](https://github.com/Fr3doo/TestLog_Inspector/actions/workflows/lint.yml/badge.svg)](https://github.com/Fr3doo/TestLog_Inspector/actions/workflows/lint.yml)
+[![npm version](https://img.shields.io/npm/v/@testlog-inspector/log-parser)](https://www.npmjs.com/package/@testlog-inspector/log-parser)
+[![License](https://img.shields.io/github/license/Fr3doo/TestLog_Inspector)](LICENSE)
 
 **TestLog Inspector** est une application web qui :
 
@@ -17,7 +21,7 @@ pnpm install          # installe toutes les dépendances
 
 pnpm dev              # API NestJS → http://localhost:3001
                       # Web Next.js → http://localhost:3000
-````
+```
 
 ### 🧪 Exécuter la suite de tests
 
@@ -31,6 +35,11 @@ pnpm test             # Jest + React Testing Library
 pnpm build            # Turbo Repo → apps/api/dist & .next/standalone
 pnpm start            # lance les deux apps via PM2 ou `node` (selon l’env.)
 ```
+
+### 🌐 Variables d'environnement
+
+`NEXT_PUBLIC_API_URL` définit l'URL de base pour l'API NestJS.
+Par défaut : `http://localhost:3001`.
 
 ---
 
@@ -61,6 +70,11 @@ pnpm start            # lance les deux apps via PM2 ou `node` (selon l’env.)
 | **Robustesse (loi de Murphy)**  | Validations Zod / class‑validator, `try/catch`, tests sur données corrompues, messages d’erreur explicites. |
 
 ---
+## 📚 Documentation
+
+- [Architecture détaillée](docs/architecture.md)
+- [Guide des agents](AGENT.md)
+
 
 ## 📄 Licence
 
@@ -68,5 +82,3 @@ Distribué sous licence [MIT](LICENSE).
 
 > Développé avec ❤️ & ☕ par l’équipe **QA Tools**
 
-```
-```
