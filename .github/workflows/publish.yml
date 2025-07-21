@@ -1,0 +1,37 @@
+name: Publish log‑parser to npm
+
+on:
+  push:
+    tags:
+      - "log-parser-v*.*.*"           # ex : log-parser-v1.3.0
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ---- Build only the log‑parser package ------------------
+      - name: Build log-parser
+        run: pnpm --filter @testlog-inspector/log-parser build
+
+      # ---- Publish to npm -------------------------------------
+      - name: Publish
+        working-directory: packages/log-parser
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm publish --access public
