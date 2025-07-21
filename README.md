@@ -38,8 +38,10 @@ pnpm start            # lance les deux apps via PM2 ou `node` (selon l’env.)
 
 ### 🌐 Variables d'environnement
 
-`NEXT_PUBLIC_API_URL` définit l'URL de base pour l'API NestJS.
-Par défaut : `http://localhost:3001`.
+Les principales variables de configuration sont décrites dans
+[ENVIRONMENT.md](./ENVIRONMENT.md). Par défaut, l'API NestJS est exposée sur
+`http://localhost:3001` et le frontend pointe vers cette URL via
+`NEXT_PUBLIC_API_URL`.
 
 ---
 
