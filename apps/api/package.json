@@ -10,7 +10,7 @@
     "build": "nest build",
     "start": "node dist/main.js",
     "start:prod": "NODE_ENV=production node dist/main.js",
-    "swagger:json": "ts-node --transpile-only scripts/gen-swagger.ts",
+    "swagger:json": "ts-node-esm --transpile-only scripts/gen-swagger.ts",
     "lint": "eslint src --ext .ts --max-warnings=0",
     "test": "jest"
   },
@@ -18,6 +18,7 @@
     "@nestjs/common": "^11.1.5",
     "@nestjs/core": "^11.1.5",
     "@nestjs/platform-express": "^11.1.5",
+    "@nestjs/swagger": "^11.2.0",
     "@testlog-inspector/log-parser": "workspace:*",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
@@ -32,7 +33,8 @@
     "@types/jest": "^30.0.0",
     "jest": "^30.0.4",
     "ts-jest": "^29.4.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "ts-node": "^10.9.2"
   },
   "engines": {
     "node": ">=18.0.0"

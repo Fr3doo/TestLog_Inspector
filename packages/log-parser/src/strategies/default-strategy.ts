@@ -32,13 +32,16 @@ export class DefaultStrategy extends BaseStrategy {
       lines,
       /(ERROR|Exception)\s*[:\-]\s*(.+)/
     );
-    const errors: LogError[] = errorMatches.map((m) => ({
-      type: m[1],
-      message: m[2],
-      stack: this.extractStack(lines, m.index),
-      lineNumber: m.lineNumber,
-      raw: lines[m.index - 1],
-    }));
+    const errors: LogError[] = errorMatches.map((m) => {
+      const idx = m.index;
+      return {
+        type: m[1],
+        message: m[2],
+        stack: this.extractStack(lines, idx),
+        lineNumber: m.lineNumber,
+        raw: lines[idx - 1],
+      };
+    });
 
     /* 4. Infos diverses ----------------------------------------- */
     const versions = Object.fromEntries(

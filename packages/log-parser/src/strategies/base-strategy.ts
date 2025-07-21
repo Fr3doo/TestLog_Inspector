@@ -1,5 +1,10 @@
 import { IParsingStrategy, ParsedLog } from "../types";
 
+export interface RegexMatchWithPos extends RegExpMatchArray {
+  index: number;
+  lineNumber: number;
+}
+
 export abstract class BaseStrategy implements IParsingStrategy {
   abstract canHandle(lines: string[]): boolean;
   abstract parse(lines: string[]): ParsedLog;
@@ -10,9 +15,13 @@ export abstract class BaseStrategy implements IParsingStrategy {
   }
 
   /* small helpers factorised here (DRY) */
-  protected matchRegex(lines: string[], regex: RegExp): RegExpMatchArray[] {
+  protected matchRegex(lines: string[], regex: RegExp): RegexMatchWithPos[] {
     return lines.flatMap((line, i) =>
-      [...line.matchAll(regex)].map((m) => ({ ...m, lineNumber: i + 1 }))
+      [...line.matchAll(regex)].map((m) => ({
+        ...(m as RegExpMatchArray),
+        index: m.index ?? 0,
+        lineNumber: i + 1,
+      } as RegexMatchWithPos))
     );
   }
 }
