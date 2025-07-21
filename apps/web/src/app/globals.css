@@ -1,0 +1,6 @@
+/* Re-exporte les styles globaux définis un dossier au-dessus.          */
+/* Cette passerelle permet à Next.js (App Router) de trouver            */
+/* automatiquement "app/globals.css" tout en gardant la logique         */
+/* dans "src/global.css" (évite duplication).                           */
+
+@import '../global.css';

@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+
+  "compilerOptions": {
+    /* Entrée / sortie */
+    "rootDir": "src",
+    "outDir": "dist",
+
+    /* JSX : génération React 18 */
+    "jsx": "react-jsx",
+
+    /* Déclarations pour export npm */
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Facilite l’incrémental (refs) */
+    "composite": true,
+
+    /* Garder les imports JSX comme tels (Next.js transpile) */
+    "isolatedModules": false
+  },
+
+  "include": ["src/**/*.{ts,tsx}"]
+}

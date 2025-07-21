@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+
+    /* Génération des .d.ts pour distribution npm */
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Permet l’usage de project references si besoin plus tard */
+    "composite": true
+  },
+
+  "include": ["src/**/*.ts"]
+}

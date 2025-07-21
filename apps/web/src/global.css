@@ -1,0 +1,31 @@
+/* ---------------- Tailwind layers ---------------- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------- App-wide tweaks ----------------- */
+html,
+body {
+  @apply h-full scroll-smooth antialiased;
+  font-family: theme('fontFamily.sans');
+}
+
+#__next,
+body > div {
+  @apply h-full;
+}
+
+/* Custom scrollbar (light) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-muted/40;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/60 rounded;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/80;
+}

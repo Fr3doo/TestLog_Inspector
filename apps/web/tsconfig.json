@@ -1,0 +1,37 @@
+{
+  "extends": "../../tsconfig.base.json",
+
+  "compilerOptions": {
+    /* === Entrée / sortie ======================= */
+    "rootDir": "src",
+    "outDir": ".next/ts-build",
+
+    /* === React / Next.js ======================= */
+    "jsx": "react-jsx",
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+
+    /* === Types globalement dispo =============== */
+    "types": [
+      "next",
+      "next/image-types/global",
+      "next/navigation-types/compat",
+      "jest",
+      "node"
+    ],
+
+    /* === Aliases front ========================= */
+    "baseUrl": "src",
+    "paths": {
+      "@ui/*": ["../..//packages/ui-components/src/*"],
+      "@parser/*": ["../..//packages/log-parser/src/*"],
+      "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/hooks/*": ["hooks/*"]
+    }
+  },
+
+  "include": ["src/**/*.{ts,tsx}", "next-env.d.ts"],
+
+  "exclude": ["node_modules", ".next", "coverage"]
+}

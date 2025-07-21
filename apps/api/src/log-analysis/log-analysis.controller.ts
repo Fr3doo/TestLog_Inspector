@@ -1,0 +1,72 @@
+import {
+  BadRequestException,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
+import {
+  FilesInterceptor,
+  MulterModuleOptions,
+} from '@nestjs/platform-express';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+import { LogAnalysisService } from './log-analysis.service';
+import { AnalyzeLogDto } from './dto/analyze-log.dto';
+import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
+
+/**
+ * POST /analyze
+ * -------------
+ * Reçoit un ou plusieurs fichiers `.txt/.log` via multipart‑form‑data
+ *   champ « files » : Express.Multer.File[]
+ *
+ * Renvoie un tableau de ParsedLog (un résultat par fichier).
+ */
+@Controller()
+export class LogAnalysisController {
+  constructor(private readonly service: LogAnalysisService) {}
+
+  /**
+   * Intercepteur Multer :
+   *   • champ `files`
+   *   • max 10 fichiers (arbitraire)
+   *   • taille déjà limitée à 50 Mo via config globale
+   */
+  @Post('analyze')
+  @HttpCode(HttpStatus.OK)
+  @UseInterceptors(
+    FilesInterceptor('files', 10, <MulterModuleOptions>{
+      dest: join(tmpdir(), 'testlog-inspector'),
+      fileFilter: (_req, file, cb) => {
+        if (!file.originalname.match(/\.(log|txt)$/i)) {
+          return cb(
+            new BadRequestException('Only .log or .txt files are allowed'),
+            false,
+          );
+        }
+        cb(null, true);
+      },
+    }),
+  )
+  async analyze(
+    @UploadedFiles() files: Express.Multer.File[],
+  ): Promise<ParsedLog[]> {
+    if (!files?.length) {
+      throw new BadRequestException('No files uploaded');
+    }
+
+    const results: ParsedLog[] = [];
+
+    for (const file of files) {
+      const dto: AnalyzeLogDto = { filePath: file.path };
+      const parsed = await this.service.analyze(dto);
+      results.push(parsed);
+    }
+
+    return results;
+  }
+}

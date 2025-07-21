@@ -1,0 +1,33 @@
+{
+  "name": "@testlog-inspector/log-parser",
+  "version": "0.0.1",
+  "description": "Pure TypeScript log‑parsing library used by TestLog Inspector (framework‑agnostic, SOLID/Strategy).",
+  "author": "TestLog Inspector Team",
+  "license": "MIT",
+  "homepage": "https://github.com/your-org/testlog-inspector",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/testlog-inspector.git",
+    "directory": "packages/log-parser"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": "./dist/*"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w --preserveWatchOutput",
+    "lint": "eslint src --max-warnings=0"
+  },
+  "peerDependencies": {},
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

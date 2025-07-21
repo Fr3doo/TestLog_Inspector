@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+
+  "compilerOptions": {
+    "diagnostics": false,
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "declaration": true
+  },
+
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts", "tests", "node_modules"]
+}

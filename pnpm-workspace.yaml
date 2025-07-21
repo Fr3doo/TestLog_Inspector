@@ -1,0 +1,9 @@
+packages:
+  # Applications (NestJS + Next.js)
+  - "apps/*"
+
+  # Librairies partagées
+  - "packages/*"
+
+  # Suite de tests racine
+  - "tests"

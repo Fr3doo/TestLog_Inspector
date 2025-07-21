@@ -1,0 +1,40 @@
+{
+  "name": "testlog-inspector",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tests"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "dev:all": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "start": "turbo run start --parallel",
+    "start:prod": "concurrently -n api,web -c green,blue \"pnpm --filter @testlog-inspector/api start:prod\" \"pnpm --filter @testlog-inspector/web start\"",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "test": "turbo run test",
+    "ci": "turbo run lint build test --no-cache",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.3.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,json,md}": "prettier --write"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* === Langage & output ====================== */
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ES2022", "DOM"],
+    "outDir": "dist",
+    "rootDir": ".",
+
+    /* === Qualité & sécurité ==================== */
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* === Interop & ergonomie =================== */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+
+    /* === Monorepo paths ======================== */
+    "baseUrl": ".",
+    "paths": {
+      "@testlog-inspector/*": ["packages/*/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "coverage"]
+}
