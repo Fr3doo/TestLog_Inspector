@@ -64,7 +64,10 @@ export function DataTable<TData extends object>({
                   onClick={header.column.getToggleSortingHandler()}
                   className="cursor-pointer select-none"
                 >
-                  {flexRender(header.column.columnDef.header, header.getContext())}
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  ) as React.ReactNode}
                   {{
                     asc: " ▲",
                     desc: " ▼",
@@ -80,7 +83,10 @@ export function DataTable<TData extends object>({
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext()
+                  ) as React.ReactNode}
                 </TableCell>
               ))}
             </TableRow>
