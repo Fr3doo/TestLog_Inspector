@@ -5,6 +5,8 @@
 [![npm version](https://img.shields.io/npm/v/@testlog-inspector/log-parser)](https://www.npmjs.com/package/@testlog-inspector/log-parser)
 [![License](https://img.shields.io/github/license/Fr3doo/TestLog_Inspector)](LICENSE)
 
+## 🚀 Objectif du projet
+
 **TestLog Inspector** est une application web qui :
 
 1. importe les journaux (_logs_) de vos campagnes de tests automatisés ;
@@ -23,6 +25,27 @@ pnpm dev              # API NestJS → http://localhost:3001
                       # Web Next.js → http://localhost:3000
 ```
 
+## 🔧 Installation
+
+### Pré‑requis
+
+- Node.js >= 18
+- [pnpm](https://pnpm.io/)
+
+### Depuis les sources
+
+```bash
+git clone https://github.com/Fr3doo/TestLog_Inspector.git
+cd TestLog_Inspector
+pnpm install
+```
+
+### Mode développement
+
+```bash
+pnpm dev
+```
+
 ### 🧪 Exécuter la suite de tests
 
 ```bash
@@ -36,6 +59,13 @@ pnpm turbo run test --filter <workspace> # cible uniquement un package ou une ap
 ```bash
 pnpm build            # Turbo Repo → apps/api/dist & .next/standalone
 pnpm start            # lance les deux apps via PM2 ou `node` (selon l’env.)
+```
+
+## ▶️ Lancement
+
+```bash
+# Après installation
+pnpm start            # exécute API et Web en production
 ```
 
 ### 🌐 Variables d'environnement
@@ -113,6 +143,110 @@ graph TD
     B2 -- Export --> B3
     B3 -- PDF download --> A1
 ```
+
+## 📦 Utilisation
+
+Après l'installation, ouvrez [http://localhost:3000](http://localhost:3000) puis
+déposez vos fichiers `.log` ou `.txt` dans la zone prévue. L'API retourne un
+JSON `ParsedLog` consommé par le dashboard Next.js qui propose ensuite
+l'export PDF.
+
+## ⚙️ Utilisation avancée
+
+L'analyse peut être déclenchée via l'API REST :
+
+```bash
+curl -F "files=@path/to/test.log" http://localhost:3001/analyze
+```
+
+## 🔌 Injection de dépendances
+
+```ts
+@Injectable()
+export class LogAnalysisService {
+  constructor(private readonly parser: LogParser = new LogParser()) {}
+}
+```
+
+## 📈 Collecte de métriques
+
+_TODO : exposer des métriques Prometheus depuis l'API._
+
+## ❗ Gestion des erreurs
+
+```ts
+if (file.size > this.MAX_SIZE) {
+  throw new BadRequestException('File exceeds the 50 MB limit');
+}
+```
+
+## 📝 Formats d'entrée
+
+- Fichiers `.log` ou `.txt` jusqu'à 50 Mo
+- JSON Lines ou fichiers JUnit XML
+
+## 📊 Contraintes de performance
+
+Le parser lit chaque fichier cinq fois pour simuler des passes lourdes. Prévoyez
+en conséquence pour de très gros fichiers.
+
+## 📁 Structure du projet
+
+```text
+.
+├── apps
+│   ├── api
+│   └── web
+├── packages
+│   ├── log-parser
+│   └── ui-components
+├── docs
+└── tests
+```
+
+## 🖥️ Compatibilité Windows
+
+Les scripts `pnpm` fonctionnent également sous Windows via Git Bash ou WSL.
+Veillez à définir les variables d'environnement (`set NEXT_PUBLIC_API_URL=...`)
+suivant la syntaxe de votre terminal.
+
+## 🛠️ Fichiers de configuration
+
+- `package.json` : scripts communs (`dev`, `build`, `start`, `lint`, `test`).
+- `pnpm-workspace.yaml` : définition des workspaces Turbo Repo.
+- `playwright.config.ts` et `vitest.workspace.config.ts` pour les tests.
+- Voir également [ENVIRONMENT.md](ENVIRONMENT.md) pour les variables.
+
+## 🧪 Tests
+
+```bash
+pnpm lint        # ESLint + Prettier
+pnpm test        # Jest & Vitest
+```
+
+Pour cibler un package particulier :
+
+```bash
+pnpm turbo run test --filter <workspace>
+```
+
+## 🔍 Qualité du code
+
+- Formatage : Prettier (`pnpm format`)
+- Linting : ESLint via `pnpm lint`
+- Commit hooks : Husky + lint-staged
+- Typage : TypeScript strict sur tous les packages
+
+## 🤝 Contribuer
+
+Merci de consulter [AGENT.md](AGENT.md) pour le guide complet. Les PR doivent
+passer `pnpm lint` et `pnpm test` avant soumission et suivre la convention de
+commit `feat(scope): message`.
+
+## 🚀 Publication d'une release
+
+Le package `@testlog-inspector/log-parser` est publié sur npm via GitHub
+Actions. Bump de version puis `git tag vX.Y.Z` pour déclencher la publication.
 
 ---
 ## 📚 Documentation
