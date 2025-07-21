@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import Dashboard from '@/components/Dashboard';
-import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
+import { ParsedLog } from '@testlog-inspector/log-parser';
 
 /* ---------- fixture minimale ---------- */
 const sample: ParsedLog = {

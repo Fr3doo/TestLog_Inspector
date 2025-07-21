@@ -17,7 +17,7 @@ import type { Express } from 'express';
 
 import { LogAnalysisService } from './log-analysis.service';
 import { AnalyzeLogDto } from './dto/analyze-log.dto';
-import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
+import { ParsedLog } from '@testlog-inspector/log-parser';
 
 /**
  * POST /analyze

@@ -12,8 +12,8 @@
  *   parser.registerStrategy(new MyStrategy());
  */
 
-export * from "./src/parser";
-export * from "./src/types";
+export * from "./src/parser.js";
+export * from "./src/types.js";
 
-export { DefaultStrategy } from "./src/strategies/default-strategy";
-export { BaseStrategy } from "./src/strategies/base-strategy";
+export { DefaultStrategy } from "./src/strategies/default-strategy.js";
+export { BaseStrategy } from "./src/strategies/base-strategy.js";

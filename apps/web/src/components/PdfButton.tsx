@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { ParsedLog } from '@testlog-inspector/log-parser/src/types';
-import { Button } from '@ui/Button';
+import { ParsedLog } from '@testlog-inspector/log-parser';
+import { Button } from '@testlog-inspector/ui-components';
 import { generatePdf } from '@/lib/pdf';
 
 interface Props {

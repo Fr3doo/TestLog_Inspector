@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ParsedLog } from "@testlog-inspector/log-parser/src/types";
+import { ParsedLog } from "@testlog-inspector/log-parser";
 
 export function useUpload(
   onSuccess: (p: ParsedLog) => void,

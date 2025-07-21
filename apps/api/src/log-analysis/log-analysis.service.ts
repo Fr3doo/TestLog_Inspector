@@ -1,6 +1,6 @@
 import { Injectable, Logger, BadRequestException } from "@nestjs/common";
 import { LogParser } from "@testlog-inspector/log-parser";
-import { ParsedLog } from "@testlog-inspector/log-parser/src/types";
+import { ParsedLog } from "@testlog-inspector/log-parser";
 import { AnalyzeLogDto } from "./dto/analyze-log.dto";
 
 @Injectable()

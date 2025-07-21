@@ -1,14 +1,17 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
 
   // Permet à Next.js de transpiler nos packages workspaces (TS pur)
-  experimental: {
-    transpilePackages: [
-      '@testlog-inspector/ui-components',
-      '@testlog-inspector/log-parser',
-    ],
-  },
+  transpilePackages: [
+    '@testlog-inspector/ui-components',
+    '@testlog-inspector/log-parser',
+  ],
 
   // Standalone ⇒ déploiement plus simple (Docker, PM2…)
   output: 'standalone',
@@ -22,6 +25,16 @@ const nextConfig = {
   eslint: {
     // Ne bloque pas la prod build — Turbo gère déjà le lint en CI
     ignoreDuringBuilds: true,
+  },
+
+  webpack: (config) => {
+    config.resolve = config.resolve || {};
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@ui': path.resolve(__dirname, '../../packages/ui-components/src'),
+      '@parser': path.resolve(__dirname, '../../packages/log-parser/src'),
+    };
+    return config;
   },
 
   // Configuration Tailwind / PostCSS déjà prise en charge via plugins

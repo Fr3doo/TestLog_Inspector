@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
 
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
 
     /* Génération des .d.ts pour distribution npm */
@@ -13,5 +13,5 @@
     "composite": true
   },
 
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "index.ts"]
 }
