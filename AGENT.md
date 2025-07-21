@@ -6,6 +6,7 @@
 - Démarrer l’ensemble API + Web : `pnpm dev`
 - Build production : `pnpm build`
 - Lancer les deux apps : `pnpm start`
+- Consulter `ENVIRONMENT.md` pour les variables nécessaires (API URL, port…)
 
 ## 2. Testing Instructions
 > ⚠️ Les modifications doivent passer tous les tests et le lint
