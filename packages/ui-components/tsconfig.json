@@ -3,6 +3,7 @@
 
   "compilerOptions": {
     /* Entrée / sortie */
+    "lib": ["ESNext", "DOM"],
     "rootDir": "src",
     "outDir": "dist",
 
