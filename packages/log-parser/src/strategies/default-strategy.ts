@@ -35,9 +35,9 @@ export class DefaultStrategy extends BaseStrategy {
     const errors: LogError[] = errorMatches.map((m) => ({
       type: m[1],
       message: m[2],
-      stack: this.extractStack(lines, m.lineNumber),
+      stack: this.extractStack(lines, m.index),
       lineNumber: m.lineNumber,
-      raw: lines[m.lineNumber - 1],
+      raw: lines[m.index - 1],
     }));
 
     /* 4. Infos diverses ----------------------------------------- */

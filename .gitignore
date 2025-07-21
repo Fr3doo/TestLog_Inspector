@@ -1,2 +1,29 @@
+# Node & dépendances
 node_modules/
-.env
+**/node_modules/
+pnpm-lock.yaml.lock
+
+# Next.js
+.next/
+out/
+.next/cache/
+
+# Turborepo
+.turbo/
+
+# Environnement local
+*.env
+.env.local
+
+# Logs & caches divers
+npm-debug.log*
+yarn-debug.log*
+lerna-debug.log*
+*.log
+.cache/
+
+# Artefacts de build
+*.gz
+dist/
+tsconfig.tsbuildinfo
+tsbuildinfo
