@@ -9,8 +9,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "types": ["node", "multer"]
   },
+
+  "include": ["src/**/*.ts"],
 
   "exclude": ["node_modules", "dist"]
 }

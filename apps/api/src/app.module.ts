@@ -6,16 +6,16 @@ import { LogAnalysisModule } from './log-analysis/log-analysis.module';
 import { LoggerInterceptor } from './common/logger.interceptor';
 
 /**
- * Racine de l’API NestJS.
- * - Configure Multer globalement (50 Mo max, contrainte produit).
- * - Importe le module métier LogAnalysis.
- * - Enregistre l’intercepteur Logger pour tracer requêtes/réponses.
+ * Root module for the NestJS API.
+ * - Configures Multer globally (50MB limit)
+ * - Imports the LogAnalysis domain module
+ * - Registers LoggerInterceptor for request/response tracing
  */
 @Module({
   imports: [
     /* -------- Upload / Multer global -------- */
     MulterModule.register({
-      limits: { fileSize: 50 * 1024 * 1024 }, // 50 Mo
+        limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
     }),
 
     /* -------- Domain modules -------- */

@@ -5,16 +5,14 @@ import { extname } from 'node:path';
 import { AnalyzeLogDto } from './dto/analyze-log.dto';
 
 /**
- * Transforme un fichier Multer en `AnalyzeLogDto`
- * et applique des validations métier supplémentaires.
- *
- * ‑ Vérifie la présence du fichier
- * ‑ Vérifie l’extension (.log, .txt)
- * ‑ Vérifie la taille maximale (50 Mo, cohérente avec Multer)
+ * Converts a Multer file into `AnalyzeLogDto` with extra validation:
+ * - ensures the file is present
+ * - checks allowed extensions (.log, .txt)
+ * - checks max size (50MB, consistent with Multer)
  */
 @Injectable()
 export class ParseFilePipe implements PipeTransform<Express.Multer.File, AnalyzeLogDto> {
-  private readonly MAX_SIZE = 50 * 1024 * 1024; // 50 Mo
+  private readonly MAX_SIZE = 50 * 1024 * 1024; // 50MB
 
   transform(file: Express.Multer.File | undefined): AnalyzeLogDto {
     if (!file) {

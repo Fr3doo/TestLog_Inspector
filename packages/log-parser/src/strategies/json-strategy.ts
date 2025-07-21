@@ -8,18 +8,18 @@ import {
 import { BaseStrategy } from "./base-strategy";
 
 /**
- * Strategy JSON Lines / JSON Array
+ * Strategy JSON Lines / JSON Array
  * --------------------------------
- * Peut gérer :
- *   • Un fichier ND‑JSON (une ligne = un objet JSON)
- *   • Un tableau JSON de log‑objects
+ * Can handle:
+ *   - A ND-JSON file (one line = a JSON object)
+ *   - A JSON array of log objects
  *
- * Chaque objet doit a minima contenir :
+ * Each object must at least contain:
  *   { level: "INFO"|"ERROR"|..., message: string, timestamp?: string, ... }
  */
 export class JsonStrategy extends BaseStrategy {
   canHandle(lines: string[]): boolean {
-    // Heuristique : les 3 premières lignes sont JSON valides OU le fichier entier est un tableau JSON
+    // Heuristic: first 3 lines are valid JSON or the whole file is a JSON array
     const sample = lines.slice(0, 3);
     return (
       sample.every((l) => this.tryJSON(l) !== null) ||

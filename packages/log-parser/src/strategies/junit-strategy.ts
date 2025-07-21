@@ -1,13 +1,13 @@
 /**
- * Strategy JUnit XML
+ * Strategy JUnit XML
  * ------------------
- * Analyse les rapports JUnit produits par, par ex., Cypress, Jest‑JUnit,
- * Surefire, Robot Framework… sans dépendance XML externe (parse naïf via RegExp).
+ * Parses JUnit reports from tools like Cypress, Jest-JUnit or Surefire
+ * without any external XML dependency (naive RegExp parsing).
  *
- * Hypothèses :
- *   • <testsuite> contient les attributs name, timestamp
- *   • <properties><property name="env" value="staging"/>…</properties> optionnel
- *   • Chaque <testcase> peut avoir <failure type="" message="">Stack…</failure>
+ * Assumptions:
+ *   - <testsuite> contains attributes name and timestamp
+ *   - <properties><property name="env" value="staging"/>…</properties> optional
+ *   - Each <testcase> may have <failure type="" message="">Stack…</failure>
  */
 
 import {
@@ -21,7 +21,7 @@ import { BaseStrategy } from "./base-strategy";
 
 export class JunitStrategy extends BaseStrategy {
   canHandle(lines: string[]): boolean {
-    // Détection simple : présence d’une balise <testsuite
+    // Simple detection: look for a <testsuite> tag
     return lines.slice(0, 10).some((l) => /<testsuite\b/i.test(l));
   }
 
@@ -55,7 +55,7 @@ export class JunitStrategy extends BaseStrategy {
     /* 3. Erreurs / Exceptions ------------------------- */
     const errors: LogError[] = [];
     const testcaseRegex =
-      /<testcase\b([^>]*)>([\s\S]*?)<\/testcase>/gi; // g+i → multiple matches
+      /<testcase\b([^>]*)>([\s\S]*?)<\/testcase>/gi; // g+i => multiple matches
     let m: RegExpExecArray | null;
 
     while ((m = testcaseRegex.exec(xml))) {
@@ -73,7 +73,7 @@ export class JunitStrategy extends BaseStrategy {
       if (failure.length) {
         const [, type, message, stackRaw] = failure;
         const stack = stackRaw.trim();
-        // Ligne approximative : position dans le fichier divisé par total lignes
+        // Approximate line: file position proportionally to total lines
         const lineNumber = Math.ceil(
           (testcaseRegex.lastIndex / xml.length) * lines.length
         );
