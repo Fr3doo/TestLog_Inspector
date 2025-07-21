@@ -73,6 +73,47 @@ Les principales variables de configuration sont décrites dans
 | **KISS** / composition          | Hooks React simples, aucun HOC superflu.                                                                    |
 | **Robustesse (loi de Murphy)**  | Validations Zod / class‑validator, `try/catch`, tests sur données corrompues, messages d’erreur explicites. |
 
+Pour une vue globale de l'architecture, consultez
+[docs/architecture.md](docs/architecture.md) ou référez-vous au schéma
+ci-dessous :
+
+```mermaid
+%% extrait de docs/architecture.md
+graph TD
+    subgraph Browser
+        A1[Utilisateur]
+    end
+
+    subgraph Frontend<br>Next.js 14 (React 18)
+        B1[FileDropzone<br/>(upload)]
+        B2[Dashboard<br/>Summary / Context / ErrorTable / Misc]
+        B3[PdfButton → jsPDF]
+    end
+
+    subgraph API<br>NestJS 10
+        C1[/analyze<br/>LogAnalysisController]
+        C2[LogAnalysisService]
+    end
+
+    subgraph Parser Lib<br/>@testlog‑inspector/log-parser
+        D1[LogParser (orchestrator)]
+        D2[DefaultStrategy]
+        D3[JsonStrategy]
+        D4[JunitStrategy]
+    end
+
+    A1 -- drag & drop .log --> B1
+    B1 -- POST multipart /analyze --> C1
+    C1 --> C2
+    C2 -- 5× read --> D1
+    D1 --> D2 & D3 & D4
+    D1 -- ParsedLog JSON --> C2
+    C2 --> C1
+    C1 -- response JSON --> B2
+    B2 -- Export --> B3
+    B3 -- PDF download --> A1
+```
+
 ---
 ## 📚 Documentation
 
