@@ -37,7 +37,8 @@
 | Agent                        | Rôle principal                             | Fichier                                           | Entrées                           | Sorties                     |
 |------------------------------|--------------------------------------------|--------------------------------------------------|-----------------------------------|------------------------------|
 | `FileDropzone`               | Upload de fichiers et appel API           | `apps/web/src/components/FileDropzone.tsx`       | `File[]` via drag&drop            | Appelle `useUpload`         |
-| `useUpload`                  | Hook d’upload vers l’API `/analyze`        | `apps/web/src/hooks/useUpload.ts`                | `File[]`                         | `ParsedLog` ou erreur       |
+| `useUpload`                  | Hook d’upload vers l’API `/analyze`        | `apps/web/src/hooks/useUpload.ts`                | `File[]`  | `ParsedLog` ou erreur       |
+| `UploadController`           | Endpoint POST `/upload`                    | `apps/api/src/log-analysis/upload.controller.ts` | `multipart/form-data`            | `ParsedLog[]`               |
 | `LogAnalysisController`      | Endpoint POST `/analyze`                   | `apps/api/src/log-analysis/log-analysis.controller.ts` | `multipart/form-data`            | `ParsedLog[]`               |
 | `LogAnalysisService`         | Orchestration de l’analyse                 | `apps/api/src/log-analysis/log-analysis.service.ts`    | `AnalyzeLogDto`                 | `ParsedLog`                 |
 | `LogParser`                  | Parseur de fichiers (librairie)            | `packages/log-parser/src/parser.ts`              | `path` fichier                   | `ParsedLog`                 |
@@ -60,6 +61,11 @@
 - **Sorties** : `ParsedLog` passé au callback `onSuccess`.
 - **Dépendances** : `fetch` / API NestJS.
 - **Tests** : `apps/web/src/__tests__/...` (à compléter).
+
+### `UploadController`
+- **Rôle** : réceptionne l’upload et délègue l’analyse au `LogAnalysisService`.
+- **Dépendances** : `LogAnalysisService`, `MulterModule`.
+- **Tests** : `apps/api/src/log-analysis/upload.controller.spec.ts`.
 
 ### `LogAnalysisController`
 - **Rôle** : réceptionne l’upload, applique Multer et renvoie un tableau de logs parsés.

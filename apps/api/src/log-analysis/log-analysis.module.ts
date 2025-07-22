@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
 import { LogAnalysisController } from './log-analysis.controller';
+import { UploadController } from './upload.controller';
 import { LogAnalysisService } from './log-analysis.service';
 import { FileValidator } from './file-validator.service';
 import { FileValidationService } from './file-validation.service';
@@ -21,7 +22,7 @@ import {
     // Local Multer module (inherits the global 50MB limit)
     MulterModule,
   ],
-  controllers: [LogAnalysisController],
+  controllers: [LogAnalysisController, UploadController],
   providers: [
     { provide: 'ILogAnalysisService', useClass: LogAnalysisService },
     {
