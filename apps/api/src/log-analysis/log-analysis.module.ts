@@ -4,6 +4,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { LogAnalysisController } from './log-analysis.controller';
 import { LogAnalysisService } from './log-analysis.service';
 import { FileValidator } from './file-validator.service';
+import { FileValidationService } from './file-validation.service';
 import { LogParser } from '@testlog-inspector/log-parser';
 
 /**
@@ -21,7 +22,8 @@ import { LogParser } from '@testlog-inspector/log-parser';
     LogAnalysisService,
     { provide: 'ILogParser', useClass: LogParser },
     FileValidator,
+    FileValidationService,
   ],
-  exports: [LogAnalysisService, FileValidator],
+  exports: [LogAnalysisService, FileValidator, FileValidationService],
 })
 export class LogAnalysisModule {}

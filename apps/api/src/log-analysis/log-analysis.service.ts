@@ -1,7 +1,7 @@
 import { Injectable, Logger, BadRequestException, Inject } from "@nestjs/common";
 import type { Express } from "express";
 import { ParsedLog, ILogParser } from "@testlog-inspector/log-parser";
-import { FileValidator } from "./file-validator.service";
+import { FileValidationService } from "./file-validation.service";
 
 @Injectable()
 export class LogAnalysisService {
@@ -9,14 +9,10 @@ export class LogAnalysisService {
 
   constructor(
     @Inject('ILogParser') private readonly parser: ILogParser,
-    private readonly validator: FileValidator,
+    private readonly validator: FileValidationService,
   ) {}
 
   async analyze(file: Express.Multer.File): Promise<ParsedLog> {
-    if (!file?.path) {
-      throw new BadRequestException("file is required");
-    }
-
     this.validator.validate(file);
 
     try {
