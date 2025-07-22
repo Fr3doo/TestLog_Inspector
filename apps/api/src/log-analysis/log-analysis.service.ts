@@ -1,7 +1,6 @@
-import { Injectable, Logger, BadRequestException } from "@nestjs/common";
+import { Injectable, Logger, BadRequestException, Inject } from "@nestjs/common";
 import type { Express } from "express";
-import { LogParser } from "@testlog-inspector/log-parser";
-import { ParsedLog } from "@testlog-inspector/log-parser";
+import { ParsedLog, ILogParser } from "@testlog-inspector/log-parser";
 import { FileValidator } from "./file-validator.service";
 
 @Injectable()
@@ -9,7 +8,7 @@ export class LogAnalysisService {
   private readonly logger = new Logger(LogAnalysisService.name);
 
   constructor(
-    private readonly parser: LogParser,
+    @Inject('ILogParser') private readonly parser: ILogParser,
     private readonly validator: FileValidator,
   ) {}
 

@@ -14,6 +14,7 @@
 
 export * from "./src/parser.js";
 export * from "./src/types.js";
+export * from "./src/ILogParser.js";
 
 export { DefaultStrategy } from "./src/strategies/default-strategy.js";
 export { BaseStrategy } from "./src/strategies/base-strategy.js";
