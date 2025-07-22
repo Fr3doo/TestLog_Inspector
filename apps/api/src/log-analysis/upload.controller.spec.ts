@@ -4,20 +4,10 @@ import { INestApplication } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
 import { LogAnalysisModule } from './log-analysis.module';
-import { ParsedLog } from '@testlog-inspector/log-parser';
+import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
 
 /* ---------- Mock service & fixture ------------------ */
-const parsedStub: ParsedLog = {
-  summary: { text: 'stub summary' },
-  context: {
-    scenario: 'login_flow',
-    date: '2025‑07‑20',
-    environment: 'staging',
-    browser: 'chrome',
-  },
-  errors: [],
-  misc: { versions: {}, apiEndpoints: [], testCases: [], folderIds: [] },
-};
+const parsedStub = parsedLogFixture;
 
 const mockService = {
   analyze: jest.fn().mockResolvedValue(parsedStub),
