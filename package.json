@@ -19,7 +19,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
     "test": "turbo run test",
     "ci": "turbo run lint build test --no-cache",
-    "prepare": "husky install"
+    "postinstall": "husky install",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "@types/node": "^24.0.15",
