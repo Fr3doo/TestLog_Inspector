@@ -3,6 +3,7 @@ import { extname } from 'node:path';
 import type { Express } from 'express';
 import type { FileFilterCallback } from 'multer';
 import { MAX_UPLOAD_SIZE } from '../common/constants';
+import { ALLOWED_EXT } from '../common/file.constants';
 import {
   ERR_FILE_TOO_LARGE,
   ERR_INVALID_FILETYPE,
@@ -15,11 +16,10 @@ import {
 @Injectable()
 export class FileValidator {
   private readonly MAX_SIZE = MAX_UPLOAD_SIZE;
-  private readonly ALLOWED_EXT = ['.log', '.txt'];
 
   validate(file: Express.Multer.File): void {
     const ext = extname(file.originalname).toLowerCase();
-    if (!this.ALLOWED_EXT.includes(ext)) {
+    if (!ALLOWED_EXT.includes(ext as (typeof ALLOWED_EXT)[number])) {
       throw new BadRequestException(ERR_INVALID_FILETYPE);
     }
 
