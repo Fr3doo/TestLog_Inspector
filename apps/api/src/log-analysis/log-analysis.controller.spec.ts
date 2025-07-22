@@ -55,6 +55,9 @@ describe('LogAnalysisController (e2e)', () => {
 
     expect(res.body).toEqual([parsedStub]);
     expect(mockService.analyze).toHaveBeenCalledTimes(1);
+    expect(mockService.analyze).toHaveBeenCalledWith(
+      expect.objectContaining({ originalname: 'sample.log' }),
+    );
   });
 
   it('POST /analyze — should return 400 when no file', async () => {
