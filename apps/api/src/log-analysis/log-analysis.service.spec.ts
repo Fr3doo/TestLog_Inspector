@@ -4,7 +4,7 @@ import { BadRequestException } from '@nestjs/common';
 import { LogAnalysisService } from './log-analysis.service';
 import { ParsedLog, ILogParser } from '@testlog-inspector/log-parser';
 import type { Express } from 'express';
-import { FileValidator } from './file-validator.service';
+import { FileValidationService } from './file-validation.service';
 
 /* ---------- Doubles / Fixtures ---------- */
 const dummyParsed: ParsedLog = {
@@ -18,7 +18,7 @@ class MockLogParser {
   parseFile = jest.fn().mockResolvedValue(dummyParsed);
 }
 
-class MockValidator {
+class MockValidationService {
   validate = jest.fn();
 }
 
@@ -26,20 +26,20 @@ class MockValidator {
 describe('LogAnalysisService', () => {
   let service: LogAnalysisService;
   let parser: MockLogParser;
-  let validator: MockValidator;
+  let validator: MockValidationService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         LogAnalysisService,
         { provide: 'ILogParser', useClass: MockLogParser },
-        { provide: FileValidator, useClass: MockValidator },
+        { provide: FileValidationService, useClass: MockValidationService },
       ],
     }).compile();
 
     service = module.get<LogAnalysisService>(LogAnalysisService);
     parser = module.get<ILogParser>('ILogParser') as unknown as MockLogParser;
-    validator = module.get<FileValidator>(FileValidator) as unknown as MockValidator;
+    validator = module.get<FileValidationService>(FileValidationService) as unknown as MockValidationService;
   });
 
   it('should return ParsedLog when path is valid', async () => {
@@ -51,7 +51,11 @@ describe('LogAnalysisService', () => {
     expect(result).toEqual(dummyParsed);
   });
 
-  it('should throw BadRequestException when filePath missing', async () => {
+  it('should throw BadRequestException when validation fails', async () => {
+    validator.validate.mockImplementationOnce(() => {
+      throw new BadRequestException('invalid');
+    });
+
     await expect(service.analyze({} as Express.Multer.File)).rejects.toBeInstanceOf(
       BadRequestException,
     );
