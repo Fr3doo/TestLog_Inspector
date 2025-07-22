@@ -111,6 +111,8 @@ graph TD
 3. Documenter son rôle dans le fichier et ici.
 4. Ajouter des tests correspondants.
 5. Mettre à jour `AGENT.md`.
+6. Lorsque la validation de fichiers est nécessaire, utiliser `FileValidator` en
+   dépendance (composition) plutôt qu'en héritage.
 
 ## 9. Meilleures pratiques
 - Un agent = une responsabilité.
