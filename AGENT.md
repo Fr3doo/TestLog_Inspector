@@ -61,6 +61,7 @@
 ### `LogAnalysisController`
 - **Rôle** : réceptionne l’upload, applique Multer et renvoie un tableau de logs parsés.
 - **Dépendances** : `LogAnalysisService`, `MulterModule`.
+- **Note** : la pipe `ParseFilePipe` a été supprimée ; la validation se fait directement via `FileValidator` dans `LogAnalysisService`.
 
 ### `LogAnalysisService`
 - **Rôle** : appelle `LogParser` et gère les erreurs.
