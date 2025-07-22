@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useUpload } from "../hooks/useUpload";
 import { ParsedLog } from "@testlog-inspector/log-parser";
 import { Card } from "@testlog-inspector/ui-components";
+import { ALLOWED_EXT } from "../../../api/src/common/file.constants";
 
 export default function FileDropzone({
   onAnalyzed,
@@ -32,12 +33,12 @@ export default function FileDropzone({
       <p className="text-center">
         {isUploading
           ? "Analyse en cours…"
-          : "Glissez-déposez vos fichiers .log ou cliquez"}
+          : `Glissez-déposez vos fichiers ${ALLOWED_EXT.join(' ou ')} ou cliquez`}
       </p>
       <input
         type="file"
         multiple
-        accept=".txt,.log"
+        accept={ALLOWED_EXT.join(',')}
         className="hidden"
         onChange={(e) => upload(Array.from(e.target.files ?? []))}
       />
