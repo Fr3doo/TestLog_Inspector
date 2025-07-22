@@ -1,10 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { ColumnDef } from '@tanstack/react-table';
 import { LogError } from '@testlog-inspector/log-parser';
 
-import { SortableTable, Button, Card } from '@testlog-inspector/ui-components';
+import {
+  SortableTable,
+  Button,
+  Card,
+  type ColumnDef
+} from '@testlog-inspector/ui-components';
 
 interface Props {
   errors: LogError[];
@@ -25,26 +29,26 @@ export default function ErrorTable({ errors }: Props) {
       {
         accessorKey: 'type',
         header: 'Type',
-        cell: (info) => <span className="font-mono">{info.getValue<string>()}</span>,
+        cell: (value) => <span className="font-mono">{String(value)}</span>,
       },
       {
         accessorKey: 'message',
         header: 'Message',
-        cell: (info) => info.getValue<string>(),
+        cell: (value) => String(value),
       },
       {
         accessorKey: 'lineNumber',
         header: 'Ligne',
-        cell: (info) => info.getValue<number>(),
+        cell: (value) => String(value),
       },
       {
-        id: 'actions',
         header: '',
-        cell: ({ row }) => {
-          const id = row.id;
+        sortable: false,
+        cell: (_, row, idx) => {
+          const id = String(idx);
           const isOpen = expanded === id;
 
-          return row.original.stack ? (
+          return row.stack ? (
             <Button
               variant="ghost"
               size="sm"
@@ -66,7 +70,7 @@ export default function ErrorTable({ errors }: Props) {
       <SortableTable
         data={errors}
         columns={columns}
-        initialSort={[{ id: 'lineNumber', desc: false }]}
+        initialSort={{ key: 'lineNumber', desc: false }}
         filterKeys={['type', 'message']}
       />
 

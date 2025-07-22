@@ -1,6 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useUpload } from '../hooks/useUpload';
 
 // Basic mock response
 function mockFetch() {
@@ -15,6 +14,7 @@ describe('useUpload', () => {
     const fetchMock = mockFetch();
     vi.stubGlobal('fetch', fetchMock);
 
+    const { useUpload } = await import('../hooks/useUpload');
     const { result } = renderHook(() => useUpload(() => {}));
 
     const file = new File(['data'], 'test.log');
