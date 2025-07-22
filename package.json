@@ -19,7 +19,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
     "test": "turbo run test",
     "ci": "turbo run lint build test --no-cache",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "help": "node scripts/help.js"
   },
   "devDependencies": {
     "@testing-library/react": "16.3.0",
