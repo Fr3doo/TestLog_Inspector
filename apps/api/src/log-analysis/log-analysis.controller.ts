@@ -54,13 +54,6 @@ export class LogAnalysisController {
       throw new BadRequestException(ERR_NO_FILES);
     }
 
-    const results: ParsedLog[] = [];
-
-    for (const file of files) {
-      const parsed = await this.service.analyze(file);
-      results.push(parsed);
-    }
-
-    return results;
+    return Promise.all(files.map((file) => this.service.analyze(file)));
   }
 }

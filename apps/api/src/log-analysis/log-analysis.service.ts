@@ -16,6 +16,7 @@ export class LogAnalysisService implements ILogAnalysisService {
   async analyze(file: Express.Multer.File): Promise<ParsedLog> {
     this.validator.validate(file);
 
+    // Parse the file and convert parser errors into HTTP 400
     try {
       return await this.parser.parseFile(file.path);
     } catch (err) {
