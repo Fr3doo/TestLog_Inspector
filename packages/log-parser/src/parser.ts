@@ -19,16 +19,14 @@ export class LogParser {
   }
 
   /**
-   * Lit le fichier 5 fois (simulate heavy passes) et renvoie un ParsedLog.
+   * Lit le fichier une seule fois et renvoie un ParsedLog.
    * @throws Error si le fichier est inaccessible ou corrompu.
    */
   async parseFile(path: string): Promise<ParsedLog> {
     if (!path) throw new Error("No file path provided");
     let content = "";
     try {
-      for (let i = 0; i < 5; i++) {
-        content = await fs.readFile(path, "utf-8");
-      }
+      content = await fs.readFile(path, "utf-8");
     } catch (e) {
       throw new Error(`Unable to read file "${path}" — ${(e as Error).message}`);
     }

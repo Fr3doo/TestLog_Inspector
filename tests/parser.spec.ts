@@ -1,7 +1,9 @@
 import { LogParser } from "@testlog-inspector/log-parser";
 import { writeFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { vi } from "vitest";
 
 describe("LogParser", () => {
   const tmp = join(tmpdir(), "test.log");
@@ -13,7 +15,7 @@ describe("LogParser", () => {
     } catch (_) {}
   });
 
-  it("should parse a nominal log file", async () => {
+  it("should parse a nominal log file using a single read", async () => {
     const content = `
       Scenario: login_flow
       Date: 2025-07-20
@@ -26,7 +28,9 @@ describe("LogParser", () => {
     writeFileSync(tmp, content);
 
     const parser = new LogParser();
+    const spy = vi.spyOn({ readFile }, "readFile");
     const res = await parser.parseFile(tmp);
+    expect(spy).toHaveBeenCalledTimes(1);
 
     expect(res.context.scenario).toBe("login_flow");
     expect(res.errors).toHaveLength(1);
