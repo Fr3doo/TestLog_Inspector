@@ -9,9 +9,13 @@ import { DefaultStrategy } from "./strategies/default-strategy";
 export class LogParser {
   private strategies: IParsingStrategy[] = [];
 
-  constructor() {
+  constructor(strategies: IParsingStrategy[] = []) {
     // Always register default fallback
     this.registerStrategy(new DefaultStrategy());
+    // Register provided strategies (highest priority first)
+    for (const s of [...strategies].reverse()) {
+      this.registerStrategy(s);
+    }
   }
 
   registerStrategy(strategy: IParsingStrategy) {

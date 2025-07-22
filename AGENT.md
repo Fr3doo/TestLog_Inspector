@@ -70,6 +70,8 @@
 ### `LogParser`
 - **Rôle** : librairie pure, stratégies de parsing extensibles.
 - **Tests** : `packages/log-parser/**/*.spec.ts`.
+- **Utilisation** : on peut passer un tableau de stratégies au constructeur :
+  `new LogParser([new JsonStrategy(), new JunitStrategy()])`.
 
 ## 7. Schéma d’interaction
 
