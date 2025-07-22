@@ -18,6 +18,7 @@ import type { Express } from 'express';
 import { LogAnalysisService } from './log-analysis.service';
 import { AnalyzeLogDto } from './dto/analyze-log.dto';
 import { ParsedLog } from '@testlog-inspector/log-parser';
+import { FileValidator, fileFilter } from './file-validator.service';
 
 /**
  * POST /analyze
@@ -29,7 +30,7 @@ import { ParsedLog } from '@testlog-inspector/log-parser';
  */
 @Controller()
 export class LogAnalysisController {
-  constructor(private readonly service: LogAnalysisService) {}
+  constructor(private readonly service: LogAnalysisService, private readonly validator: FileValidator) {}
 
   /**
    * Multer interceptor:
@@ -42,15 +43,7 @@ export class LogAnalysisController {
   @UseInterceptors(
     FilesInterceptor('files', 10, <MulterModuleOptions>{
       dest: join(tmpdir(), 'testlog-inspector'),
-      fileFilter: (_req, file, cb) => {
-        if (!file.originalname.match(/\.(log|txt)$/i)) {
-          return cb(
-            new BadRequestException('Only .log or .txt files are allowed'),
-            false,
-          );
-        }
-        cb(null, true);
-      },
+      fileFilter,
     }),
   )
   async analyze(
@@ -64,6 +57,7 @@ export class LogAnalysisController {
 
     for (const file of files) {
       const dto: AnalyzeLogDto = { filePath: file.path };
+      this.validator.validate(file);
       const parsed = await this.service.analyze(dto);
       results.push(parsed);
     }
