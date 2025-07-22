@@ -1,4 +1,4 @@
-import { LogParser } from "@testlog-inspector/log-parser";
+import { LogParser, readFileContent } from "@testlog-inspector/log-parser";
 import { writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -18,6 +18,12 @@ describe("LogParser", () => {
   afterEach(() => {
     vi.restoreAllMocks();
     cleanup();
+  });
+
+  it("readFileContent returns file content", async () => {
+    writeFileSync(tmp, "abc");
+    const res = await readFileContent(tmp);
+    expect(res).toContain("abc");
   });
 
   it("should parse a nominal log file using a single read", async () => {

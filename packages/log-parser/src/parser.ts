@@ -6,6 +6,18 @@ import fs from "node:fs/promises";
 import { IParsingStrategy, ParsedLog } from "./types";
 import { DefaultStrategy } from "./strategies/default-strategy";
 
+/**
+ * Read a file and return its content using UTF-8 encoding.
+ *
+ * @param path Absolute or relative file path
+ * @throws Error when the file cannot be read
+ */
+export async function readFileContent(path: string): Promise<string> {
+  return fs.readFile(path, "utf-8").catch((e) => {
+    throw new Error(`Unable to read file "${path}" — ${(e as Error).message}`);
+  });
+}
+
 export class LogParser {
   private strategies: IParsingStrategy[] = [];
 
@@ -28,12 +40,7 @@ export class LogParser {
    */
   async parseFile(path: string): Promise<ParsedLog> {
     if (!path) throw new Error("No file path provided");
-    let content = "";
-    try {
-      content = await fs.readFile(path, "utf-8");
-    } catch (e) {
-      throw new Error(`Unable to read file "${path}" — ${(e as Error).message}`);
-    }
+    const content = await readFileContent(path);
 
     const lines = content.split(/\r?\n/);
     const strategy =
