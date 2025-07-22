@@ -10,7 +10,7 @@
     "build": "nest build",
     "start": "node dist/main.js",
     "start:prod": "node dist/main.js",
-    "swagger:json": "ts-node-esm --transpile-only scripts/gen-swagger.ts",
+    "swagger:json": "ts-node --transpile-only scripts/gen-swagger.ts",
     "lint": "eslint src --ext .ts --max-warnings=0",
     "test": "jest"
   },

@@ -1,0 +1,30 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/analyze": {
+      "post": {
+        "operationId": "LogAnalysisController_analyze",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "LogAnalysis"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "TestLog Inspector API",
+    "description": "Endpoints d’upload et d’analyse de logs",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {}
+  }
+}
