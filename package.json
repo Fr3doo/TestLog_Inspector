@@ -44,6 +44,11 @@
     "multer": "^2.0.2",
     "esbuild": "^0.25.0"
   },
+  "pnpm": {
+    "overrides": {
+      "glob": "^10.3.10"
+    }
+  },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.11",
     "jspdf-autotable": "^5.0.2"

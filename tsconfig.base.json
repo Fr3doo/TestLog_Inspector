@@ -24,7 +24,7 @@
     /* === Monorepo paths ======================== */
     "baseUrl": ".",
     "paths": {
-      "@testlog-inspector/*": ["packages/*/src", "packages/*"]
+      "@testlog-inspector/*": ["packages/*/src"]
     }
   },
   "exclude": ["node_modules", "dist", "coverage"]
