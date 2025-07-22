@@ -1,19 +1,23 @@
 import { LogParser } from "@testlog-inspector/log-parser";
 import { writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { tempDir } from "./helpers/tempDir";
 import { vi } from "vitest";
 
 describe("LogParser", () => {
-  const tmp = join(tmpdir(), "test.log");
+  let tmp: string;
+  let cleanup: () => void;
+  let dir: string;
+
+  beforeEach(() => {
+    ({ dir, cleanup } = tempDir("parser-"));
+    tmp = join(dir, "test.log");
+  });
 
   afterEach(() => {
     vi.restoreAllMocks();
-    try {
-      // remove file quietly
-      writeFileSync(tmp, "");
-    } catch (_) {}
+    cleanup();
   });
 
   it("should parse a nominal log file using a single read", async () => {

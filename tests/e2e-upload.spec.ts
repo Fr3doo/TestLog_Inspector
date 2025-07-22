@@ -10,14 +10,15 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { join } from 'node:path';
-import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
+import { tempDir } from './helpers/tempDir';
 
 import { AppModule } from '../apps/api/src/app.module';
 import { MAX_UPLOAD_SIZE } from '../apps/api/src/common/constants';
 
 describe('Upload log file (e2e)', () => {
   let app: INestApplication;
-  const tmpDir = join(__dirname, '.tmp');
+  let tmp: { dir: string; cleanup: () => void };
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -33,17 +34,17 @@ describe('Upload log file (e2e)', () => {
     );
     await app.init();
 
-    mkdirSync(tmpDir, { recursive: true });
+    tmp = tempDir('upload-e2e-');
   }, 30_000);
 
   afterAll(async () => {
     await app.close();
-    rmSync(tmpDir, { recursive: true, force: true });
+    tmp.cleanup();
   });
 
   it('POST /analyze should return parsed JSON', async () => {
     // Prépare un petit log fictif
-    const logPath = join(tmpDir, 'sample.log');
+    const logPath = join(tmp.dir, 'sample.log');
     writeFileSync(
       logPath,
       `Scenario: upload_e2e
