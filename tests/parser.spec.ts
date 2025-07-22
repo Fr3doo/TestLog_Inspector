@@ -28,7 +28,7 @@ describe("LogParser", () => {
     `;
     writeFileSync(tmp, content);
 
-    const parser = new LogParser();
+    const parser = new LogParser([]);
     const spy = vi.spyOn({ readFile }, "readFile");
     const res = await parser.parseFile(tmp);
     expect(spy).toHaveBeenCalledTimes(1);
@@ -38,14 +38,14 @@ describe("LogParser", () => {
   });
 
   it("should throw when file is corrupted", async () => {
-    const parser = new LogParser();
+    const parser = new LogParser([]);
     await expect(parser.parseFile("nonexistent.log")).rejects.toThrow(
       /Unable to read file/
     );
   });
 
   it("should propagate read errors", async () => {
-    const parser = new LogParser();
+    const parser = new LogParser([]);
     const error = new Error("permission denied");
     vi.spyOn({ readFile }, "readFile").mockRejectedValueOnce(error);
 

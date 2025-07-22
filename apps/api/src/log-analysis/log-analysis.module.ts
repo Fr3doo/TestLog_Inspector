@@ -5,7 +5,11 @@ import { LogAnalysisController } from './log-analysis.controller';
 import { LogAnalysisService } from './log-analysis.service';
 import { FileValidator } from './file-validator.service';
 import { FileValidationService } from './file-validation.service';
-import { LogParser } from '@testlog-inspector/log-parser';
+import {
+  LogParser,
+  JsonStrategy,
+  JunitStrategy,
+} from '@testlog-inspector/log-parser';
 
 /**
  * Module métier dédié à l’analyse de logs.
@@ -20,7 +24,11 @@ import { LogParser } from '@testlog-inspector/log-parser';
   controllers: [LogAnalysisController],
   providers: [
     { provide: 'ILogAnalysisService', useClass: LogAnalysisService },
-    { provide: 'ILogParser', useClass: LogParser },
+    {
+      provide: 'ILogParser',
+      useFactory: () =>
+        new LogParser([new JsonStrategy(), new JunitStrategy()]),
+    },
     FileValidator,
     FileValidationService,
   ],

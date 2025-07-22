@@ -18,6 +18,9 @@ module.exports = {
         ],
       },
       extensionsToTreatAsEsm: ['.ts'],
+      moduleNameMapper: {
+        '^@testlog-inspector/(.*)$': '<rootDir>/../../packages/$1',
+      },
       preset: 'ts-jest',
       testEnvironment: 'node',
       setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
