@@ -1,7 +1,7 @@
 {
   "name": "@testlog-inspector/ui-components",
   "version": "0.0.1",
-  "description": "Shared React UI components (shadcn/ui re‑exports and custom DataTable) for TestLog Inspector.",
+  "description": "Shared React UI components (shadcn/ui re‑exports and custom SortableTable) for TestLog Inspector.",
   "author": "TestLog Inspector Team",
   "license": "MIT",
   "homepage": "https://github.com/your-org/testlog-inspector",
