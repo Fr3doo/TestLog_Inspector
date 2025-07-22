@@ -3,6 +3,8 @@ import { BadRequestException } from '@nestjs/common';
 
 import { LogAnalysisService } from './log-analysis.service';
 import { LogParser, ParsedLog } from '@testlog-inspector/log-parser';
+import type { Express } from 'express';
+import { FileValidator } from './file-validator.service';
 
 /* ---------- Doubles / Fixtures ---------- */
 const dummyParsed: ParsedLog = {
@@ -16,34 +18,41 @@ class MockLogParser {
   parseFile = jest.fn().mockResolvedValue(dummyParsed);
 }
 
+class MockValidator {
+  validate = jest.fn();
+}
+
 /* ---------- Suite de tests --------------- */
 describe('LogAnalysisService', () => {
   let service: LogAnalysisService;
   let parser: MockLogParser;
+  let validator: MockValidator;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         LogAnalysisService,
         { provide: LogParser, useClass: MockLogParser },
+        { provide: FileValidator, useClass: MockValidator },
       ],
     }).compile();
 
     service = module.get<LogAnalysisService>(LogAnalysisService);
     parser = module.get<LogParser>(LogParser) as unknown as MockLogParser;
+    validator = module.get<FileValidator>(FileValidator) as unknown as MockValidator;
   });
 
   it('should return ParsedLog when path is valid', async () => {
-    const dto = { filePath: '/tmp/file.log' };
-    const result = await service.analyze(dto);
+    const file = { path: '/tmp/file.log', originalname: 'file.log', size: 1 } as Express.Multer.File;
+    const result = await service.analyze(file);
 
+    expect(validator.validate).toHaveBeenCalledWith(file);
     expect(parser.parseFile).toHaveBeenCalledWith('/tmp/file.log');
     expect(result).toEqual(dummyParsed);
   });
 
   it('should throw BadRequestException when filePath missing', async () => {
-    // @ts-expect-error – intentionally passing empty dto
-    await expect(service.analyze({})).rejects.toBeInstanceOf(
+    await expect(service.analyze({} as Express.Multer.File)).rejects.toBeInstanceOf(
       BadRequestException,
     );
   });
@@ -51,8 +60,8 @@ describe('LogAnalysisService', () => {
   it('should wrap parser errors into BadRequestException', async () => {
     parser.parseFile.mockRejectedValueOnce(new Error('corrupted'));
 
-    await expect(
-      service.analyze({ filePath: '/tmp/bad.log' }),
-    ).rejects.toThrow(/corrupted/);
+    const file = { path: '/tmp/bad.log', originalname: 'bad.log', size: 1 } as Express.Multer.File;
+
+    await expect(service.analyze(file)).rejects.toThrow(/corrupted/);
   });
 });

@@ -16,9 +16,7 @@ import { join } from 'node:path';
 import type { Express } from 'express';
 
 import { LogAnalysisService } from './log-analysis.service';
-import { AnalyzeLogDto } from './dto/analyze-log.dto';
 import { ParsedLog } from '@testlog-inspector/log-parser';
-import { FileValidator, fileFilter } from './file-validator.service';
 
 /**
  * POST /analyze
@@ -30,7 +28,7 @@ import { FileValidator, fileFilter } from './file-validator.service';
  */
 @Controller()
 export class LogAnalysisController {
-  constructor(private readonly service: LogAnalysisService, private readonly validator: FileValidator) {}
+  constructor(private readonly service: LogAnalysisService) {}
 
   /**
    * Multer interceptor:
@@ -43,7 +41,6 @@ export class LogAnalysisController {
   @UseInterceptors(
     FilesInterceptor('files', 10, <MulterModuleOptions>{
       dest: join(tmpdir(), 'testlog-inspector'),
-      fileFilter,
     }),
   )
   async analyze(
@@ -56,9 +53,7 @@ export class LogAnalysisController {
     const results: ParsedLog[] = [];
 
     for (const file of files) {
-      const dto: AnalyzeLogDto = { filePath: file.path };
-      this.validator.validate(file);
-      const parsed = await this.service.analyze(dto);
+      const parsed = await this.service.analyze(file);
       results.push(parsed);
     }
 
