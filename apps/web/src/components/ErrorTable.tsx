@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { LogError } from '@testlog-inspector/log-parser';
 
-import { DataTable, Button, Card } from '@testlog-inspector/ui-components';
+import { SortableTable, Button, Card } from '@testlog-inspector/ui-components';
 
 interface Props {
   errors: LogError[];
@@ -14,7 +14,7 @@ interface Props {
  * Table des erreurs / exceptions
  * ------------------------------
  * - Tri activé sur toutes les colonnes.
- * - Filtre global (fournit par DataTable).
+ * - Filtre global (fourni par SortableTable).
  * - Affichage déroulant de la stack-trace sur demande.
  */
 export default function ErrorTable({ errors }: Props) {
@@ -63,7 +63,7 @@ export default function ErrorTable({ errors }: Props) {
     <Card className="p-6 space-y-4">
       <h2 className="text-xl font-semibold">Erreurs / Exceptions</h2>
 
-      <DataTable
+      <SortableTable
         data={errors}
         columns={columns}
         initialSort={[{ id: 'lineNumber', desc: false }]}

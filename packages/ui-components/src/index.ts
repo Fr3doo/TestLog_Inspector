@@ -1,7 +1,7 @@
 /**
  * Library entry point:
  * - Re-exports common shadcn/ui components
- * - Exposes our generic DataTable component
+ * - Exposes our generic SortableTable component
  *
  * The shadcn components are copied via `npx shadcn-ui@latest add …` in the
  * Next.js app and re-mapped here for sharing.
@@ -13,4 +13,5 @@ export { Badge } from "./shadcn/Badge";
 export { Input } from "./shadcn/Input";
 export { Table, TableHeader, TableRow, TableCell, TableHead } from "./shadcn/Table";
 
-export { DataTable } from "./DataTable";
+export { SortableTable } from "./SortableTable";
+export { SortableTable as DataTable } from "./SortableTable";
