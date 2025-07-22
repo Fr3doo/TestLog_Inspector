@@ -6,6 +6,12 @@ import { ParsedLog } from "@testlog-inspector/log-parser";
 import { Card } from "@testlog-inspector/ui-components";
 import { ALLOWED_EXT } from "../../../api/src/common/file.constants";
 
+const classes = {
+  base: "p-8 border-2 border-dashed",
+  drag: "border-primary",
+  idle: "border-muted",
+};
+
 export default function FileDropzone({
   onAnalyzed,
 }: {
@@ -16,9 +22,7 @@ export default function FileDropzone({
 
   return (
     <Card
-      className={`p-8 border-2 border-dashed ${
-        drag ? "border-primary" : "border-muted"
-      }`}
+      className={`${classes.base} ${drag ? classes.drag : classes.idle}`}
       onDragOver={(e) => {
         e.preventDefault();
         setDrag(true);
