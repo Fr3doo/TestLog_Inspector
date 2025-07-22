@@ -12,9 +12,8 @@ export class FileValidationService {
   constructor(private readonly validator: FileValidator) {}
 
   validate(file: Express.Multer.File): void {
-    if (!file?.path) {
-      throw new BadRequestException(ERR_FILE_REQUIRED);
-    }
+    if (!file?.path) throw new BadRequestException(ERR_FILE_REQUIRED);
+
     this.validator.validate(file);
   }
 }
