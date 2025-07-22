@@ -5,7 +5,7 @@ Each variable has a sensible default so the stack runs out‑of‑the‑box.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `NEXT_PUBLIC_API_URL` | `http://localhost:3001` | Base URL for the NestJS API used by the Next.js frontend. |
+| `NEXT_PUBLIC_API_URL` | `http://localhost:3001` | Base URL for the NestJS API used by the Next.js frontend. `useUpload` builds its POST endpoint from this value. |
 | `PORT` | `3001` | Port on which the NestJS API listens. |
 | `CORS_ORIGIN` | `http://localhost:3000` | Allowed origin for CORS requests to the API. |
 | `NODE_ENV` | `development` | Node runtime environment. |

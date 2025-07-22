@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { ParsedLog } from "@testlog-inspector/log-parser";
 
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "http://localhost:3001";
+
 export function useUpload(
   onSuccess: (p: ParsedLog) => void,
-  endpoint = "/api/analyze"
+  endpoint = `${API_BASE}/analyze`
 ) {
   const [isUploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
