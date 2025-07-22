@@ -14,3 +14,5 @@ Each variable has a sensible default so the stack runs out‑of‑the‑box.
 | `CI` | *unset* | When defined, Playwright will not reuse an existing dev server. |
 
 These variables can be provided via `.env` files or your host environment.
+The NestJS API reads them via `getConfig()` defined in
+[apps/api/src/common/config.ts](apps/api/src/common/config.ts).

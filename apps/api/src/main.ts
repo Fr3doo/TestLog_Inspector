@@ -5,6 +5,7 @@ import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { MAX_UPLOAD_SIZE } from './common/constants';
+import { getConfig } from './common/config';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -29,13 +30,14 @@ async function bootstrap() {
     }),
   );
 
+  const { port, corsOrigin } = getConfig();
+
   /* ---------- CORS (Next.js on :3000) ---------- */
   app.enableCors({
-    origin: process.env.CORS_ORIGIN ?? 'http://localhost:3000',
+    origin: corsOrigin,
     credentials: true,
   });
 
-  const port = process.env.PORT ? Number(process.env.PORT) : 3001;
   await app.listen(port);
   logger.log(`🚀  API TestLog Inspector running on http://localhost:${port}`);
 }
