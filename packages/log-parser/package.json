@@ -21,8 +21,12 @@
     "./*": "./dist/*"
   },
   "files": [
-    "dist"
+    "dist",
+    "bin"
   ],
+  "bin": {
+    "tl-inspect": "./bin/tl-inspect"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json -w --preserveWatchOutput",

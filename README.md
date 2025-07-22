@@ -164,6 +164,17 @@ L'analyse peut être déclenchée via l'API REST :
 curl -F "files=@path/to/test.log" http://localhost:3001/analyze
 ```
 
+### Ligne de commande
+
+Le package `@testlog-inspector/log-parser` expose également un outil CLI nommé
+`tl-inspect`. Vous pouvez l'utiliser directement via `npx` :
+
+```bash
+npx tl-inspect path/to/file.log
+```
+
+La sortie correspond au `ParsedLog` au format JSON.
+
 ## 🔌 Injection de dépendances
 
 ```ts
