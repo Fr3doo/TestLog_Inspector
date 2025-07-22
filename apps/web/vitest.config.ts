@@ -26,6 +26,10 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
       '@ui': resolve(__dirname, '../../packages/ui-components/src'),
       '@parser': resolve(__dirname, '../../packages/log-parser/src'),
+      '@testlog-inspector/ui-components': resolve(
+        __dirname,
+        '../../packages/ui-components/src',
+      ),
     },
   },
 });

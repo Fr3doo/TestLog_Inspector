@@ -45,6 +45,7 @@
 | `FileValidationService`      | Coordonne la validation du fichier         | `apps/api/src/log-analysis/file-validation.service.ts` | `Express.Multer.File` | `void` ou erreur           |
 | `FileValidator`              | Vérifie l'extension et la taille           | `apps/api/src/log-analysis/file-validator.service.ts`  | `Express.Multer.File` | `void` ou erreur           |
 | `LoggerInterceptor`          | Journalisation globale des requêtes        | `apps/api/src/common/logger.interceptor.ts`      | `Request/Response` | `Observable`                |
+| `JsPdfGenerator`             | Génère et télécharge un rapport PDF        | `apps/web/src/lib/JsPdfGenerator.ts`            | `ParsedLog` | Fichier téléchargé |
 
 ## 6. Détails par agent
 
@@ -102,6 +103,13 @@
 - **Entrées** : contexte d'exécution.
 - **Sorties** : passe au handler suivant.
 - **Tests** : non définis.
+
+### `JsPdfGenerator`
+- **Rôle** : générer un rapport PDF et déclencher son téléchargement.
+- **Entrées** : `ParsedLog`, nom de fichier optionnel.
+- **Sorties** : fichier PDF téléchargé.
+- **Dépendances** : `jsPDF`, `jspdf-autotable`.
+- **Tests** : `apps/web/src/__tests__/PdfButton.test.tsx` via injection.
 
 ## 7. Schéma d’interaction
 
