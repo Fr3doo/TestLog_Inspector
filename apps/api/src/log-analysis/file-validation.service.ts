@@ -1,6 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import type { Express } from 'express';
 import { FileValidator } from './file-validator.service';
+import { ERR_FILE_REQUIRED } from '../common/error-messages';
 
 /**
  * Coordinates all checks on the uploaded file before parsing.
@@ -12,7 +13,7 @@ export class FileValidationService {
 
   validate(file: Express.Multer.File): void {
     if (!file?.path) {
-      throw new BadRequestException('file is required');
+      throw new BadRequestException(ERR_FILE_REQUIRED);
     }
     this.validator.validate(file);
   }

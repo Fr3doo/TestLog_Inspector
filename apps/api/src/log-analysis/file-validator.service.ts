@@ -3,6 +3,10 @@ import { extname } from 'node:path';
 import type { Express } from 'express';
 import type { FileFilterCallback } from 'multer';
 import { MAX_UPLOAD_SIZE } from '../common/constants';
+import {
+  ERR_FILE_TOO_LARGE,
+  ERR_INVALID_FILETYPE,
+} from '../common/error-messages';
 
 /**
  * Service responsible for validating uploaded files.
@@ -16,12 +20,12 @@ export class FileValidator {
   validate(file: Express.Multer.File): void {
     const ext = extname(file.originalname).toLowerCase();
     if (!this.ALLOWED_EXT.includes(ext)) {
-      throw new BadRequestException('Invalid file type; only .log or .txt are accepted');
+      throw new BadRequestException(ERR_INVALID_FILETYPE);
     }
 
     if (file.size > this.MAX_SIZE) {
       const mb = Math.ceil(this.MAX_SIZE / (1024 * 1024));
-      throw new BadRequestException(`File exceeds the ${mb}\u00a0MB limit`);
+      throw new BadRequestException(ERR_FILE_TOO_LARGE(mb));
     }
   }
 }

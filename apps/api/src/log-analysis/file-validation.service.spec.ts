@@ -3,6 +3,7 @@ import { BadRequestException } from '@nestjs/common';
 import type { Express } from 'express';
 import { FileValidationService } from './file-validation.service';
 import { FileValidator } from './file-validator.service';
+import { ERR_FILE_REQUIRED } from '../common/error-messages';
 
 class MockFileValidator {
   validate = jest.fn();
@@ -33,7 +34,7 @@ describe('FileValidationService', () => {
   });
 
   it('should throw when file has no path', () => {
-    expect(() => service.validate({} as Express.Multer.File)).toThrow(BadRequestException);
+    expect(() => service.validate({} as Express.Multer.File)).toThrow(ERR_FILE_REQUIRED);
     expect(validator.validate).not.toHaveBeenCalled();
   });
 
