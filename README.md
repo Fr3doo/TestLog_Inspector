@@ -74,6 +74,8 @@ Les principales variables de configuration sont décrites dans
 [ENVIRONMENT.md](./ENVIRONMENT.md). Par défaut, l'API NestJS est exposée sur
 `http://localhost:3001` et le frontend pointe vers cette URL via
 `NEXT_PUBLIC_API_URL`.
+La lecture de ces variables côté API est centralisée dans
+[apps/api/src/common/config.ts](apps/api/src/common/config.ts).
 
 `MAX_UPLOAD_SIZE` permet d'ajuster la taille maximale autorisée pour les requêtes
 et les fichiers envoyés (50 Mo par défaut).
