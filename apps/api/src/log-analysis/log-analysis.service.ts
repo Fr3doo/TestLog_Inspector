@@ -7,7 +7,7 @@ import { AnalyzeLogDto } from "./dto/analyze-log.dto";
 export class LogAnalysisService {
   private readonly logger = new Logger(LogAnalysisService.name);
 
-  constructor(private readonly parser: LogParser = new LogParser()) {}
+  constructor(private readonly parser: LogParser) {}
 
   async analyze(dto: AnalyzeLogDto): Promise<ParsedLog> {
     if (!dto.filePath) {
