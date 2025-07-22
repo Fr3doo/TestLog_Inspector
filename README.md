@@ -77,6 +77,8 @@ Les principales variables de configuration sont décrites dans
 
 `MAX_UPLOAD_SIZE` permet d'ajuster la taille maximale autorisée pour les requêtes
 et les fichiers envoyés (50 Mo par défaut).
+Vous pouvez aussi définir `UPLOAD_LIMIT_MB` pour spécifier la limite directement
+en mégaoctets (`UPLOAD_LIMIT_MB=100` autorise 100 Mo).
 
 ---
 
