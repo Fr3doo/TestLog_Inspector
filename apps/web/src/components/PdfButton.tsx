@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ParsedLog } from '@testlog-inspector/log-parser';
-import { Button } from '@testlog-inspector/ui-components';
-import { usePdfGenerator } from '@/lib/PdfGeneratorContext';
+import { ParsedLog } from "@testlog-inspector/log-parser";
+import { Button } from "@testlog-inspector/ui-components";
+import { usePdfGenerator } from "@/lib/PdfGeneratorContext";
 
 interface Props {
   data: ParsedLog;
@@ -14,21 +13,14 @@ interface Props {
  * L'implémentation concrète peut être remplacée en tests.
  */
 export default function PdfButton({ data }: Props) {
-  const [loading, setLoading] = useState(false);
   const pdf = usePdfGenerator();
 
-  const onClick = async () => {
-    try {
-      setLoading(true);
-      await pdf.generate(data);
-    } finally {
-      setLoading(false);
-    }
+  const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    await pdf.generate(data);
+    btn.disabled = false;
   };
 
-  return (
-    <Button onClick={onClick} disabled={loading}>
-      {loading ? 'Génération…' : 'Télécharger rapport PDF'}
-    </Button>
-  );
+  return <Button onClick={onClick}>Télécharger rapport PDF</Button>;
 }
