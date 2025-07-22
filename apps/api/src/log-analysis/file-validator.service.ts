@@ -2,14 +2,15 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { extname } from 'node:path';
 import type { Express } from 'express';
 import type { FileFilterCallback } from 'multer';
+import { MAX_UPLOAD_SIZE } from '../common/constants';
 
 /**
  * Service responsible for validating uploaded files.
- * Checks allowed extensions and maximum size (50MB).
+ * Checks allowed extensions and maximum size (configured via MAX_UPLOAD_SIZE).
  */
 @Injectable()
 export class FileValidator {
-  private readonly MAX_SIZE = 50 * 1024 * 1024; // 50MB
+  private readonly MAX_SIZE = MAX_UPLOAD_SIZE;
   private readonly ALLOWED_EXT = ['.log', '.txt'];
 
   validate(file: Express.Multer.File): void {
@@ -19,7 +20,8 @@ export class FileValidator {
     }
 
     if (file.size > this.MAX_SIZE) {
-      throw new BadRequestException('File exceeds the 50\u00a0MB limit');
+      const mb = Math.ceil(this.MAX_SIZE / (1024 * 1024));
+      throw new BadRequestException(`File exceeds the ${mb}\u00a0MB limit`);
     }
   }
 }

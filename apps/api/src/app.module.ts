@@ -4,6 +4,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 
 import { LogAnalysisModule } from './log-analysis/log-analysis.module';
 import { LoggerInterceptor } from './common/logger.interceptor';
+import { MAX_UPLOAD_SIZE } from './common/constants';
 
 /**
  * Root module for the NestJS API.
@@ -15,7 +16,7 @@ import { LoggerInterceptor } from './common/logger.interceptor';
   imports: [
     /* -------- Upload / Multer global -------- */
     MulterModule.register({
-        limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
+        limits: { fileSize: MAX_UPLOAD_SIZE },
     }),
 
     /* -------- Domain modules -------- */
