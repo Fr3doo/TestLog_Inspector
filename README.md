@@ -222,6 +222,12 @@ Les scripts `pnpm` fonctionnent également sous Windows via Git Bash ou WSL.
 Veillez à définir les variables d'environnement (`set NEXT_PUBLIC_API_URL=...`)
 suivant la syntaxe de votre terminal.
 
+Pour lister rapidement les commandes utiles :
+
+```bash
+pnpm run help
+```
+
 ## 🛠️ Fichiers de configuration
 
 - `package.json` : scripts communs (`dev`, `build`, `start`, `lint`, `test`).
