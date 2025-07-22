@@ -173,6 +173,13 @@ export class LogAnalysisService {
 }
 ```
 
+### Ajouter une stratégie personnalisée
+
+```ts
+const parser = new LogParser();
+parser.registerStrategy(new XmlStrategy());
+```
+
 ## 📈 Collecte de métriques
 
 _TODO : exposer des métriques Prometheus depuis l'API._
