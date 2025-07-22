@@ -18,6 +18,7 @@ import type { Express } from 'express';
 
 import { ILogAnalysisService } from './ILogAnalysisService';
 import { ParsedLog } from '@testlog-inspector/log-parser';
+import { ERR_NO_FILES } from '../common/error-messages';
 
 /**
  * POST /analyze
@@ -50,7 +51,7 @@ export class LogAnalysisController {
     @UploadedFiles() files: Express.Multer.File[],
   ): Promise<ParsedLog[]> {
     if (!files?.length) {
-      throw new BadRequestException('No files uploaded');
+      throw new BadRequestException(ERR_NO_FILES);
     }
 
     const results: ParsedLog[] = [];
