@@ -4,7 +4,6 @@ import { INestApplication } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
 import { LogAnalysisModule } from './log-analysis.module';
-import { LogAnalysisService } from './log-analysis.service';
 import { ParsedLog } from '@testlog-inspector/log-parser';
 
 /* ---------- Mock service & fixture ------------------ */
@@ -35,7 +34,7 @@ describe('LogAnalysisController (e2e)', () => {
         LogAnalysisModule,
       ],
     })
-      .overrideProvider(LogAnalysisService)
+      .overrideProvider('ILogAnalysisService')
       .useValue(mockService)
       .compile();
 

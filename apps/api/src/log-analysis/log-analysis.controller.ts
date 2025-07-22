@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Inject,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -15,7 +16,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Express } from 'express';
 
-import { LogAnalysisService } from './log-analysis.service';
+import { ILogAnalysisService } from './ILogAnalysisService';
 import { ParsedLog } from '@testlog-inspector/log-parser';
 
 /**
@@ -28,7 +29,9 @@ import { ParsedLog } from '@testlog-inspector/log-parser';
  */
 @Controller()
 export class LogAnalysisController {
-  constructor(private readonly service: LogAnalysisService) {}
+  constructor(
+    @Inject('ILogAnalysisService') private readonly service: ILogAnalysisService,
+  ) {}
 
   /**
    * Multer interceptor:

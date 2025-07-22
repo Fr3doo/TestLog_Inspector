@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 
 import { LogAnalysisService } from './log-analysis.service';
+import { ILogAnalysisService } from './ILogAnalysisService';
 import { ParsedLog, ILogParser } from '@testlog-inspector/log-parser';
 import type { Express } from 'express';
 import { FileValidationService } from './file-validation.service';
@@ -24,20 +25,20 @@ class MockValidationService {
 
 /* ---------- Suite de tests --------------- */
 describe('LogAnalysisService', () => {
-  let service: LogAnalysisService;
+  let service: ILogAnalysisService;
   let parser: MockLogParser;
   let validator: MockValidationService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        LogAnalysisService,
+        { provide: 'ILogAnalysisService', useClass: LogAnalysisService },
         { provide: 'ILogParser', useClass: MockLogParser },
         { provide: FileValidationService, useClass: MockValidationService },
       ],
     }).compile();
 
-    service = module.get<LogAnalysisService>(LogAnalysisService);
+    service = module.get<ILogAnalysisService>('ILogAnalysisService');
     parser = module.get<ILogParser>('ILogParser') as unknown as MockLogParser;
     validator = module.get<FileValidationService>(FileValidationService) as unknown as MockValidationService;
   });

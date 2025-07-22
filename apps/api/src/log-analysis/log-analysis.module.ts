@@ -19,11 +19,11 @@ import { LogParser } from '@testlog-inspector/log-parser';
   ],
   controllers: [LogAnalysisController],
   providers: [
-    LogAnalysisService,
+    { provide: 'ILogAnalysisService', useClass: LogAnalysisService },
     { provide: 'ILogParser', useClass: LogParser },
     FileValidator,
     FileValidationService,
   ],
-  exports: [LogAnalysisService, FileValidator, FileValidationService],
+  exports: ['ILogAnalysisService', FileValidator, FileValidationService],
 })
 export class LogAnalysisModule {}
