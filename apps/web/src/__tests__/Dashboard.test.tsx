@@ -1,12 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { renderWithProviders, screen } from '../../../../tests/helpers/renderWithProviders';
 
 import Dashboard from '@/components/Dashboard';
 import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
 
 describe('<Dashboard />', () => {
   it('renders without crashing and shows key sections', () => {
-    render(<Dashboard data={parsedLogFixture} />);
+    renderWithProviders(<Dashboard data={parsedLogFixture} />);
 
     // Résumé
     expect(screen.getByText('Résumé exécutif')).toBeInTheDocument();
