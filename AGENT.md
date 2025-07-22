@@ -41,6 +41,9 @@
 | `LogAnalysisController`      | Endpoint POST `/analyze`                   | `apps/api/src/log-analysis/log-analysis.controller.ts` | `multipart/form-data`            | `ParsedLog[]`               |
 | `LogAnalysisService`         | Orchestration de l’analyse                 | `apps/api/src/log-analysis/log-analysis.service.ts`    | `AnalyzeLogDto`                 | `ParsedLog`                 |
 | `LogParser`                  | Parseur de fichiers (librairie)            | `packages/log-parser/src/parser.ts`              | `path` fichier                   | `ParsedLog`                 |
+| `FileValidationService`      | Coordonne la validation du fichier         | `apps/api/src/log-analysis/file-validation.service.ts` | `Express.Multer.File` | `void` ou erreur           |
+| `FileValidator`              | Vérifie l'extension et la taille           | `apps/api/src/log-analysis/file-validator.service.ts`  | `Express.Multer.File` | `void` ou erreur           |
+| `LoggerInterceptor`          | Journalisation globale des requêtes        | `apps/api/src/common/logger.interceptor.ts`      | `Request/Response` | `Observable`                |
 
 ## 6. Détails par agent
 
@@ -72,6 +75,27 @@
 - **Tests** : `packages/log-parser/**/*.spec.ts`.
 - **Utilisation** : on peut passer un tableau de stratégies au constructeur :
   `new LogParser([new JsonStrategy(), new JunitStrategy()])`.
+### `FileValidationService`
+- **Rôle** : centralise toutes les vérifications avant le parsing.
+- **SRP** : valider la présence du fichier et déléguer au `FileValidator`.
+- **Entrées** : `Express.Multer.File`.
+- **Sorties** : exception éventuelle.
+- **Dépendances** : `FileValidator`.
+- **Tests** : `apps/api/src/log-analysis/file-validation.service.spec.ts`.
+
+### `FileValidator`
+- **Rôle** : vérifier extension autorisée et taille maximale.
+- **SRP** : assurer la conformité du fichier uploadé (pas de parsing).
+- **Entrées** : `Express.Multer.File`.
+- **Sorties** : exception en cas d'erreur.
+- **Tests** : (à compléter).
+
+### `LoggerInterceptor`
+- **Rôle** : journaliser chaque requête HTTP et les erreurs.
+- **SRP** : logging des échanges HTTP uniquement.
+- **Entrées** : contexte d'exécution.
+- **Sorties** : passe au handler suivant.
+- **Tests** : non définis.
 
 ## 7. Schéma d’interaction
 
