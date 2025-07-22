@@ -3,24 +3,24 @@
 import { useState } from 'react';
 import { ParsedLog } from '@testlog-inspector/log-parser';
 import { Button } from '@testlog-inspector/ui-components';
-import { generatePdf } from '@/lib/pdf';
+import { usePdfGenerator } from '@/lib/PdfGeneratorContext';
 
 interface Props {
   data: ParsedLog;
 }
 
 /**
- * Génère et télécharge un rapport PDF récapitulatif.
- * Utilise la fonction helper `generatePdf` (lib/pdf.ts) qui
- * renvoie un Blob ou déclenche automatiquement le download.
+ * Génère et télécharge un rapport PDF via un `IPdfGenerator`.
+ * L'implémentation concrète peut être remplacée en tests.
  */
 export default function PdfButton({ data }: Props) {
   const [loading, setLoading] = useState(false);
+  const pdf = usePdfGenerator();
 
   const onClick = async () => {
     try {
       setLoading(true);
-      await generatePdf(data); // encapsule jsPDF + save
+      await pdf.generate(data);
     } finally {
       setLoading(false);
     }
