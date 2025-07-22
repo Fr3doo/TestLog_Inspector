@@ -17,7 +17,11 @@ import { LogParser } from '@testlog-inspector/log-parser';
     MulterModule,
   ],
   controllers: [LogAnalysisController],
-  providers: [LogAnalysisService, LogParser, FileValidator],
+  providers: [
+    LogAnalysisService,
+    { provide: 'ILogParser', useClass: LogParser },
+    FileValidator,
+  ],
   exports: [LogAnalysisService, FileValidator],
 })
 export class LogAnalysisModule {}
