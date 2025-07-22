@@ -9,6 +9,7 @@ describe("LogParser", () => {
   const tmp = join(tmpdir(), "test.log");
 
   afterEach(() => {
+    vi.restoreAllMocks();
     try {
       // remove file quietly
       writeFileSync(tmp, "");
@@ -41,5 +42,13 @@ describe("LogParser", () => {
     await expect(parser.parseFile("nonexistent.log")).rejects.toThrow(
       /Unable to read file/
     );
+  });
+
+  it("should propagate read errors", async () => {
+    const parser = new LogParser();
+    const error = new Error("permission denied");
+    vi.spyOn({ readFile }, "readFile").mockRejectedValueOnce(error);
+
+    await expect(parser.parseFile(tmp)).rejects.toThrow("permission denied");
   });
 });
