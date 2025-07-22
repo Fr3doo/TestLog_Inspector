@@ -4,7 +4,7 @@ import { json, urlencoded } from 'express';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
-import { MAX_UPLOAD_SIZE_LABEL } from './common/constants';
+import { MAX_UPLOAD_SIZE } from './common/constants';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -16,8 +16,8 @@ async function bootstrap() {
   app.use(helmet());
 
   // Keep body size consistent with upload limit
-  app.use(json({ limit: MAX_UPLOAD_SIZE_LABEL }));
-  app.use(urlencoded({ extended: true, limit: MAX_UPLOAD_SIZE_LABEL }));
+  app.use(json({ limit: MAX_UPLOAD_SIZE }));
+  app.use(urlencoded({ extended: true, limit: MAX_UPLOAD_SIZE }));
 
   /* ---------- Global validation (class-validator) ---------- */
   app.useGlobalPipes(

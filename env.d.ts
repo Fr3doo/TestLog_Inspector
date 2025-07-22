@@ -12,7 +12,7 @@ declare namespace NodeJS {
     /** Environnement d’exécution */
     readonly NODE_ENV: "development" | "production" | "test";
 
-    /** Max upload size in bytes (default 50MB) */
+    /** Max upload size in bytes for Multer and body parsing (default 50MB) */
     readonly MAX_UPLOAD_SIZE?: string;
   }
 }

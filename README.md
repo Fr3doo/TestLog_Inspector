@@ -75,6 +75,9 @@ Les principales variables de configuration sont décrites dans
 `http://localhost:3001` et le frontend pointe vers cette URL via
 `NEXT_PUBLIC_API_URL`.
 
+`MAX_UPLOAD_SIZE` permet d'ajuster la taille maximale autorisée pour les requêtes
+et les fichiers envoyés (50 Mo par défaut).
+
 ---
 
 ## 🛠️ Pile technologique
