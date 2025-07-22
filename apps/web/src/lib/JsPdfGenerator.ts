@@ -31,16 +31,23 @@ export class JsPdfGenerator implements IPdfGenerator {
     };
 
     /* ---------- Page 1 : résumé + contexte ---------- */
-    addHeading('Résumé exécutif');
-    addParagraph(data.summary.text);
+    const sections = [
+      {
+        title: 'Résumé exécutif',
+        paragraphs: [data.summary.text],
+      },
+      {
+        title: 'Contexte',
+        paragraphs: Object.entries(data.context)
+          .filter(([, v]) => v)
+          .map(([k, v]) => `${k}: ${v}`),
+      },
+    ];
 
-    addHeading('Contexte');
-    Object.entries(data.context)
-      .filter(([, v]) => v)
-      .forEach(([k, v]) => {
-        doc.text(`${k}: ${v}`, margin, cursorY);
-        cursorY += lineHeight;
-      });
+    sections.forEach(({ title, paragraphs }) => {
+      addHeading(title);
+      paragraphs.forEach(addParagraph);
+    });
 
     doc.addPage();
     cursorY = margin;
@@ -62,11 +69,10 @@ export class JsPdfGenerator implements IPdfGenerator {
     });
 
     /* ---------- Infos diverses ---------------------- */
-    cursorY += lineHeight;
-    addHeading('Informations diverses');
+    const miscParts: string[] = [];
 
     if (Object.keys(data.misc.versions).length) {
-      addParagraph(
+      miscParts.push(
         'Versions: ' +
           Object.entries(data.misc.versions)
             .map(([n, v]) => `${n} ${v}`)
@@ -75,15 +81,21 @@ export class JsPdfGenerator implements IPdfGenerator {
     }
 
     if (data.misc.apiEndpoints.length) {
-      addParagraph(`Endpoints API: ${data.misc.apiEndpoints.join(', ')}`);
+      miscParts.push(`Endpoints API: ${data.misc.apiEndpoints.join(', ')}`);
     }
 
     if (data.misc.testCases.length) {
-      addParagraph(`Test cases: ${data.misc.testCases.join(', ')}`);
+      miscParts.push(`Test cases: ${data.misc.testCases.join(', ')}`);
     }
 
     if (data.misc.folderIds.length) {
-      addParagraph(`Folder IDs: ${data.misc.folderIds.join(', ')}`);
+      miscParts.push(`Folder IDs: ${data.misc.folderIds.join(', ')}`);
+    }
+
+    if (miscParts.length) {
+      cursorY += lineHeight;
+      addHeading('Informations diverses');
+      miscParts.forEach(addParagraph);
     }
 
     /* ---------- Téléchargement ----------------------- */
