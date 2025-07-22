@@ -2,7 +2,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import type { ParsedLog } from '@testlog-inspector/log-parser';
 import type { IPdfGenerator } from './IPdfGenerator';
-import { setHeading, setParagraph } from './pdf';
+import { PDF_CONFIG, setHeading, setParagraph } from './pdf';
 
 /**
  * Implémentation concrète de `IPdfGenerator` basée sur jsPDF.
@@ -11,14 +11,13 @@ import { setHeading, setParagraph } from './pdf';
 export class JsPdfGenerator implements IPdfGenerator {
   async generate(data: ParsedLog, filename = 'testlog-report.pdf'): Promise<void> {
     const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-    const margin = 40;
-    const lineHeight = 14;
+    const { margin, lineHeight, headingSpacing } = PDF_CONFIG;
     let cursorY = margin;
 
     const addHeading = (text: string) => {
       setHeading(doc);
       doc.text(text, margin, cursorY);
-      cursorY += lineHeight + 4;
+      cursorY += lineHeight + headingSpacing;
     };
 
     const addParagraph = (text: string) => {
