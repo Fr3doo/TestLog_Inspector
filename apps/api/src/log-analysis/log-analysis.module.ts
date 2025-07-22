@@ -3,6 +3,7 @@ import { MulterModule } from '@nestjs/platform-express';
 
 import { LogAnalysisController } from './log-analysis.controller';
 import { LogAnalysisService } from './log-analysis.service';
+import { LogParser } from '@testlog-inspector/log-parser';
 
 /**
  * Module métier dédié à l’analyse de logs.
@@ -15,7 +16,7 @@ import { LogAnalysisService } from './log-analysis.service';
     MulterModule,
   ],
   controllers: [LogAnalysisController],
-  providers: [LogAnalysisService],
+  providers: [LogAnalysisService, LogParser],
   exports: [LogAnalysisService],
 })
 export class LogAnalysisModule {}
