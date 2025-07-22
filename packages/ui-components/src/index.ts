@@ -13,5 +13,5 @@ export { Badge } from "./shadcn/Badge";
 export { Input } from "./shadcn/Input";
 export { Table, TableHeader, TableRow, TableCell, TableHead } from "./shadcn/Table";
 
-export { SortableTable } from "./SortableTable";
+export { SortableTable, type ColumnDef, type SortConfig } from "./SortableTable";
 export { SortableTable as DataTable } from "./SortableTable";
