@@ -3,17 +3,13 @@ import { BadRequestException } from '@nestjs/common';
 
 import { LogAnalysisService } from './log-analysis.service';
 import { ILogAnalysisService } from './ILogAnalysisService';
-import { ParsedLog, ILogParser } from '@testlog-inspector/log-parser';
+import { ILogParser } from '@testlog-inspector/log-parser';
+import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
 import type { Express } from 'express';
 import { FileValidationService } from './file-validation.service';
 
 /* ---------- Doubles / Fixtures ---------- */
-const dummyParsed: ParsedLog = {
-  summary: { text: 'dummy' },
-  context: { scenario: 's', date: 'd', environment: 'e', browser: 'b' },
-  errors: [],
-  misc: { versions: {}, apiEndpoints: [], testCases: [], folderIds: [] },
-};
+const dummyParsed = parsedLogFixture;
 
 class MockLogParser {
   parseFile = jest.fn().mockResolvedValue(dummyParsed);

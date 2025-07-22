@@ -2,36 +2,11 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import Dashboard from '@/components/Dashboard';
-import { ParsedLog } from '@testlog-inspector/log-parser';
-
-/* ---------- fixture minimale ---------- */
-const sample: ParsedLog = {
-  summary: { text: 'Un court résumé.' },
-  context: {
-    scenario: 'login',
-    date: '2025‑07‑20',
-    environment: 'staging',
-    browser: 'chrome',
-  },
-  errors: [
-    {
-      type: 'ERROR',
-      message: 'Something bad',
-      lineNumber: 42,
-      raw: 'ERROR: Something bad',
-    },
-  ],
-  misc: {
-    versions: { app: '1.2.3' },
-    apiEndpoints: ['http://api.local/v1/login'],
-    testCases: ['TC01'],
-    folderIds: ['F123'],
-  },
-};
+import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
 
 describe('<Dashboard />', () => {
   it('renders without crashing and shows key sections', () => {
-    render(<Dashboard data={sample} />);
+    render(<Dashboard data={parsedLogFixture} />);
 
     // Résumé
     expect(screen.getByText('Résumé exécutif')).toBeInTheDocument();
@@ -43,7 +18,7 @@ describe('<Dashboard />', () => {
 
     // Erreurs
     expect(screen.getByText('Erreurs / Exceptions')).toBeInTheDocument();
-    expect(screen.getByText('Something bad')).toBeInTheDocument();
+    expect(screen.getByText('B issue')).toBeInTheDocument();
 
     // Misc
     expect(screen.getByText('Informations diverses')).toBeInTheDocument();

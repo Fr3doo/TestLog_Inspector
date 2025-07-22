@@ -9,6 +9,7 @@
 
 export { Button } from "./shadcn/Button";
 export { Card } from "./shadcn/Card";
+export { Badge } from "./shadcn/Badge";
 export { Input } from "./shadcn/Input";
 export { Table, TableHeader, TableRow, TableCell, TableHead } from "./shadcn/Table";
 
