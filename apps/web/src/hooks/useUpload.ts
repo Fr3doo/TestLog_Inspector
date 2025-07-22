@@ -6,6 +6,13 @@ import { ParsedLog } from "@testlog-inspector/log-parser";
 const API_BASE =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "http://localhost:3001";
 
+// Build multipart payload
+function buildFormData(files: File[]): FormData {
+  const form = new FormData();
+  files.forEach((file) => form.append("files", file));
+  return form;
+}
+
 export function useUpload(
   onSuccess: (p: ParsedLog) => void,
   endpoint = `${API_BASE}/analyze`
@@ -18,12 +25,18 @@ export function useUpload(
     setError(null);
 
     try {
-      const form = new FormData();
-      files.forEach((f) => form.append("files", f));
+      // Send files to the API
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: buildFormData(files),
+      });
 
-      const res = await fetch(endpoint, { method: "POST", body: form });
-      if (!res.ok) throw new Error(await res.text());
+      if (!res.ok) {
+        setError(await res.text());
+        return;
+      }
 
+      // Notify success
       const data: ParsedLog = await res.json();
       onSuccess(data);
     } catch (e) {
