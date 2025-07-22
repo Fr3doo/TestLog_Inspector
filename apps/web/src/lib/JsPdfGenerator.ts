@@ -2,6 +2,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import type { ParsedLog } from '@testlog-inspector/log-parser';
 import type { IPdfGenerator } from './IPdfGenerator';
+import { setHeading, setParagraph } from './pdf';
 
 /**
  * Implémentation concrète de `IPdfGenerator` basée sur jsPDF.
@@ -15,13 +16,13 @@ export class JsPdfGenerator implements IPdfGenerator {
     let cursorY = margin;
 
     const addHeading = (text: string) => {
-      doc.setFontSize(14).setFont('helvetica', 'bold');
+      setHeading(doc);
       doc.text(text, margin, cursorY);
       cursorY += lineHeight + 4;
     };
 
     const addParagraph = (text: string) => {
-      doc.setFontSize(11).setFont('helvetica', 'normal');
+      setParagraph(doc);
       const splitted = doc.splitTextToSize(
         text,
         doc.internal.pageSize.getWidth() - margin * 2,
