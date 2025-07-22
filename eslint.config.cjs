@@ -6,15 +6,12 @@ const reactPlugin = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const importPlugin = require('eslint-plugin-import');
 const prettier = require('eslint-config-prettier');
-const nextPlugin = require('eslint-plugin-next');
+const nextPlugin = require('@next/eslint-plugin-next');
 
 module.exports = [
   // 1️⃣ Désactivation no-undef et activation Next.js + TS/React pour tous les fichiers ciblés
   {
-    files: [
-      'packages/ui-components/src/**/*.{ts,tsx,cts,mts}',
-      'apps/web/**/*.{js,jsx,ts,tsx}'
-    ],
+    files: ['apps/web/**/*.{js,jsx,ts,tsx}'],
     ignores: ['node_modules/**', 'dist/**'],
     languageOptions: {
       parser: tsParser,
@@ -27,7 +24,7 @@ module.exports = [
       }
     },
     plugins: {
-      next: nextPlugin,
+      '@next/next': nextPlugin,
       '@typescript-eslint': tsPlugin,
       react: reactPlugin,
       'react-hooks': reactHooks,
@@ -80,6 +77,7 @@ module.exports = [
     rules: {
       'react/react-in-jsx-scope': 'off',
       'no-unused-vars': 'off',
+      'no-undef': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       /* … autres règles TS … */
     },
