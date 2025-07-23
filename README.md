@@ -77,10 +77,13 @@ Les principales variables de configuration sont décrites dans
 La lecture de ces variables côté API est centralisée dans
 [apps/api/src/common/config.ts](apps/api/src/common/config.ts).
 
-`MAX_UPLOAD_SIZE` permet d'ajuster la taille maximale autorisée pour les requêtes
-et les fichiers envoyés (50 Mo par défaut).
-Vous pouvez aussi définir `UPLOAD_LIMIT_MB` pour spécifier la limite directement
-en mégaoctets (`UPLOAD_LIMIT_MB=100` autorise 100 Mo).
+Variables utilisées :
+
+- `NEXT_PUBLIC_API_URL` – URL de base pour l'API.
+- `PORT` – port d'écoute de l'API.
+- `CORS_ORIGIN` – origine autorisée pour CORS.
+- `MAX_UPLOAD_SIZE` ou `UPLOAD_LIMIT_MB` – taille maximale d'envoi.
+- `CI` – empêche Playwright de réutiliser un serveur local.
 
 ---
 
