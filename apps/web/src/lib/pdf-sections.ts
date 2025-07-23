@@ -1,5 +1,11 @@
 import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import {
+  addPage,
+  addTable,
+  addText,
+  getPageWidth,
+  splitText,
+} from './pdf-tools';
 import type { ParsedLog } from '@testlog-inspector/log-parser';
 import { PDF_CONFIG, setHeading, setParagraph } from './pdf';
 
@@ -16,17 +22,17 @@ export type Section = (
 function addHeading(doc: jsPDF, text: string, state: SectionState) {
   const { margin, lineHeight, headingSpacing } = PDF_CONFIG;
   setHeading(doc);
-  doc.text(text, margin, state.cursorY);
+  addText(doc, text, margin, state.cursorY);
   state.cursorY += lineHeight + headingSpacing;
 }
 
 function addParagraph(doc: jsPDF, text: string, state: SectionState) {
   const { margin, lineHeight } = PDF_CONFIG;
   setParagraph(doc);
-  // Law of Demeter: store deep property access in a local variable
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const splitted = doc.splitTextToSize(text, pageWidth - margin * 2);
-  doc.text(splitted, margin, state.cursorY);
+  // Law of Demeter: store deep property access in a helper
+  const pageWidth = getPageWidth(doc);
+  const splitted = splitText(doc, text, pageWidth - margin * 2);
+  addText(doc, splitted, margin, state.cursorY);
   state.cursorY += splitted.length * lineHeight + lineHeight;
 }
 
@@ -43,10 +49,10 @@ export const addContext: Section = (doc, data, state) => {
 };
 
 export const addErrors: Section = (doc, data, state) => {
-  doc.addPage();
+  addPage(doc);
   state.cursorY = PDF_CONFIG.margin;
   addHeading(doc, `Erreurs / Exceptions (${data.errors.length})`, state);
-  autoTable(doc, {
+  addTable(doc, {
     startY: state.cursorY,
     head: [['Type', 'Message', 'Ligne']],
     body: data.errors.map((e) => [e.type, e.message, e.lineNumber.toString()]),
