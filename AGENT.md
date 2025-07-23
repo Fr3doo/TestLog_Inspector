@@ -65,6 +65,7 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 | `FileValidator`         | Vérifie l'extension et la taille                                   | `apps/api/src/log-analysis/file-validator.service.ts`  | `Express.Multer.File`  | `void` ou erreur      |
 | `LoggerInterceptor`     | Journalisation globale des requêtes                                | `apps/api/src/common/logger.interceptor.ts`            | `Request/Response`     | `Observable`          |
 | `JsPdfGenerator`        | Génère et télécharge un rapport PDF                                | `apps/web/src/lib/JsPdfGenerator.ts`                   | `ParsedLog`            | Fichier téléchargé    |
+| `usePdfGenerator`       | Renvoie la fonction `generatePdf`                 | `apps/web/src/hooks/usePdfGenerator.ts`               | `ParsedLog`            | Appelle `IPdfGenerator.generate` |
 | `SortableTable`         | Tableau générique triable et filtrable                             | `packages/ui-components/src/SortableTable.tsx`         | `data`, `columns`      | Composant React       |
 
 ## 6. Détails par agent
@@ -141,6 +142,14 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Sorties** : fichier PDF téléchargé.
 - **Dépendances** : `jsPDF`, `jspdf-autotable`.
 - **Tests** : `apps/web/src/__tests__/PdfButton.test.tsx` via injection.
+
+### `usePdfGenerator`
+
+- **Rôle** : expose la fonction `generatePdf` utilisant l'implémentation courante.
+- **Entrées** : `ParsedLog`, nom de fichier optionnel.
+- **Sorties** : fichier PDF téléchargé.
+- **Dépendances** : `PdfGeneratorContext`.
+- **Tests** : `apps/web/src/__tests__/usePdfGenerator.test.tsx`.
 
 ### `SortableTable`
 

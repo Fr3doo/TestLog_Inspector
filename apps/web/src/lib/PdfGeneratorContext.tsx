@@ -11,6 +11,6 @@ export const PdfGeneratorContext = createContext<IPdfGenerator>(new JsPdfGenerat
 
 export const PdfGeneratorProvider = PdfGeneratorContext.Provider;
 
-export function usePdfGenerator() {
+export function usePdfGeneratorContext() {
   return useContext(PdfGeneratorContext);
 }
