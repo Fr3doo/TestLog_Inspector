@@ -45,7 +45,7 @@ graph TD
 | --------------------- | ---------------------------------------------- | -------------------------------------------------------------------- |
 | Upload Front → API    | Fichier > 50 Mo, mauvais type, réseau coupé    | **Multer** + `fileFilter` + limite taille 50 Mo ; message clair UI   |
 | Lecture fichier (API) | I/O error, fichier verrouillé, chemin invalide | Try/catch → `BadRequestException` ; logs Nest                        |
-| Parsing (1 pass)    | Format inconnu, JSON/XML corrompu              | Strategy fallback (`DefaultStrategy`) + tests unitaires              |
+| Parsing (1 pass)      | Format inconnu, JSON/XML corrompu              | Strategy fallback (`DefaultStrategy`) + tests unitaires              |
 | Retour JSON           | Payload massif → latence                       | Taille limitée ; résumé ≤ 300 mots ; pas de stack complète dans JSON |
 | Rendering React       | Data manquante / undefined                     | Checks `if (!data)` dans composants ; Prop Types stricts             |
 | Export PDF            | jsPDF erreur de police ou overflow             | `try/catch` + bouton désactivé (`loading`)                           |
@@ -54,14 +54,23 @@ graph TD
 
 ## Découplage SOLID
 
-* **SRP** : chaque bloc ci‑dessus assure une seule responsabilité.
-* **OCP** : nouvelles stratégies parsing plug‑and‑play (`registerStrategy()`).
-* **DIP** : API dépend de l’interface `LogParser`, non des stratégies concrètes.
-* **Maintenance** : la pipe `ParseFilePipe` a été supprimée au profit du service `FileValidationService` pour centraliser la validation des uploads.
+- **SRP** : chaque bloc ci‑dessus assure une seule responsabilité.
+- **OCP** : nouvelles stratégies parsing plug‑and‑play (`registerStrategy()`).
+- **DIP** : API dépend de l’interface `LogParser`, non des stratégies concrètes.
+- **Maintenance** : la pipe `ParseFilePipe` a été supprimée au profit du service `FileValidationService` pour centraliser la validation des uploads.
+
+## Aliases TypeScript
+
+Le fichier `tsconfig.base.json` définit deux raccourcis communs :
+
+- `@/…` vers le dossier `src` du projet courant ;
+- `@testlog-inspector/…` vers les packages du monorepo.
+
+Chaque package ou application étend ce fichier pour bénéficier automatiquement de ces résolutions.
 
 ---
 
-*Générez la spécification OpenAPI à tout moment :*
+_Générez la spécification OpenAPI à tout moment :_
 
 ```bash
 pnpm -C apps/api run swagger:json   # => docs/api.openapi.json

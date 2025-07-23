@@ -14,12 +14,12 @@ module.exports = {
       transform: {
         '^.+\\.ts$': [
           'ts-jest',
-          { tsconfig: '<rootDir>/tsconfig.json', useESM: true }
+          { tsconfig: '<rootDir>/tsconfig.json', useESM: true },
         ],
       },
       extensionsToTreatAsEsm: ['.ts'],
       moduleNameMapper: {
-        '^@testlog-inspector/(.*)$': '<rootDir>/../../packages/$1',
+        '^@testlog-inspector/(.*)$': '<rootDir>/../../packages/$1/src',
       },
       preset: 'ts-jest',
       testEnvironment: 'node',
