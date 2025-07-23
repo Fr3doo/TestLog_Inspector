@@ -1,11 +1,21 @@
-import * as React from "react";
-import { Table, TableHead, TableHeader, TableRow, TableCell } from "./shadcn/Table";
-import { Input } from "./shadcn/Input";
+import * as React from 'react';
+import {
+  Table,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCell,
+} from './shadcn/Table';
+import { Input } from './shadcn/Input';
 
 export interface ColumnDef<TData> {
   accessorKey?: keyof TData;
   header: React.ReactNode;
-  cell?: (value: TData[keyof TData] | undefined, row: TData, index: number) => React.ReactNode;
+  cell?: (
+    value: TData[keyof TData] | undefined,
+    row: TData,
+    index: number,
+  ) => React.ReactNode;
   sortable?: boolean;
 }
 
@@ -19,6 +29,8 @@ export interface SortableTableProps<TData extends object> {
   columns: ColumnDef<TData>[];
   initialSort?: SortConfig<TData>;
   filterKeys?: (keyof TData)[];
+  /** Callback executed when sort changes */
+  onSort?: (sort: SortConfig<TData> | undefined) => void;
 }
 
 export function SortableTable<TData extends object>({
@@ -26,23 +38,37 @@ export function SortableTable<TData extends object>({
   columns,
   initialSort,
   filterKeys = [],
+  onSort,
 }: SortableTableProps<TData>) {
-  const [sort, setSort] = React.useState<SortConfig<TData> | undefined>(initialSort);
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [sort, setSort] = React.useState<SortConfig<TData> | undefined>(
+    initialSort,
+  );
+  const [globalFilter, setGlobalFilter] = React.useState('');
 
   const handleSort = (key?: keyof TData) => {
     if (!key) return;
-    setSort((prev) =>
-      prev && prev.key === key ? { key, desc: !prev.desc } : { key, desc: false },
-    );
+    setSort((prev) => {
+      const next =
+        prev && prev.key === key
+          ? { key, desc: !prev.desc }
+          : { key, desc: false };
+      onSort?.(next);
+      return next;
+    });
   };
 
   const filtered = React.useMemo(() => {
     if (!globalFilter) return data;
-    const keys = filterKeys.length ? filterKeys : (Object.keys(data[0] ?? {}) as (keyof TData)[]);
+    const keys = filterKeys.length
+      ? filterKeys
+      : (Object.keys(data[0] ?? {}) as (keyof TData)[]);
     const lower = globalFilter.toLowerCase();
     return data.filter((row) =>
-      keys.some((k) => String(row[k] ?? "").toLowerCase().includes(lower)),
+      keys.some((k) =>
+        String(row[k] ?? '')
+          .toLowerCase()
+          .includes(lower),
+      ),
     );
   }, [data, globalFilter, filterKeys]);
 
@@ -73,11 +99,23 @@ export function SortableTable<TData extends object>({
             {columns.map((col) => (
               <TableHead
                 key={String(col.accessorKey ?? col.header)}
-                onClick={col.sortable === false ? undefined : () => handleSort(col.accessorKey)}
-                className={col.sortable === false ? undefined : "cursor-pointer select-none"}
+                onClick={
+                  col.sortable === false
+                    ? undefined
+                    : () => handleSort(col.accessorKey)
+                }
+                className={
+                  col.sortable === false
+                    ? undefined
+                    : 'cursor-pointer select-none'
+                }
               >
                 {col.header}
-                {col.accessorKey && sort?.key === col.accessorKey ? (sort.desc ? " ▼" : " ▲") : null}
+                {col.accessorKey && sort?.key === col.accessorKey
+                  ? sort.desc
+                    ? ' ▼'
+                    : ' ▲'
+                  : null}
               </TableHead>
             ))}
           </TableRow>
@@ -89,10 +127,14 @@ export function SortableTable<TData extends object>({
               {columns.map((col) => (
                 <TableCell key={String(col.accessorKey ?? col.header)}>
                   {col.cell
-                    ? col.cell(col.accessorKey ? row[col.accessorKey] : undefined, row, idx)
+                    ? col.cell(
+                        col.accessorKey ? row[col.accessorKey] : undefined,
+                        row,
+                        idx,
+                      )
                     : col.accessorKey
-                    ? ((row[col.accessorKey] as React.ReactNode) ?? null)
-                    : null}
+                      ? ((row[col.accessorKey] as React.ReactNode) ?? null)
+                      : null}
                 </TableCell>
               ))}
             </TableRow>

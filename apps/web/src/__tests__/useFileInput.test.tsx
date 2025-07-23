@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+import { useFileInput } from '../hooks/useFileInput';
 
 describe('useFileInput', () => {
   it('returns selected files via callback', () => {
     const onFiles = vi.fn();
-    const { useFileInput } = require('../hooks/useFileInput');
     const { result } = renderHook(() => useFileInput(onFiles));
 
     const files = [new File(['data'], 'a.log')];

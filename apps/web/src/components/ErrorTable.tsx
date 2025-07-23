@@ -3,12 +3,8 @@
 import * as React from 'react';
 import { LogError } from '@testlog-inspector/log-parser';
 
-import {
-  SortableTable,
-  Button,
-  Card,
-  type ColumnDef
-} from '@testlog-inspector/ui-components';
+import { Button, type ColumnDef } from '@testlog-inspector/ui-components';
+import TableContainer from './TableContainer';
 
 interface Props {
   errors: LogError[];
@@ -64,21 +60,18 @@ export default function ErrorTable({ errors }: Props) {
   );
 
   return (
-    <Card className="p-6 space-y-4">
-      <h2 className="text-xl font-semibold">Erreurs / Exceptions</h2>
-
-      <SortableTable
-        data={errors}
-        columns={columns}
-        initialSort={{ key: 'lineNumber', desc: false }}
-        filterKeys={['type', 'message']}
-      />
-
+    <TableContainer
+      title="Erreurs / Exceptions"
+      data={errors}
+      columns={columns}
+      initialSort={{ key: 'lineNumber', desc: false }}
+      filterKeys={['type', 'message']}
+    >
       {expanded !== null && errors[Number(expanded)]?.stack && (
         <pre className="mt-4 max-h-64 overflow-auto rounded bg-muted p-4 text-sm">
           {errors[Number(expanded)].stack}
         </pre>
       )}
-    </Card>
+    </TableContainer>
   );
 }
