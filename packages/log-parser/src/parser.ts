@@ -2,9 +2,9 @@
  * Public façade respectant SRP (1 seule responsabilité : orchestrer).
  * OCP : ajouter une stratégie via registerStrategy() sans modifier le code.
  */
-import fs from "node:fs/promises";
-import { IParsingStrategy, ParsedLog } from "./types";
-import { DefaultStrategy } from "./strategies/default-strategy";
+import { IParsingStrategy, ParsedLog } from './types';
+import { DefaultStrategy } from './strategies/default-strategy';
+import { FileReader, IFileReader } from './file-reader';
 
 /**
  * Read a file and return its content using UTF-8 encoding.
@@ -12,16 +12,20 @@ import { DefaultStrategy } from "./strategies/default-strategy";
  * @param path Absolute or relative file path
  * @throws Error when the file cannot be read
  */
-export async function readFileContent(path: string): Promise<string> {
-  return fs.readFile(path, "utf-8").catch((e) => {
-    throw new Error(`Unable to read file "${path}" — ${(e as Error).message}`);
-  });
+export async function readFileContent(
+  path: string,
+  reader: IFileReader = new FileReader(),
+): Promise<string> {
+  return reader.read(path);
 }
 
 export class LogParser {
   private strategies: IParsingStrategy[] = [];
 
-  constructor(strategies: IParsingStrategy[] = []) {
+  constructor(
+    strategies: IParsingStrategy[] = [],
+    private readonly reader: IFileReader = new FileReader(),
+  ) {
     // Always register default fallback
     this.registerStrategy(new DefaultStrategy());
     // Register provided strategies (highest priority first)
@@ -39,8 +43,8 @@ export class LogParser {
    * @throws Error si le fichier est inaccessible ou corrompu.
    */
   async parseFile(path: string): Promise<ParsedLog> {
-    if (!path) throw new Error("No file path provided");
-    const content = await readFileContent(path);
+    if (!path) throw new Error('No file path provided');
+    const content = await this.reader.read(path);
 
     const lines = content.split(/\r?\n/);
     const strategy =

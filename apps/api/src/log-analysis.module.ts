@@ -10,6 +10,8 @@ import {
   LogParser,
   JsonStrategy,
   JunitStrategy,
+  FileReader,
+  IFileReader,
 } from '@testlog-inspector/log-parser';
 
 /**
@@ -25,14 +27,21 @@ import {
   controllers: [LogAnalysisController, UploadController],
   providers: [
     { provide: 'ILogAnalysisService', useClass: LogAnalysisService },
+    { provide: 'IFileReader', useClass: FileReader },
     {
       provide: 'ILogParser',
-      useFactory: () =>
-        new LogParser([new JsonStrategy(), new JunitStrategy()]),
+      useFactory: (reader: IFileReader) =>
+        new LogParser([new JsonStrategy(), new JunitStrategy()], reader),
+      inject: ['IFileReader'],
     },
     FileValidator,
     FileValidationService,
   ],
-  exports: ['ILogAnalysisService', FileValidator, FileValidationService],
+  exports: [
+    'ILogAnalysisService',
+    FileValidator,
+    FileValidationService,
+    'IFileReader',
+  ],
 })
 export class LogAnalysisModule {}
