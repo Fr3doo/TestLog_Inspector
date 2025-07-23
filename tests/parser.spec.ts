@@ -59,4 +59,25 @@ describe('LogParser', () => {
 
     await expect(parser.parseFile(tmp)).rejects.toThrow('permission denied');
   });
+
+  it('should handle an empty log file', async () => {
+    writeFileSync(tmp, '');
+    const parser = new LogParser([]);
+    const res = await parser.parseFile(tmp);
+
+    expect(res.summary.text).toBe('');
+    expect(res.context).toStrictEqual({
+      scenario: '',
+      date: '',
+      environment: '',
+      browser: '',
+    });
+    expect(res.errors).toHaveLength(0);
+    expect(res.misc).toStrictEqual({
+      versions: {},
+      apiEndpoints: [],
+      testCases: [],
+      folderIds: [],
+    });
+  });
 });
