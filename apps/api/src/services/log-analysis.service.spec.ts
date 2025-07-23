@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   BadRequestException,
   InternalServerErrorException,
+  RequestTimeoutException,
 } from '@nestjs/common';
 
 import { LogAnalysisService } from './log-analysis.service';
@@ -10,7 +11,10 @@ import { ILogParser } from '@testlog-inspector/log-parser';
 import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
 import type { Express } from 'express';
 import { FileValidationService } from './file-validation.service';
-import { ERR_INVALID_FILETYPE } from '../common/error-messages';
+import {
+  ERR_INVALID_FILETYPE,
+  ERR_PARSING_TIMEOUT,
+} from '../common/error-messages';
 
 /* ---------- Doubles / Fixtures ---------- */
 const dummyParsed = parsedLogFixture;
@@ -78,6 +82,28 @@ describe('LogAnalysisService', () => {
     } as Express.Multer.File;
 
     await expect(service.analyze(file)).rejects.toThrow(/corrupted/);
+  });
+
+  it('should throw RequestTimeoutException when parser takes too long', async () => {
+    jest.useFakeTimers();
+    parser.parseFile.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => setTimeout(() => resolve(dummyParsed), 10000)),
+    );
+
+    const file = {
+      path: '/tmp/slow.log',
+      originalname: 'slow.log',
+      size: 1,
+    } as Express.Multer.File;
+
+    const result = service.analyze(file);
+    jest.advanceTimersByTime(5000);
+    await expect(result).rejects.toBeInstanceOf(RequestTimeoutException);
+    await expect(result).rejects.toThrow(ERR_PARSING_TIMEOUT);
+    jest.advanceTimersByTime(10000);
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
 
   it('should return InternalServerErrorException on unexpected errors', async () => {
