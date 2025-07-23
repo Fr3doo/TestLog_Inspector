@@ -1,5 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BadRequestException } from '@nestjs/common';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 import { LogAnalysisService } from './log-analysis.service';
 import { ILogAnalysisService } from './ILogAnalysisService';
@@ -37,11 +40,17 @@ describe('LogAnalysisService', () => {
 
     service = module.get<ILogAnalysisService>('ILogAnalysisService');
     parser = module.get<ILogParser>('ILogParser') as unknown as MockLogParser;
-    validator = module.get<FileValidationService>(FileValidationService) as unknown as MockValidationService;
+    validator = module.get<FileValidationService>(
+      FileValidationService,
+    ) as unknown as MockValidationService;
   });
 
   it('should return ParsedLog when path is valid', async () => {
-    const file = { path: '/tmp/file.log', originalname: 'file.log', size: 1 } as Express.Multer.File;
+    const file = {
+      path: '/tmp/file.log',
+      originalname: 'file.log',
+      size: 1,
+    } as Express.Multer.File;
     const result = await service.analyze(file);
 
     expect(validator.validate).toHaveBeenCalledWith(file);
@@ -54,16 +63,35 @@ describe('LogAnalysisService', () => {
       throw new BadRequestException(ERR_INVALID_FILETYPE);
     });
 
-    await expect(service.analyze({} as Express.Multer.File)).rejects.toBeInstanceOf(
-      BadRequestException,
-    );
+    await expect(
+      service.analyze({} as Express.Multer.File),
+    ).rejects.toBeInstanceOf(BadRequestException);
   });
 
   it('should wrap parser errors into BadRequestException', async () => {
     parser.parseFile.mockRejectedValueOnce(new Error('corrupted'));
 
-    const file = { path: '/tmp/bad.log', originalname: 'bad.log', size: 1 } as Express.Multer.File;
+    const file = {
+      path: '/tmp/bad.log',
+      originalname: 'bad.log',
+      size: 1,
+    } as Express.Multer.File;
 
     await expect(service.analyze(file)).rejects.toThrow(/corrupted/);
+  });
+
+  it('should return InternalServerErrorException on unexpected errors', async () => {
+    validator.validate.mockImplementationOnce(() => {
+      throw new Error('boom');
+    });
+
+    const file = {
+      path: '/tmp/bad.log',
+      originalname: 'bad.log',
+      size: 1,
+    } as Express.Multer.File;
+    const result = service.analyze(file);
+    await expect(result).rejects.toBeInstanceOf(InternalServerErrorException);
+    await expect(result).rejects.toThrow('Internal Server Error');
   });
 });
