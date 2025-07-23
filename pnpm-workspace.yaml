@@ -5,5 +5,3 @@ packages:
   # Librairies partagées
   - "packages/*"
 
-  # Suite de tests racine
-  - "tests"
