@@ -171,6 +171,3 @@ graph TD
 
 ## 10. TODOs & Améliorations
 - [ ] Lier `AGENT.md` depuis le `README.md`.
-- [ ] Générer automatiquement le diagramme Mermaid.
-- [ ] Documenter les formats d’événements supplémentaires.
-- [ ] Ajouter la surveillance et les métriques (Prometheus, logs). 

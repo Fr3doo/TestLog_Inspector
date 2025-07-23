@@ -193,10 +193,6 @@ const parser = new LogParser();
 parser.registerStrategy(new XmlStrategy());
 ```
 
-## 📈 Collecte de métriques
-
-_TODO : exposer des métriques Prometheus depuis l'API._
-
 ## ❗ Gestion des erreurs
 
 ```ts
