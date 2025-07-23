@@ -4,10 +4,11 @@ import {
   TestContext,
   LogError,
   MiscInfo,
-} from "../types";
-import { BaseStrategy } from "./base-strategy";
+  IParsingStrategy,
+} from '../types';
+import { execSummaryFrom, matchRegex } from './strategy-helpers';
 
-export class DefaultStrategy extends BaseStrategy {
+export class DefaultStrategy implements IParsingStrategy {
   canHandle(_lines: string[]): boolean {
     // fallback strategy → always true
     return true;
@@ -16,7 +17,7 @@ export class DefaultStrategy extends BaseStrategy {
   parse(lines: string[]): ParsedLog {
     /* 1. Résumé exécutif ---------------------------------------- */
     const summary: ExecutiveSummary = {
-      text: this.execSummaryFrom(lines),
+      text: execSummaryFrom(lines),
     };
 
     /* 2. Contexte de campagne ----------------------------------- */
@@ -28,10 +29,7 @@ export class DefaultStrategy extends BaseStrategy {
     };
 
     /* 3. Erreurs/Exceptions ------------------------------------- */
-    const errorMatches = this.matchRegex(
-      lines,
-      /(ERROR|Exception)\s*[:-]\s*(.+)/
-    );
+    const errorMatches = matchRegex(lines, /(ERROR|Exception)\s*[:-]\s*(.+)/);
     const errors: LogError[] = errorMatches.map((m) => {
       const idx = m.index;
       return {
@@ -45,18 +43,13 @@ export class DefaultStrategy extends BaseStrategy {
 
     /* 4. Infos diverses ----------------------------------------- */
     const versions = Object.fromEntries(
-      this.matchRegex(lines, /(\w+) v?(\d+\.\d+\.\d+)/).map((m) => [
-        m[1],
-        m[2],
-      ])
+      matchRegex(lines, /(\w+) v?(\d+\.\d+\.\d+)/).map((m) => [m[1], m[2]]),
     );
     const misc: MiscInfo = {
       versions,
-      apiEndpoints: this.matchRegex(lines, /(https?:\/\/[^\s]+)/).map(
-        (m) => m[1]
-      ),
-      testCases: this.matchRegex(lines, /TestCase:\s*(\w+)/).map((m) => m[1]),
-      folderIds: this.matchRegex(lines, /FolderID:\s*(\w+)/).map((m) => m[1]),
+      apiEndpoints: matchRegex(lines, /(https?:\/\/[^\s]+)/).map((m) => m[1]),
+      testCases: matchRegex(lines, /TestCase:\s*(\w+)/).map((m) => m[1]),
+      folderIds: matchRegex(lines, /FolderID:\s*(\w+)/).map((m) => m[1]),
     };
 
     return { summary, context: ctx, errors, misc };
@@ -65,7 +58,7 @@ export class DefaultStrategy extends BaseStrategy {
   /* ---------- private helpers ---------- */
   private extractSingle(r: RegExp, lines: string[]): string {
     const m = lines.find((l) => r.test(l));
-    return m ? m.replace(r, "$1").trim() : "";
+    return m ? m.replace(r, '$1').trim() : '';
   }
 
   private extractStack(lines: string[], from: number): string | undefined {
@@ -74,6 +67,6 @@ export class DefaultStrategy extends BaseStrategy {
       if (/^\s+at\s/.test(lines[i])) stackLines.push(lines[i]);
       else if (stackLines.length) break;
     }
-    return stackLines.length ? stackLines.join("\n") : undefined;
+    return stackLines.length ? stackLines.join('\n') : undefined;
   }
 }

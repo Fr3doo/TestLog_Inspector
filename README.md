@@ -109,7 +109,7 @@ Variables utilisées :
 | **SRP** (Single Responsibility) | `LogParser` orchestre ; chaque _strategy_ gère un format de log distinct.                                   |
 | **OCP** (Open/Closed)           | Ajouter un format = créer une nouvelle stratégie **sans modifier** l’existant.                              |
 | **DIP** (Dependency Inversion)  | Le service NestJS dépend de l’interface `ILogAnalyzer` (implémentée par `LogParser`).                       |
-| **DRY**                         | Helpers d’expressions régulières mutualisés dans `BaseStrategy`.                                            |
+| **DRY**                         | Helpers d’expressions régulières mutualisés dans `strategy-helpers.ts`.                                     |
 | **KISS** / composition          | Hooks React simples, aucun HOC superflu.                                                                    |
 | **Robustesse (loi de Murphy)**  | Validations Zod / class‑validator, `try/catch`, tests sur données corrompues, messages d’erreur explicites. |
 
@@ -199,8 +199,8 @@ parser.registerStrategy(new XmlStrategy());
 > ℹ️ **À noter :** inutile de créer à l'avance des dossiers ou fichiers pour
 > d'hypothétiques stratégies. Quand un nouveau format de log devra être pris en
 > charge, créez simplement un fichier dans
-> `packages/log-parser/src/strategies` qui étend `BaseStrategy`, puis
-> enregistrez-la via `parser.registerStrategy()` comme illustré ci-dessus.
+> `packages/log-parser/src/strategies` et implémente simplement `IParsingStrategy`,
+> puis enregistrez-la via `parser.registerStrategy()` comme illustré ci-dessus.
 
 ## ❗ Gestion des erreurs
 

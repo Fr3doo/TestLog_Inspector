@@ -4,8 +4,9 @@ import {
   TestContext,
   LogError,
   MiscInfo,
-} from "../types";
-import { BaseStrategy } from "./base-strategy";
+  IParsingStrategy,
+} from '../types';
+import { execSummaryFrom } from './strategy-helpers';
 
 /**
  * Strategy JSON Lines / JSON Array
@@ -17,41 +18,41 @@ import { BaseStrategy } from "./base-strategy";
  * Each object must at least contain:
  *   { level: "INFO"|"ERROR"|..., message: string, timestamp?: string, ... }
  */
-export class JsonStrategy extends BaseStrategy {
+export class JsonStrategy implements IParsingStrategy {
   canHandle(lines: string[]): boolean {
     // Heuristic: first 3 lines are valid JSON or the whole file is a JSON array
     const sample = lines.slice(0, 3);
     return (
       sample.every((l) => this.tryJSON(l) !== null) ||
-      this.tryJSON(lines.join(""))?.[Symbol.iterator] !== undefined
+      this.tryJSON(lines.join(''))?.[Symbol.iterator] !== undefined
     );
   }
 
   parse(lines: string[]): ParsedLog {
-    const raw = lines.join("\n");
+    const raw = lines.join('\n');
     const objects: Record<string, unknown>[] = this.toObjects(raw);
 
     /* 1. Résumé exécutif ----------------------------- */
     const summary: ExecutiveSummary = {
-      text: this.execSummaryFrom(lines),
+      text: execSummaryFrom(lines),
     };
 
     /* 2. Contexte ------------------------------------ */
     const first = objects[0] ?? {};
     const ctx: TestContext = {
-      scenario: String(first["scenario"] ?? ""),
-      date: String(first["date"] ?? first["timestamp"] ?? ""),
-      environment: String(first["environment"] ?? first["env"] ?? ""),
-      browser: String(first["browser"] ?? ""),
+      scenario: String(first['scenario'] ?? ''),
+      date: String(first['date'] ?? first['timestamp'] ?? ''),
+      environment: String(first['environment'] ?? first['env'] ?? ''),
+      browser: String(first['browser'] ?? ''),
     };
 
     /* 3. Erreurs / Exceptions ------------------------ */
     const errors: LogError[] = objects
-      .filter((o) => (o["level"] ?? "").toString().toUpperCase() === "ERROR")
+      .filter((o) => (o['level'] ?? '').toString().toUpperCase() === 'ERROR')
       .map((o, idx) => ({
-        type: String(o["type"] ?? "ERROR"),
-        message: String(o["message"] ?? ""),
-        stack: String(o["stack"] ?? ""),
+        type: String(o['type'] ?? 'ERROR'),
+        message: String(o['message'] ?? ''),
+        stack: String(o['stack'] ?? ''),
         lineNumber: idx + 1,
         raw: JSON.stringify(o),
       }));
@@ -63,17 +64,17 @@ export class JsonStrategy extends BaseStrategy {
     const folderIds: string[] = [];
 
     objects.forEach((o) => {
-      if (typeof o["version"] === "string") {
-        versions["app"] = o["version"];
+      if (typeof o['version'] === 'string') {
+        versions['app'] = o['version'];
       }
-      if (typeof o["endpoint"] === "string") {
-        apiEndpoints.push(o["endpoint"]);
+      if (typeof o['endpoint'] === 'string') {
+        apiEndpoints.push(o['endpoint']);
       }
-      if (typeof o["testCase"] === "string") {
-        testCases.push(o["testCase"]);
+      if (typeof o['testCase'] === 'string') {
+        testCases.push(o['testCase']);
       }
-      if (typeof o["folderId"] === "string") {
-        folderIds.push(o["folderId"]);
+      if (typeof o['folderId'] === 'string') {
+        folderIds.push(o['folderId']);
       }
     });
 
