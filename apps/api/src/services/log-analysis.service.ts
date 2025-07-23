@@ -2,6 +2,7 @@ import {
   Injectable,
   Logger,
   BadRequestException,
+  InternalServerErrorException,
   Inject,
 } from '@nestjs/common';
 import type { Express } from 'express';
@@ -22,14 +23,23 @@ export class LogAnalysisService implements ILogAnalysisService {
     file: Express.Multer.File,
     parser: ILogParser = this.parser,
   ): Promise<ParsedLog> {
-    this.validator.validate(file);
-
-    // Parse the file and convert parser errors into HTTP 400
     try {
-      return await parser.parseFile(file.path);
+      this.validator.validate(file);
+
+      // Parse the file and convert parser errors into HTTP 400
+      try {
+        return await parser.parseFile(file.path);
+      } catch (err) {
+        this.logger.error('Parsing failed', err as Error);
+        throw new BadRequestException((err as Error).message);
+      }
     } catch (err) {
-      this.logger.error('Parsing failed', err as Error);
-      throw new BadRequestException((err as Error).message);
+      if (err instanceof BadRequestException) {
+        throw err;
+      }
+
+      this.logger.error('Unexpected error', err as Error);
+      throw new InternalServerErrorException();
     }
   }
 }
