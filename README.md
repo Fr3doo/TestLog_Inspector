@@ -284,6 +284,7 @@ Actions. Bump de version puis `git tag vX.Y.Z` pour déclencher la publication.
 
 - [Architecture détaillée](docs/architecture.md)
 - [Guide des agents](AGENT.md)
+- Note: la pipe `ParseFilePipe` a été retirée; la validation des fichiers est désormais gérée par `FileValidationService`.
 
 
 ## 📄 Licence
