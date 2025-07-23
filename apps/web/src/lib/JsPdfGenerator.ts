@@ -1,4 +1,4 @@
-import { jsPDF } from 'jspdf';
+import { createDoc, saveDoc } from './pdf-tools';
 import type { ParsedLog } from '@testlog-inspector/log-parser';
 import type { IPdfGenerator } from './IPdfGenerator';
 import { PDF_CONFIG } from './pdf';
@@ -15,13 +15,13 @@ export class JsPdfGenerator implements IPdfGenerator {
     data: ParsedLog,
     filename = 'testlog-report.pdf',
   ): Promise<void> {
-    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    const doc = createDoc();
     const state: SectionState = { cursorY: PDF_CONFIG.margin };
 
     for (const section of this.sections) {
       section(doc, data, state);
     }
 
-    doc.save(filename);
+    saveDoc(doc, filename);
   }
 }
