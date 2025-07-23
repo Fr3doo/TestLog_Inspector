@@ -205,8 +205,11 @@ parser.registerStrategy(new XmlStrategy());
 ## ❗ Gestion des erreurs
 
 ```ts
+import { ERR_FILE_TOO_LARGE } from './common/error-messages';
+
 if (file.size > this.MAX_SIZE) {
-  throw new BadRequestException('File exceeds the 50 MB limit');
+  const mb = Math.ceil(this.MAX_SIZE / (1024 * 1024));
+  throw new BadRequestException(ERR_FILE_TOO_LARGE(mb));
 }
 ```
 

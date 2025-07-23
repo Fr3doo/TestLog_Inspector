@@ -3,7 +3,7 @@ import { BadRequestException } from '@nestjs/common';
 import type { Express } from 'express';
 import { FileValidationService } from './file-validation.service';
 import { FileValidator } from './file-validator.service';
-import { ERR_FILE_REQUIRED } from '../common/error-messages';
+import { ERR_FILE_REQUIRED, ERR_INVALID_FILETYPE } from '../common/error-messages';
 
 class MockFileValidator {
   validate = jest.fn();
@@ -41,9 +41,9 @@ describe('FileValidationService', () => {
   it('should propagate errors from FileValidator', () => {
     const file = { path: '/tmp/foo.log', originalname: 'foo.log', size: 1 } as Express.Multer.File;
     validator.validate.mockImplementation(() => {
-      throw new BadRequestException('nope');
+      throw new BadRequestException(ERR_INVALID_FILETYPE);
     });
 
-    expect(() => service.validate(file)).toThrow('nope');
+    expect(() => service.validate(file)).toThrow(ERR_INVALID_FILETYPE);
   });
 });
