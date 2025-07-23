@@ -25,6 +25,15 @@
      - `@codecov-ai-reviewer test`
 - Exécuter localement `pnpm lint` et `pnpm test` avant d’ouvrir la PR.
 
+### Convention de commit
+Les messages suivent le format **Conventional Commits** :
+
+```
+<type>(<scope>): <sujet concis>
+```
+
+Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `ci`.
+
 ## 4. Codex/ChatGPT Usage Tips
 > 🛠️ Conseils pour guider l’IA dans ce repo
 - Limiter la recherche à `apps/*/src` ou `packages/*/src` selon le scope.
