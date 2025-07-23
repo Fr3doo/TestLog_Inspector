@@ -1,25 +1,25 @@
 # TestLog Inspector – Architecture
 
 ```mermaid
-%% C4 – context + container (simplifié)
-graph TD
+%% C4 – context + container (simplifié)
+flowchart TD
     subgraph Browser
         A1[Utilisateur]
     end
 
-    subgraph Frontend<br>Next.js 14 (React 18)
-        B1[FileDropzone<br/>(upload)]
-        B2[Dashboard<br/>Summary / Context / ErrorTable / Misc]
+    subgraph Frontend_NextJS14_React18
+        B1[FileDropzone upload]
+        B2[Dashboard Summary / Context / ErrorTable / Misc]
         B3[PdfButton → jsPDF]
     end
 
-    subgraph API<br>NestJS 10
-        C1[/analyze<br/>LogAnalysisController]
+    subgraph API_NestJS10
+        C1[/analyze LogAnalysisController/]
         C2[LogAnalysisService]
     end
 
-    subgraph Parser Lib<br/>@testlog‑inspector/log-parser
-        D1[LogParser (orchestrator)]
+    subgraph ParserLib_testlog_inspector_log_parser
+        D1[LogParser orchestrator]
         D2[DefaultStrategy]
         D3[JsonStrategy]
         D4[JunitStrategy]
@@ -29,7 +29,9 @@ graph TD
     B1 -- POST multipart /analyze --> C1
     C1 --> C2
     C2 -- 1× read --> D1
-    D1 --> D2 & D3 & D4
+    D1 --> D2
+    D1 --> D3
+    D1 --> D4
     D1 -- ParsedLog JSON --> C2
     C2 --> C1
     C1 -- response JSON --> B2
