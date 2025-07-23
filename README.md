@@ -236,6 +236,18 @@ Le parser lit chaque fichier une seule fois pour optimiser les performances.
 └── tests
 ```
 
+Chaque application possède trois sous-dossiers standard dans `src` :
+
+```text
+src/
+├── controllers
+├── services
+└── dto
+```
+
+Les fichiers NestJS (contrôleurs, services et DTO) doivent être placés
+dans ces répertoires afin d’harmoniser la structure entre les apps.
+
 ## 🖥️ Compatibilité Windows
 
 Les scripts `pnpm` fonctionnent également sous Windows via Git Bash ou WSL.
