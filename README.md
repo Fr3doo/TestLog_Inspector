@@ -142,7 +142,7 @@ graph TD
     A1 -- drag & drop .log --> B1
     B1 -- POST multipart /analyze --> C1
     C1 --> C2
-    C2 -- 5× read --> D1
+    C2 -- 1× read --> D1
     D1 --> D2 & D3 & D4
     D1 -- ParsedLog JSON --> C2
     C2 --> C1
@@ -208,8 +208,7 @@ if (file.size > this.MAX_SIZE) {
 
 ## 📊 Contraintes de performance
 
-Le parser lit chaque fichier cinq fois pour simuler des passes lourdes. Prévoyez
-en conséquence pour de très gros fichiers.
+Le parser lit chaque fichier une seule fois pour optimiser les performances.
 
 ## 📁 Structure du projet
 

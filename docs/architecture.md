@@ -28,7 +28,7 @@ graph TD
     A1 -- drag & drop .log --> B1
     B1 -- POST multipart /analyze --> C1
     C1 --> C2
-    C2 -- 5× read --> D1
+    C2 -- 1× read --> D1
     D1 --> D2 & D3 & D4
     D1 -- ParsedLog JSON --> C2
     C2 --> C1
@@ -45,7 +45,7 @@ graph TD
 | --------------------- | ---------------------------------------------- | -------------------------------------------------------------------- |
 | Upload Front → API    | Fichier > 50 Mo, mauvais type, réseau coupé    | **Multer** + `fileFilter` + limite taille 50 Mo ; message clair UI   |
 | Lecture fichier (API) | I/O error, fichier verrouillé, chemin invalide | Try/catch → `BadRequestException` ; logs Nest                        |
-| Parsing (5 passes)    | Format inconnu, JSON/XML corrompu              | Strategy fallback (`DefaultStrategy`) + tests unitaires              |
+| Parsing (1 pass)    | Format inconnu, JSON/XML corrompu              | Strategy fallback (`DefaultStrategy`) + tests unitaires              |
 | Retour JSON           | Payload massif → latence                       | Taille limitée ; résumé ≤ 300 mots ; pas de stack complète dans JSON |
 | Rendering React       | Data manquante / undefined                     | Checks `if (!data)` dans composants ; Prop Types stricts             |
 | Export PDF            | jsPDF erreur de police ou overflow             | `try/catch` + bouton désactivé (`loading`)                           |
