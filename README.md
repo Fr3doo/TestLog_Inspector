@@ -275,6 +275,7 @@ Chaque `package.json` définit les commandes suivantes :
 - `package.json` : scripts communs (`dev`, `build`, `start`, `lint`, `test`).
 - `pnpm-workspace.yaml` : définition des workspaces Turbo Repo.
 - `playwright.config.ts` et `vitest.workspace.config.ts` pour les tests.
+- `.editorconfig` : indentation, fin de ligne et encodage unifiés.
 - Voir également [ENVIRONMENT.md](ENVIRONMENT.md) pour les variables.
 
 ## 🧪 Tests
@@ -296,6 +297,7 @@ pnpm turbo run test --filter <workspace>
 - Linting : ESLint via `pnpm lint`
 - Commit hooks : Husky + lint-staged
 - Typage : TypeScript strict sur tous les packages
+- Fichier [.editorconfig](.editorconfig) pour aligner les éditeurs
 
 ## 🤝 Contribuer
 
