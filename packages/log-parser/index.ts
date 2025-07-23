@@ -6,19 +6,19 @@
  * - DefaultStrategy   : fallback parsing strategy
  *
  * Pour ajouter votre propre stratégie :
- *   import { LogParser, BaseStrategy } from '@testlog-inspector/log-parser';
- *   class MyStrategy extends BaseStrategy { … }
+ *   import { LogParser } from '@testlog-inspector/log-parser';
+ *   import type { IParsingStrategy } from '@testlog-inspector/log-parser';
+ *   class MyStrategy implements IParsingStrategy { … }
  *   const parser = new LogParser();
  *   parser.registerStrategy(new MyStrategy());
  */
 
-export * from "./src/parser.js";
-export { readFileContent } from "./src/parser.js";
-export * from "./src/types.js";
-export * from "./src/ILogParser.js";
+export * from './src/parser.js';
+export { readFileContent } from './src/parser.js';
+export * from './src/types.js';
+export * from './src/ILogParser.js';
 
-export { DefaultStrategy } from "./src/strategies/default-strategy.js";
-export { BaseStrategy } from "./src/strategies/base-strategy.js";
-export { JsonStrategy } from "./src/strategies/json-strategy.js";
-export { JunitStrategy } from "./src/strategies/junit-strategy.js";
-export { XmlStrategy } from "./src/strategies/xml-strategy.js";
+export { DefaultStrategy } from './src/strategies/default-strategy.js';
+export { JsonStrategy } from './src/strategies/json-strategy.js';
+export { JunitStrategy } from './src/strategies/junit-strategy.js';
+export { XmlStrategy } from './src/strategies/xml-strategy.js';
