@@ -7,6 +7,7 @@ import { ILogParser } from '@testlog-inspector/log-parser';
 import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
 import type { Express } from 'express';
 import { FileValidationService } from './file-validation.service';
+import { ERR_INVALID_FILETYPE } from '../common/error-messages';
 
 /* ---------- Doubles / Fixtures ---------- */
 const dummyParsed = parsedLogFixture;
@@ -50,7 +51,7 @@ describe('LogAnalysisService', () => {
 
   it('should throw BadRequestException when validation fails', async () => {
     validator.validate.mockImplementationOnce(() => {
-      throw new BadRequestException('invalid');
+      throw new BadRequestException(ERR_INVALID_FILETYPE);
     });
 
     await expect(service.analyze({} as Express.Multer.File)).rejects.toBeInstanceOf(
