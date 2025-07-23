@@ -1,8 +1,8 @@
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-export function createDoc() {
-  return new jsPDF({ unit: 'pt', format: 'a4' });
+export function createDoc(JsPdfClass: typeof jsPDF = jsPDF) {
+  return new JsPdfClass({ unit: 'pt', format: 'a4' });
 }
 
 export function saveDoc(doc: jsPDF, filename: string) {
@@ -30,6 +30,10 @@ export function getPageWidth(doc: jsPDF) {
   return doc.internal.pageSize.getWidth();
 }
 
-export function addTable(doc: jsPDF, options: Parameters<typeof autoTable>[1]) {
-  autoTable(doc, options);
+export function addTable(
+  doc: jsPDF,
+  options: Parameters<typeof autoTable>[1],
+  autoTableImpl: typeof autoTable = autoTable,
+) {
+  autoTableImpl(doc, options);
 }
