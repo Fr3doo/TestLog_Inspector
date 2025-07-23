@@ -1,11 +1,3 @@
-/**
- * Test e2e (Jest + Supertest)
- * ---------------------------
- * Démarre l’application NestJS complète sur un port aléatoire
- * puis envoie un upload multipart pour vérifier la chaîne
- * complète (Multer ➜ Service ➜ Parser ➜ Réponse JSON).
- */
-
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
@@ -44,15 +36,8 @@ describe('Upload log file (e2e)', () => {
   });
 
   it('POST /analyze should return parsed JSON', async () => {
-    // Prépare un petit log fictif
     const logPath = join(tmp.dir, 'sample.log');
-    writeFileSync(
-      logPath,
-      `Scenario: upload_e2e
-Date: 2025-07-20
-Environment: ci
-Browser: headless`,
-    );
+    writeFileSync(logPath, 'Scenario: upload_e2e');
 
     const res = await request(app.getHttpServer())
       .post('/analyze')
