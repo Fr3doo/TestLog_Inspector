@@ -50,8 +50,7 @@ pnpm dev
 ### 🧪 Exécuter la suite de tests
 
 ```bash
-pnpm lint                               # vérifie la qualité du code
-pnpm test                               # Jest + React Testing Library
+pnpm check                              # lint + test + format check
 pnpm turbo run test --filter <workspace> # cible uniquement un package ou une app
 ```
 
@@ -282,8 +281,7 @@ Chaque `package.json` définit les commandes suivantes :
 ## 🧪 Tests
 
 ```bash
-pnpm lint        # ESLint + Prettier
-pnpm test        # Jest & Vitest
+pnpm check       # lint + test + format check
 ```
 
 Pour cibler un package particulier :
@@ -294,7 +292,7 @@ pnpm turbo run test --filter <workspace>
 
 ## 🔍 Qualité du code
 
-- Formatage : Prettier (`pnpm format`, règles communes via `.prettierrc`)
+- Formatage : Prettier (`pnpm format --write`, règles communes via `.prettierrc`)
 - Linting : ESLint via `pnpm lint`
 - Commit hooks : Husky + lint-staged
 - Typage : TypeScript strict sur tous les packages
@@ -303,7 +301,7 @@ pnpm turbo run test --filter <workspace>
 ## 🤝 Contribuer
 
 Merci de consulter [AGENT.md](AGENT.md) pour le guide complet. Les PR doivent
-passer `pnpm lint` et `pnpm test` avant soumission et suivre la convention de
+passer `pnpm check` avant soumission et suivre la convention de
 commit `feat(scope): message`.
 
 Exemple :

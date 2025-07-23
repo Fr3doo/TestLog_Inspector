@@ -1,7 +1,9 @@
 # 🤖 Agent Guide – Projet TestLog Inspector
 
 ## 1. Dev Environment Tips
+
 > ℹ️ Comment configurer et lancer l’environnement local
+
 - Installer les dépendances : `pnpm install`
 - Démarrer l’ensemble API + Web : `pnpm dev`
 - Build production : `pnpm build`
@@ -9,12 +11,17 @@
 - Consulter `ENVIRONMENT.md` pour les variables nécessaires (API URL, port…)
 
 ## 2. Testing Instructions
+
 > ⚠️ Les modifications doivent passer tous les tests et le lint
+
 - Linter tout le repo : `pnpm lint`
 - Exécuter les tests unitaires : `pnpm test`
+- Vérifier le formatage : `pnpm format --check`
+- Tout lancer d'un coup : `pnpm check`
 - Cibler un package ou une app : `pnpm turbo run test --filter <workspace>`
 
 ## 3. Pull Request (PR) Instructions
+
 - **Titre** : `[<scope>] <Résumé concis>`
 - **Description** :
   1. Contexte et objectif
@@ -23,9 +30,10 @@
   4. Ajoutez à la fin :
      - `@codecov-ai-reviewer review`
      - `@codecov-ai-reviewer test`
-- Exécuter localement `pnpm lint` et `pnpm test` avant d’ouvrir la PR.
+- Exécuter localement `pnpm check` avant d’ouvrir la PR.
 
 ### Convention de commit
+
 Les messages suivent le format **Conventional Commits** :
 
 ```
@@ -35,7 +43,9 @@ Les messages suivent le format **Conventional Commits** :
 Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `ci`.
 
 ## 4. Codex/ChatGPT Usage Tips
+
 > 🛠️ Conseils pour guider l’IA dans ce repo
+
 - Limiter la recherche à `apps/*/src` ou `packages/*/src` selon le scope.
 - Fournir des extraits de stack trace ou de logs pour le débogage.
 - Demander un diagramme Mermaid avant d’écrire du code complexe.
@@ -43,23 +53,24 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 
 ## 5. Vue d’ensemble des agents
 
-| Agent                        | Rôle principal                             | Fichier                                           | Entrées                           | Sorties                     |
-|------------------------------|--------------------------------------------|--------------------------------------------------|-----------------------------------|------------------------------|
-| `FileDropzone`               | Upload de fichiers et appel API           | `apps/web/src/components/FileDropzone.tsx`       | `File[]` via drag&drop            | Appelle `useUpload`         |
-| `useUpload`                  | Hook d’upload vers l’API NestJS (`${NEXT_PUBLIC_API_URL}/analyze`)        | `apps/web/src/hooks/useUpload.ts`                | `File[]`  | `ParsedLog` ou erreur       |
-| `UploadController`           | Endpoint POST `/upload`                    | `apps/api/src/log-analysis/upload.controller.ts` | `multipart/form-data`            | `ParsedLog[]`               |
-| `LogAnalysisController`      | Endpoint POST `/analyze`                   | `apps/api/src/log-analysis/log-analysis.controller.ts` | `multipart/form-data`            | `ParsedLog[]`               |
-| `LogAnalysisService`         | Orchestration de l’analyse                 | `apps/api/src/log-analysis/log-analysis.service.ts`    | `AnalyzeLogDto`                 | `ParsedLog`                 |
-| `LogParser`                  | Parseur de fichiers (librairie)            | `packages/log-parser/src/parser.ts`              | `path` fichier                   | `ParsedLog`                 |
-| `FileValidationService`      | Coordonne la validation du fichier         | `apps/api/src/log-analysis/file-validation.service.ts` | `Express.Multer.File` | `void` ou erreur           |
-| `FileValidator`              | Vérifie l'extension et la taille           | `apps/api/src/log-analysis/file-validator.service.ts`  | `Express.Multer.File` | `void` ou erreur           |
-| `LoggerInterceptor`          | Journalisation globale des requêtes        | `apps/api/src/common/logger.interceptor.ts`      | `Request/Response` | `Observable`                |
-| `JsPdfGenerator`             | Génère et télécharge un rapport PDF        | `apps/web/src/lib/JsPdfGenerator.ts`            | `ParsedLog` | Fichier téléchargé |
-| `SortableTable`              | Tableau générique triable et filtrable     | `packages/ui-components/src/SortableTable.tsx` | `data`, `columns` | Composant React |
+| Agent                   | Rôle principal                                                     | Fichier                                                | Entrées                | Sorties               |
+| ----------------------- | ------------------------------------------------------------------ | ------------------------------------------------------ | ---------------------- | --------------------- |
+| `FileDropzone`          | Upload de fichiers et appel API                                    | `apps/web/src/components/FileDropzone.tsx`             | `File[]` via drag&drop | Appelle `useUpload`   |
+| `useUpload`             | Hook d’upload vers l’API NestJS (`${NEXT_PUBLIC_API_URL}/analyze`) | `apps/web/src/hooks/useUpload.ts`                      | `File[]`               | `ParsedLog` ou erreur |
+| `UploadController`      | Endpoint POST `/upload`                                            | `apps/api/src/log-analysis/upload.controller.ts`       | `multipart/form-data`  | `ParsedLog[]`         |
+| `LogAnalysisController` | Endpoint POST `/analyze`                                           | `apps/api/src/log-analysis/log-analysis.controller.ts` | `multipart/form-data`  | `ParsedLog[]`         |
+| `LogAnalysisService`    | Orchestration de l’analyse                                         | `apps/api/src/log-analysis/log-analysis.service.ts`    | `AnalyzeLogDto`        | `ParsedLog`           |
+| `LogParser`             | Parseur de fichiers (librairie)                                    | `packages/log-parser/src/parser.ts`                    | `path` fichier         | `ParsedLog`           |
+| `FileValidationService` | Coordonne la validation du fichier                                 | `apps/api/src/log-analysis/file-validation.service.ts` | `Express.Multer.File`  | `void` ou erreur      |
+| `FileValidator`         | Vérifie l'extension et la taille                                   | `apps/api/src/log-analysis/file-validator.service.ts`  | `Express.Multer.File`  | `void` ou erreur      |
+| `LoggerInterceptor`     | Journalisation globale des requêtes                                | `apps/api/src/common/logger.interceptor.ts`            | `Request/Response`     | `Observable`          |
+| `JsPdfGenerator`        | Génère et télécharge un rapport PDF                                | `apps/web/src/lib/JsPdfGenerator.ts`                   | `ParsedLog`            | Fichier téléchargé    |
+| `SortableTable`         | Tableau générique triable et filtrable                             | `packages/ui-components/src/SortableTable.tsx`         | `data`, `columns`      | Composant React       |
 
 ## 6. Détails par agent
 
 ### `FileDropzone`
+
 - **Rôle** : zone de dépôt drag&drop ; déclenche `useUpload`.
 - **Entrées** : `FileList`.
 - **Sorties** : appel `onAnalyzed(parsed)` ou message d’erreur.
@@ -67,6 +78,7 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Tests** : `apps/web/src/__tests__/...` (à compléter).
 
 ### `useUpload`
+
 - **Rôle** : envoie les fichiers à l’API et gère l’état de chargement.
 - **Entrées** : tableau de `File`.
 - **Sorties** : `ParsedLog` passé au callback `onSuccess`.
@@ -74,25 +86,31 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Tests** : `apps/web/src/__tests__/...` (à compléter).
 
 ### `UploadController`
+
 - **Rôle** : réceptionne l’upload et délègue l’analyse au `LogAnalysisService`.
 - **Dépendances** : `LogAnalysisService`, `MulterModule`.
 - **Tests** : `apps/api/src/log-analysis/upload.controller.spec.ts`.
 
 ### `LogAnalysisController`
+
 - **Rôle** : réceptionne l’upload, applique Multer et renvoie un tableau de logs parsés.
 - **Dépendances** : `LogAnalysisService`, `MulterModule`.
 - **Note** : la pipe `ParseFilePipe` a été supprimée ; la validation se fait directement via `FileValidator` dans `LogAnalysisService`.
 
 ### `LogAnalysisService`
+
 - **Rôle** : appelle `LogParser` et gère les erreurs.
 - **Tests** : `apps/api/src/log-analysis/*.spec.ts`.
 
 ### `LogParser`
+
 - **Rôle** : librairie pure, stratégies de parsing extensibles.
 - **Tests** : `packages/log-parser/**/*.spec.ts`.
 - **Utilisation** : on peut passer un tableau de stratégies au constructeur :
   `new LogParser([new JsonStrategy(), new JunitStrategy()])`.
+
 ### `FileValidationService`
+
 - **Rôle** : centralise toutes les vérifications avant le parsing.
 - **SRP** : valider la présence du fichier et déléguer au `FileValidator`.
 - **Entrées** : `Express.Multer.File`.
@@ -101,6 +119,7 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Tests** : `apps/api/src/log-analysis/file-validation.service.spec.ts`.
 
 ### `FileValidator`
+
 - **Rôle** : vérifier extension autorisée et taille maximale.
 - **SRP** : assurer la conformité du fichier uploadé (pas de parsing).
 - **Entrées** : `Express.Multer.File`.
@@ -108,6 +127,7 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Tests** : (à compléter).
 
 ### `LoggerInterceptor`
+
 - **Rôle** : journaliser chaque requête HTTP et les erreurs.
 - **SRP** : logging des échanges HTTP uniquement.
 - **Entrées** : contexte d'exécution.
@@ -115,6 +135,7 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Tests** : non définis.
 
 ### `JsPdfGenerator`
+
 - **Rôle** : générer un rapport PDF et déclencher son téléchargement.
 - **Entrées** : `ParsedLog`, nom de fichier optionnel.
 - **Sorties** : fichier PDF téléchargé.
@@ -122,6 +143,7 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Tests** : `apps/web/src/__tests__/PdfButton.test.tsx` via injection.
 
 ### `SortableTable`
+
 - **Rôle** : afficher un tableau triable avec filtrage global.
 - **Entrées** : `data`, `columns`, options de tri initial.
 - **Sorties** : rendu React.
@@ -164,6 +186,7 @@ graph TD
 ```
 
 ## 8. Ajouter un nouvel agent
+
 1. Isoler une responsabilité unique.
 2. Créer le fichier dans `apps/*/src` ou `packages/*/src`.
 3. Documenter son rôle dans le fichier et ici.
@@ -173,10 +196,12 @@ graph TD
    dépendance (composition) plutôt qu'en héritage.
 
 ## 9. Meilleures pratiques
+
 - Un agent = une responsabilité.
 - Privilégier des fonctions pures et courtes.
 - Déclarer clairement les entrées/sorties.
 - Utiliser les hooks React/Nest de façon explicite.
 
 ## 10. TODOs & Améliorations
+
 - [ ] Lier `AGENT.md` depuis le `README.md`.
