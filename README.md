@@ -106,7 +106,7 @@ Variables utilisées :
 
 | Principe                        | Mise en œuvre                                                                                               |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **SRP** (Single Responsibility) | `LogParser` orchestre ; chaque *strategy* gère un format de log distinct.                                   |
+| **SRP** (Single Responsibility) | `LogParser` orchestre ; chaque _strategy_ gère un format de log distinct.                                   |
 | **OCP** (Open/Closed)           | Ajouter un format = créer une nouvelle stratégie **sans modifier** l’existant.                              |
 | **DIP** (Dependency Inversion)  | Le service NestJS dépend de l’interface `ILogAnalyzer` (implémentée par `LogParser`).                       |
 | **DRY**                         | Helpers d’expressions régulières mutualisés dans `BaseStrategy`.                                            |
@@ -282,7 +282,7 @@ pnpm turbo run test --filter <workspace>
 
 ## 🔍 Qualité du code
 
-- Formatage : Prettier (`pnpm format`)
+- Formatage : Prettier (`pnpm format`, règles communes via `.prettierrc`)
 - Linting : ESLint via `pnpm lint`
 - Commit hooks : Husky + lint-staged
 - Typage : TypeScript strict sur tous les packages
@@ -299,16 +299,15 @@ Le package `@testlog-inspector/log-parser` est publié sur npm via GitHub
 Actions. Bump de version puis `git tag vX.Y.Z` pour déclencher la publication.
 
 ---
+
 ## 📚 Documentation
 
 - [Architecture détaillée](docs/architecture.md)
 - [Guide des agents](AGENT.md)
 - Note: la pipe `ParseFilePipe` a été retirée; la validation des fichiers est désormais gérée par `FileValidationService`.
 
-
 ## 📄 Licence
 
 Distribué sous licence [MIT](LICENSE).
 
 > Développé avec ❤️ & ☕ par l’équipe **QA Tools**
-
