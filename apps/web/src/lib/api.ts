@@ -1,7 +1,7 @@
 import { ParsedLog } from '@testlog-inspector/log-parser';
+import { CONFIG } from '../config';
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? 'http://localhost:3001';
+const API_BASE = CONFIG.apiUrl;
 
 /**
  * Analyse un ou plusieurs fichiers .log/.txt via l’API NestJS.
