@@ -2,7 +2,7 @@
 
 import { ParsedLog } from "@testlog-inspector/log-parser";
 import { Button } from "@testlog-inspector/ui-components";
-import { usePdfGenerator } from "@/lib/PdfGeneratorContext";
+import { usePdfGenerator } from "@/hooks/usePdfGenerator";
 
 interface Props {
   data: ParsedLog;
@@ -13,12 +13,12 @@ interface Props {
  * L'implémentation concrète peut être remplacée en tests.
  */
 export default function PdfButton({ data }: Props) {
-  const pdf = usePdfGenerator();
+  const generatePdf = usePdfGenerator();
 
   const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const btn = e.currentTarget;
     btn.disabled = true;
-    await pdf.generate(data);
+    await generatePdf(data);
     btn.disabled = false;
   };
 

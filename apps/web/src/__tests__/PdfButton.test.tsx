@@ -30,7 +30,7 @@ describe("<PdfButton />", () => {
     );
     const user = userEvent.setup();
     await user.click(screen.getByRole("button"));
-    expect(generateMock).toHaveBeenCalledWith(sample);
+    expect(generateMock).toHaveBeenCalledWith(sample, undefined);
   });
 
   it("disables the button while generating", async () => {
