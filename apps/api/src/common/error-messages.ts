@@ -8,3 +8,4 @@ export const ERR_FILE_TOO_LARGE = (limitMb: number) =>
 
 export const ERR_FILE_REQUIRED = 'file is required';
 export const ERR_NO_FILES = 'No files uploaded';
+export const ERR_PARSING_TIMEOUT = 'Parsing timed out';
