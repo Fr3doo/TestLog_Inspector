@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useUpload } from "../hooks/useUpload";
-import { ParsedLog } from "@testlog-inspector/log-parser";
-import { Card } from "@testlog-inspector/ui-components";
-import { ALLOWED_EXT } from "../../../api/src/common/file.constants";
+import { useState } from 'react';
+import { useUpload } from '../hooks/useUpload';
+import { ParsedLog } from '@testlog-inspector/log-parser';
+import { Card } from '@testlog-inspector/ui-components';
+import { ALLOWED_EXT } from '../../../api/src/common/file.constants';
 
 const classes = {
-  base: "p-8 border-2 border-dashed",
-  drag: "border-primary",
-  idle: "border-muted",
+  base: 'p-8 border-2 border-dashed',
+  drag: 'border-primary',
+  idle: 'border-muted',
 };
 
 export default function FileDropzone({
@@ -19,6 +19,16 @@ export default function FileDropzone({
 }) {
   const { upload, isUploading, error } = useUpload(onAnalyzed);
   const [drag, setDrag] = useState(false);
+  const [lastFiles, setLastFiles] = useState<File[]>([]);
+
+  function handleUpload(files: File[]) {
+    setLastFiles(files);
+    upload(files);
+  }
+
+  function retry() {
+    if (lastFiles.length) upload(lastFiles);
+  }
 
   return (
     <Card
@@ -31,12 +41,12 @@ export default function FileDropzone({
       onDrop={(e) => {
         e.preventDefault();
         setDrag(false);
-        upload(Array.from(e.dataTransfer.files));
+        handleUpload(Array.from(e.dataTransfer.files));
       }}
     >
       <p className="text-center">
         {isUploading
-          ? "Analyse en cours…"
+          ? 'Analyse en cours…'
           : `Glissez-déposez vos fichiers ${ALLOWED_EXT.join(' ou ')} ou cliquez`}
       </p>
       <input
@@ -44,9 +54,16 @@ export default function FileDropzone({
         multiple
         accept={ALLOWED_EXT.join(',')}
         className="hidden"
-        onChange={(e) => upload(Array.from(e.target.files ?? []))}
+        onChange={(e) => handleUpload(Array.from(e.target.files ?? []))}
       />
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+      {error && (
+        <div className="text-red-500 mt-2 space-y-1">
+          <p>Échec de l'analyse: {error}</p>
+          <button onClick={retry} className="underline">
+            Réessayer
+          </button>
+        </div>
+      )}
     </Card>
   );
 }
