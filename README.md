@@ -38,6 +38,7 @@ pnpm dev              # API NestJS → http://localhost:3001
 git clone https://github.com/Fr3doo/TestLog_Inspector.git
 cd TestLog_Inspector
 pnpm install
+cp .env.example .env
 ```
 
 ### Mode développement
