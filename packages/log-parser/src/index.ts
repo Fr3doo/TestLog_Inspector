@@ -2,6 +2,7 @@ export * from './parser';
 export { readFileContent } from './parser';
 export { FileReader } from './file-reader';
 export type { IFileReader } from './file-reader';
+export { readFile, writeFile } from './file-utils';
 export * from './types';
 export * from './ILogParser';
 export { DefaultStrategy } from './strategies/default-strategy';
