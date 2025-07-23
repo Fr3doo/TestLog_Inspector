@@ -3,10 +3,9 @@
 import { ParsedLog } from '@testlog-inspector/log-parser';
 import { useApiPost } from './useApiPost';
 import { useFileInput } from './useFileInput';
+import { CONFIG } from '../config';
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ??
-  'http://localhost:3001';
+const API_BASE = CONFIG.apiUrl;
 
 /**
  * Orchestration de `useFileInput` et `useApiPost` pour analyser des fichiers log.
