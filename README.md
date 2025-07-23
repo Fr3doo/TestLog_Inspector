@@ -154,6 +154,24 @@ graph TD
     B3 -- PDF download --> A1
 ```
 
+### Loi de Demeter (LoD)
+
+Ce principe, aussi appelé "principe du moindre savoir", encourage
+à éviter les accès en profondeur aux objets. Dans ce projet, le
+composant `PdfButton` applique ce principe :
+
+```ts
+export default function PdfButton({ data }: Props) {
+  const generatePdf = usePdfGenerator(); // abstraction autour de jsPDF
+  await generatePdf(data);
+}
+```
+
+`PdfButton` ignore ainsi les détails internes de la génération PDF,
+facilitant la maintenance et les tests. Dans vos contributions,
+privilégiez l'usage de helpers ou de services plutôt que des chaînes
+d'accès `obj.a.b.c`.
+
 ## 📦 Utilisation
 
 Après l'installation, ouvrez [http://localhost:3000](http://localhost:3000) puis
