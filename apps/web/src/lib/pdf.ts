@@ -16,17 +16,21 @@ export const PDF_CONFIG = {
 /**
  * Apply heading style to the current jsPDF instance.
  */
-export function setHeading<T extends FontUtils>(doc: T): T {
-  return doc
-    .setFontSize(PDF_CONFIG.headingSize)
-    .setFont(PDF_CONFIG.fontFamily, 'bold');
+export function setHeading<T extends FontUtils>(
+  doc: T,
+  config: typeof PDF_CONFIG = PDF_CONFIG,
+): T {
+  return doc.setFontSize(config.headingSize).setFont(config.fontFamily, 'bold');
 }
 
 /**
  * Apply paragraph style to the current jsPDF instance.
  */
-export function setParagraph<T extends FontUtils>(doc: T): T {
+export function setParagraph<T extends FontUtils>(
+  doc: T,
+  config: typeof PDF_CONFIG = PDF_CONFIG,
+): T {
   return doc
-    .setFontSize(PDF_CONFIG.paragraphSize)
-    .setFont(PDF_CONFIG.fontFamily, 'normal');
+    .setFontSize(config.paragraphSize)
+    .setFont(config.fontFamily, 'normal');
 }
