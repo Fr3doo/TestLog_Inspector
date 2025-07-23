@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { extname } from 'node:path';
 import type { Express } from 'express';
 import type { FileFilterCallback } from 'multer';
-import { MAX_UPLOAD_SIZE } from '../common/constants';
+import { ConfigService } from '../common/config.service';
 import { ALLOWED_EXT } from '../common/file.constants';
 import {
   ERR_FILE_TOO_LARGE,
@@ -11,11 +11,15 @@ import {
 
 /**
  * Service responsible for validating uploaded files.
- * Checks allowed extensions and maximum size (configured via MAX_UPLOAD_SIZE).
+ * Checks allowed extensions and maximum size from ConfigService.
  */
 @Injectable()
 export class FileValidator {
-  private readonly MAX_SIZE = MAX_UPLOAD_SIZE;
+  constructor(private readonly config: ConfigService) {}
+
+  private get MAX_SIZE() {
+    return this.config.maxUploadSize;
+  }
 
   validate(file: Express.Multer.File): void {
     const ext = extname(file.originalname).toLowerCase();
@@ -38,7 +42,7 @@ export const fileFilter = (
 ) => {
   try {
     // Use a fresh validator as fileFilter runs outside DI
-    new FileValidator().validate(file);
+    new FileValidator(new ConfigService()).validate(file);
     cb(null, true);
   } catch (err) {
     cb(err as Error);
