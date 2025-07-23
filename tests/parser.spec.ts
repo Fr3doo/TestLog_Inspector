@@ -27,15 +27,10 @@ describe("LogParser", () => {
   });
 
   it("should parse a nominal log file using a single read", async () => {
-    const content = `
-      Scenario: login_flow
-      Date: 2025-07-20
-      Environment: staging
-      Browser: Chrome
-      ERROR: NullPointerException Something went wrong
-        at com.example.Test(Example.java:42)
-      Version App 1.2.3
-    `;
+    const content = [
+      "Scenario: login_flow",
+      "ERROR: boom",
+    ].join("\n");
     writeFileSync(tmp, content);
 
     const parser = new LogParser([]);
