@@ -59,6 +59,17 @@ graph TD
 - **DIP** : API dépend de l’interface `LogParser`, non des stratégies concrètes.
 - **Maintenance** : la pipe `ParseFilePipe` a été supprimée au profit du service `FileValidationService` pour centraliser la validation des uploads.
 
+## Composition avant héritage
+
+Nous privilégions la composition pour limiter le couplage et faciliter le
+test unitaire. Les stratégies de parsing illustrent ce principe&nbsp;: chaque
+format de log implémente `IParsingStrategy` puis est enregistré dans
+`LogParser` plutôt que d'étendre une classe commune. Côté frontend, les
+composants React sont assemblés via leurs props sans recours à l'héritage.
+Cet assemblage modulaire simplifie l’ajout de fonctionnalités et la
+maintenance. Merci de conserver cette approche dans vos futures
+contributions.
+
 ## Aliases TypeScript
 
 Le fichier `tsconfig.base.json` définit deux raccourcis communs :
