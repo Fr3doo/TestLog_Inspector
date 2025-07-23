@@ -8,11 +8,25 @@ import {
 } from '../types';
 import { execSummaryFrom, matchRegex } from './strategy-helpers';
 
-export class DefaultStrategy implements IParsingStrategy {
+function extractSingle(r: RegExp, lines: string[]): string {
+  const m = lines.find((l) => r.test(l));
+  return m ? m.replace(r, '$1').trim() : '';
+}
+
+function extractStack(lines: string[], from: number): string | undefined {
+  const stackLines: string[] = [];
+  for (let i = from; i < lines.length && stackLines.length < 20; i++) {
+    if (/^\s+at\s/.test(lines[i])) stackLines.push(lines[i]);
+    else if (stackLines.length) break;
+  }
+  return stackLines.length ? stackLines.join('\n') : undefined;
+}
+
+export const DefaultStrategy: IParsingStrategy = {
   canHandle(_lines: string[]): boolean {
     // fallback strategy → always true
     return true;
-  }
+  },
 
   parse(lines: string[]): ParsedLog {
     /* 1. Résumé exécutif ---------------------------------------- */
@@ -22,10 +36,10 @@ export class DefaultStrategy implements IParsingStrategy {
 
     /* 2. Contexte de campagne ----------------------------------- */
     const ctx: TestContext = {
-      scenario: this.extractSingle(/Scenario:\s*(.+)/i, lines),
-      date: this.extractSingle(/Date:\s*(.+)/i, lines),
-      environment: this.extractSingle(/Env(?:ironment)?:\s*(.+)/i, lines),
-      browser: this.extractSingle(/Browser:\s*(.+)/i, lines),
+      scenario: extractSingle(/Scenario:\s*(.+)/i, lines),
+      date: extractSingle(/Date:\s*(.+)/i, lines),
+      environment: extractSingle(/Env(?:ironment)?:\s*(.+)/i, lines),
+      browser: extractSingle(/Browser:\s*(.+)/i, lines),
     };
 
     /* 3. Erreurs/Exceptions ------------------------------------- */
@@ -35,7 +49,7 @@ export class DefaultStrategy implements IParsingStrategy {
       return {
         type: m[1],
         message: m[2],
-        stack: this.extractStack(lines, idx),
+        stack: extractStack(lines, idx),
         lineNumber: m.lineNumber,
         raw: lines[idx - 1],
       };
@@ -53,20 +67,5 @@ export class DefaultStrategy implements IParsingStrategy {
     };
 
     return { summary, context: ctx, errors, misc };
-  }
-
-  /* ---------- private helpers ---------- */
-  private extractSingle(r: RegExp, lines: string[]): string {
-    const m = lines.find((l) => r.test(l));
-    return m ? m.replace(r, '$1').trim() : '';
-  }
-
-  private extractStack(lines: string[], from: number): string | undefined {
-    const stackLines: string[] = [];
-    for (let i = from; i < lines.length && stackLines.length < 20; i++) {
-      if (/^\s+at\s/.test(lines[i])) stackLines.push(lines[i]);
-      else if (stackLines.length) break;
-    }
-    return stackLines.length ? stackLines.join('\n') : undefined;
-  }
-}
+  },
+};

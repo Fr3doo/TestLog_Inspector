@@ -27,7 +27,7 @@ export class LogParser {
     private readonly reader: IFileReader = new FileReader(),
   ) {
     // Always register default fallback
-    this.registerStrategy(new DefaultStrategy());
+    this.registerStrategy(DefaultStrategy);
     // Register provided strategies (highest priority first)
     for (const s of [...strategies].reverse()) {
       this.registerStrategy(s);
