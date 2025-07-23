@@ -79,8 +79,8 @@ La lecture de ces variables côté API est centralisée dans
 
 Variables utilisées :
 
-- `NEXT_PUBLIC_API_URL` – URL de base pour l'API.
-- `PORT` – port d'écoute de l'API.
+- `NEXT_PUBLIC_API_URL` – URL de base pour l'API côté frontend.
+- `API_PORT` – port d'écoute de l'API.
 - `CORS_ORIGIN` – origine autorisée pour CORS.
 - `MAX_UPLOAD_SIZE` ou `UPLOAD_LIMIT_MB` – taille maximale d'envoi.
 - `CI` – empêche Playwright de réutiliser un serveur local.
