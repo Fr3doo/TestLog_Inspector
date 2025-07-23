@@ -57,6 +57,7 @@ graph TD
 * **SRP** : chaque bloc ci‑dessus assure une seule responsabilité.
 * **OCP** : nouvelles stratégies parsing plug‑and‑play (`registerStrategy()`).
 * **DIP** : API dépend de l’interface `LogParser`, non des stratégies concrètes.
+* **Maintenance** : la pipe `ParseFilePipe` a été supprimée au profit du service `FileValidationService` pour centraliser la validation des uploads.
 
 ---
 
