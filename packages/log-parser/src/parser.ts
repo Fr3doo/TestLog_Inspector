@@ -3,6 +3,7 @@
  * OCP : ajouter une stratégie via registerStrategy() sans modifier le code.
  */
 import { IParsingStrategy, ParsedLog } from './types';
+import { validateParsedLog } from './parsed-log.schema';
 import { DefaultStrategy } from './strategies/default-strategy';
 import { FileReader, IFileReader } from './file-reader';
 
@@ -51,6 +52,12 @@ export class LogParser {
       this.strategies.find((s) => s.canHandle(lines)) ??
       this.strategies[this.strategies.length - 1];
 
-    return strategy.parse(lines);
+    const result = strategy.parse(lines);
+    try {
+      return validateParsedLog(result);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'invalid parsed log';
+      throw new Error(`Invalid parsed log format: ${msg}`);
+    }
   }
 }

@@ -25,3 +25,4 @@ export { DefaultStrategy } from './src/strategies/default-strategy.js';
 export { JsonStrategy } from './src/strategies/json-strategy.js';
 export { JunitStrategy } from './src/strategies/junit-strategy.js';
 export { XmlStrategy } from './src/strategies/xml-strategy.js';
+export { parsedLogSchema, validateParsedLog } from './src/parsed-log.schema.js';
