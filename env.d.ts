@@ -9,8 +9,6 @@ declare namespace NodeJS {
     /** URL publique de l’API Nest (ex. http://localhost:3001) */
     readonly NEXT_PUBLIC_API_URL?: string;
 
-    /** Environnement d’exécution */
-    readonly NODE_ENV: "development" | "production" | "test";
 
     /** Max upload size in bytes for Multer and body parsing (default 50MB) */
     readonly MAX_UPLOAD_SIZE?: string;
