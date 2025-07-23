@@ -13,13 +13,13 @@ export interface ApiConfig {
  */
 export function getConfig(): ApiConfig {
   const {
-    PORT,
+    API_PORT,
     CORS_ORIGIN,
     MAX_UPLOAD_SIZE,
     UPLOAD_LIMIT_MB,
   } = process.env;
 
-  const port = PORT ? Number(PORT) : 3001;
+  const port = API_PORT ? Number(API_PORT) : 3001;
   const corsOrigin = CORS_ORIGIN ?? 'http://localhost:3000';
 
   const defaultSize = 50 * 1024 * 1024; // 50MB

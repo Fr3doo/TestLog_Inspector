@@ -12,5 +12,8 @@ declare namespace NodeJS {
 
     /** Max upload size in bytes for Multer and body parsing (default 50MB) */
     readonly MAX_UPLOAD_SIZE?: string;
+
+    /** Port for the NestJS API (default 3001) */
+    readonly API_PORT?: string;
   }
 }
