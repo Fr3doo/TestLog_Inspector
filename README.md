@@ -104,14 +104,14 @@ Variables utilisées :
 
 ## 📐 Principes d’architecture : SOLID / DRY / KISS
 
-| Principe                        | Mise en œuvre                                                                                               |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **SRP** (Single Responsibility) | `LogParser` orchestre ; chaque _strategy_ gère un format de log distinct.                                   |
-| **OCP** (Open/Closed)           | Ajouter un format = créer une nouvelle stratégie **sans modifier** l’existant.                              |
-| **DIP** (Dependency Inversion)  | Le service NestJS dépend de l’interface `ILogAnalyzer` (implémentée par `LogParser`).                       |
-| **DRY**                         | Helpers d’expressions régulières mutualisés dans `strategy-helpers.ts`.                                     |
-| **KISS** / composition          | Hooks React simples, aucun HOC superflu.                                                                    |
-| **Robustesse (loi de Murphy)**  | Validations Zod / class‑validator, `try/catch`, tests sur données corrompues, messages d’erreur explicites. |
+| Principe                        | Mise en œuvre                                                                                                                             |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **SRP** (Single Responsibility) | `LogParser` orchestre ; chaque _strategy_ gère un format de log distinct.                                                                 |
+| **OCP** (Open/Closed)           | Ajouter un format = créer une nouvelle stratégie **sans modifier** l’existant.                                                            |
+| **DIP** (Dependency Inversion)  | Le service NestJS dépend de l’interface `ILogAnalyzer` (implémentée par `LogParser`).                                                     |
+| **DRY**                         | Helpers d’expressions régulières mutualisés dans `strategy-helpers.ts`.                                                                   |
+| **KISS** / composition          | Hooks React simples, aucun HOC superflu.                                                                                                  |
+| **Robustesse (loi de Murphy)**  | Validations Zod / class‑validator, `try/catch`, tests sur données corrompues, gestion des fichiers vides et messages d’erreur explicites. |
 
 Pour une vue globale de l'architecture, consultez
 [docs/architecture.md](docs/architecture.md) ou référez-vous au schéma
