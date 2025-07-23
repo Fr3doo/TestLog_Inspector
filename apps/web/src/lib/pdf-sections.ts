@@ -23,10 +23,9 @@ function addHeading(doc: jsPDF, text: string, state: SectionState) {
 function addParagraph(doc: jsPDF, text: string, state: SectionState) {
   const { margin, lineHeight } = PDF_CONFIG;
   setParagraph(doc);
-  const splitted = doc.splitTextToSize(
-    text,
-    doc.internal.pageSize.getWidth() - margin * 2,
-  );
+  // Law of Demeter: store deep property access in a local variable
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const splitted = doc.splitTextToSize(text, pageWidth - margin * 2);
   doc.text(splitted, margin, state.cursorY);
   state.cursorY += splitted.length * lineHeight + lineHeight;
 }
@@ -56,7 +55,9 @@ export const addErrors: Section = (doc, data, state) => {
     headStyles: { fillColor: [22, 119, 255] },
     margin: { left: PDF_CONFIG.margin, right: PDF_CONFIG.margin },
     didDrawPage: (hook) => {
-      state.cursorY = hook.cursor.y + PDF_CONFIG.lineHeight;
+      // Respect the Law of Demeter by storing nested access in a variable
+      const cursorY = hook.cursor.y;
+      state.cursorY = cursorY + PDF_CONFIG.lineHeight;
     },
   });
 };
