@@ -53,21 +53,23 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 
 ## 5. Vue d’ensemble des agents
 
-| Agent                   | Rôle principal                                                     | Fichier                                                | Entrées                | Sorties               |
-| ----------------------- | ------------------------------------------------------------------ | ------------------------------------------------------ | ---------------------- | --------------------- |
-| `FileDropzone`          | Upload de fichiers et appel API                                    | `apps/web/src/components/FileDropzone.tsx`             | `File[]` via drag&drop | Appelle `useUpload`   |
-| `useUpload`             | Hook d’upload vers l’API NestJS (`${NEXT_PUBLIC_API_URL}/analyze`) | `apps/web/src/hooks/useUpload.ts`                      | `File[]`               | `ParsedLog` ou erreur |
-| `UploadController`      | Endpoint POST `/upload`                                            | `apps/api/src/log-analysis/upload.controller.ts`       | `multipart/form-data`  | `ParsedLog[]`         |
-| `LogAnalysisController` | Endpoint POST `/analyze`                                           | `apps/api/src/log-analysis/log-analysis.controller.ts` | `multipart/form-data`  | `ParsedLog[]`         |
-| `LogAnalysisService`    | Orchestration de l’analyse                                         | `apps/api/src/log-analysis/log-analysis.service.ts`    | `AnalyzeLogDto`        | `ParsedLog`           |
-| `LogParser`             | Parseur de fichiers (librairie)                                    | `packages/log-parser/src/parser.ts`                    | `path` fichier         | `ParsedLog`           |
-| `FileValidationService` | Coordonne la validation du fichier                                 | `apps/api/src/log-analysis/file-validation.service.ts` | `Express.Multer.File`  | `void` ou erreur      |
-| `FileValidator`         | Vérifie l'extension et la taille                                   | `apps/api/src/log-analysis/file-validator.service.ts`  | `Express.Multer.File`  | `void` ou erreur      |
-| `validateFiles`         | Middleware de validation des uploads                    | `apps/api/src/middlewares/file-validation.middleware.ts` | `Request`             | `next()` ou erreur    |
-| `LoggerInterceptor`     | Journalisation globale des requêtes                                | `apps/api/src/common/logger.interceptor.ts`            | `Request/Response`     | `Observable`          |
-| `JsPdfGenerator`        | Génère et télécharge un rapport PDF                                | `apps/web/src/lib/JsPdfGenerator.ts`                   | `ParsedLog`            | Fichier téléchargé    |
-| `usePdfGenerator`       | Renvoie la fonction `generatePdf`                 | `apps/web/src/hooks/usePdfGenerator.ts`               | `ParsedLog`            | Appelle `IPdfGenerator.generate` |
-| `SortableTable`         | Tableau générique triable et filtrable                             | `packages/ui-components/src/SortableTable.tsx`         | `data`, `columns`      | Composant React       |
+| Agent                   | Rôle principal                                  | Fichier                                                  | Entrées                | Sorties                          |
+| ----------------------- | ----------------------------------------------- | -------------------------------------------------------- | ---------------------- | -------------------------------- |
+| `FileDropzone`          | Upload de fichiers et appel API                 | `apps/web/src/components/FileDropzone.tsx`               | `File[]` via drag&drop | Appelle `useUpload`              |
+| `useUpload`             | Orchestration de `useFileInput` et `useApiPost` | `apps/web/src/hooks/useUpload.ts`                        | `File[]`               | `ParsedLog` ou erreur            |
+| `useApiPost`            | Hook POST générique vers l’API                  | `apps/web/src/hooks/useApiPost.ts`                       | `FormData`             | Réponse JSON ou erreur           |
+| `useFileInput`          | Centralise la sélection de fichiers             | `apps/web/src/hooks/useFileInput.ts`                     | `FileList`/`File[]`    | `File[]` via callback            |
+| `UploadController`      | Endpoint POST `/upload`                         | `apps/api/src/log-analysis/upload.controller.ts`         | `multipart/form-data`  | `ParsedLog[]`                    |
+| `LogAnalysisController` | Endpoint POST `/analyze`                        | `apps/api/src/log-analysis/log-analysis.controller.ts`   | `multipart/form-data`  | `ParsedLog[]`                    |
+| `LogAnalysisService`    | Orchestration de l’analyse                      | `apps/api/src/log-analysis/log-analysis.service.ts`      | `AnalyzeLogDto`        | `ParsedLog`                      |
+| `LogParser`             | Parseur de fichiers (librairie)                 | `packages/log-parser/src/parser.ts`                      | `path` fichier         | `ParsedLog`                      |
+| `FileValidationService` | Coordonne la validation du fichier              | `apps/api/src/log-analysis/file-validation.service.ts`   | `Express.Multer.File`  | `void` ou erreur                 |
+| `FileValidator`         | Vérifie l'extension et la taille                | `apps/api/src/log-analysis/file-validator.service.ts`    | `Express.Multer.File`  | `void` ou erreur                 |
+| `validateFiles`         | Middleware de validation des uploads            | `apps/api/src/middlewares/file-validation.middleware.ts` | `Request`              | `next()` ou erreur               |
+| `LoggerInterceptor`     | Journalisation globale des requêtes             | `apps/api/src/common/logger.interceptor.ts`              | `Request/Response`     | `Observable`                     |
+| `JsPdfGenerator`        | Génère et télécharge un rapport PDF             | `apps/web/src/lib/JsPdfGenerator.ts`                     | `ParsedLog`            | Fichier téléchargé               |
+| `usePdfGenerator`       | Renvoie la fonction `generatePdf`               | `apps/web/src/hooks/usePdfGenerator.ts`                  | `ParsedLog`            | Appelle `IPdfGenerator.generate` |
+| `SortableTable`         | Tableau générique triable et filtrable          | `packages/ui-components/src/SortableTable.tsx`           | `data`, `columns`      | Composant React                  |
 
 ## 6. Détails par agent
 
@@ -81,11 +83,27 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 
 ### `useUpload`
 
-- **Rôle** : envoie les fichiers à l’API et gère l’état de chargement.
+- **Rôle** : orchestre `useFileInput` et `useApiPost` pour envoyer les fichiers.
 - **Entrées** : tableau de `File`.
 - **Sorties** : `ParsedLog` passé au callback `onSuccess`.
-- **Dépendances** : `fetch` / API NestJS.
-- **Tests** : `apps/web/src/__tests__/...` (à compléter).
+- **Dépendances** : `useApiPost`, `useFileInput`.
+- **Tests** : `apps/web/src/__tests__/useUpload.test.ts`.
+
+### `useApiPost`
+
+- **Rôle** : envoie un `FormData` en POST et gère l’état de chargement.
+- **Entrées** : `FormData` et endpoint.
+- **Sorties** : réponse JSON ou message d’erreur.
+- **Dépendances** : `fetch`.
+- **Tests** : `apps/web/src/__tests__/useApiPost.test.tsx`.
+
+### `useFileInput`
+
+- **Rôle** : récupère les fichiers issus d’un input ou d’un drop.
+- **Entrées** : `FileList` ou tableau de `File`.
+- **Sorties** : `File[]` via callback et stockés localement.
+- **Dépendances** : aucune.
+- **Tests** : `apps/web/src/__tests__/useFileInput.test.tsx`.
 
 ### `UploadController`
 

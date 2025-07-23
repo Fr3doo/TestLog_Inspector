@@ -24,7 +24,7 @@ describe('useUpload', () => {
 
     expect(fetchMock).toHaveBeenCalledWith(
       `${apiUrl.replace(/\/$/, '')}/analyze`,
-      expect.objectContaining({ method: 'POST' })
+      expect.objectContaining({ method: 'POST' }),
     );
     vi.restoreAllMocks();
   });
