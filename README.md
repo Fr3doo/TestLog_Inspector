@@ -293,6 +293,12 @@ Merci de consulter [AGENT.md](AGENT.md) pour le guide complet. Les PR doivent
 passer `pnpm lint` et `pnpm test` avant soumission et suivre la convention de
 commit `feat(scope): message`.
 
+Exemple :
+
+```bash
+git commit -m "feat(api): ajout du téléversement de plusieurs fichiers"
+```
+
 ## 🚀 Publication d'une release
 
 Le package `@testlog-inspector/log-parser` est publié sur npm via GitHub
