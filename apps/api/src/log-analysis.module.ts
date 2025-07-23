@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
-import { LogAnalysisController } from './log-analysis.controller';
-import { UploadController } from './upload.controller';
-import { LogAnalysisService } from './log-analysis.service';
-import { FileValidator } from './file-validator.service';
-import { FileValidationService } from './file-validation.service';
+import { LogAnalysisController } from './controllers/log-analysis.controller';
+import { UploadController } from './controllers/upload.controller';
+import { LogAnalysisService } from './services/log-analysis.service';
+import { FileValidator } from './services/file-validator.service';
+import { FileValidationService } from './services/file-validation.service';
 import {
   LogParser,
   JsonStrategy,

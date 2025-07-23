@@ -3,7 +3,7 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
-import { LogAnalysisModule } from './log-analysis.module';
+import { LogAnalysisModule } from '../log-analysis.module';
 import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
 
 /* ---------- Mock service & fixture ------------------ */

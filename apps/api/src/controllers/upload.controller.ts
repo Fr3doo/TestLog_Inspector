@@ -16,38 +16,34 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Express } from 'express';
 
-import { ILogAnalysisService } from './ILogAnalysisService';
+import { ILogAnalysisService } from '../services/ILogAnalysisService';
 import { ParsedLog } from '@testlog-inspector/log-parser';
 import { ERR_NO_FILES } from '../common/error-messages';
 
 /**
- * POST /analyze
+ * POST /upload
  * -------------
  * Accepts one or more `.txt` or `.log` files via multipart-form-data
  *   field "files": Express.Multer.File[]
  *
  * Returns an array of ParsedLog (one result per file).
+ * Dedicated controller so other upload-related actions can be added
+ * without bloating `LogAnalysisController`.
  */
-@Controller()
-export class LogAnalysisController {
+@Controller('upload')
+export class UploadController {
   constructor(
     @Inject('ILogAnalysisService') private readonly service: ILogAnalysisService,
   ) {}
 
-  /**
-   * Multer interceptor:
-   *   - field `files`
-   *   - max 10 files (arbitrary)
-   *   - size already limited to 50MB via global config
-   */
-  @Post('analyze')
+  @Post()
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(
     FilesInterceptor('files', 10, <MulterModuleOptions>{
       dest: join(tmpdir(), 'testlog-inspector'),
     }),
   )
-  async analyze(
+  async upload(
     @UploadedFiles() files: Express.Multer.File[],
   ): Promise<ParsedLog[]> {
     if (!files?.length) {

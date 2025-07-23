@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
-import { LogAnalysisModule } from './log-analysis/log-analysis.module';
+import { LogAnalysisModule } from './log-analysis.module';
 import { LoggerInterceptor } from './common/logger.interceptor';
 import { MAX_UPLOAD_SIZE } from './common/constants';
 
