@@ -15,6 +15,8 @@
 
 export * from './src/parser.js';
 export { readFileContent } from './src/parser.js';
+export { FileReader } from './src/file-reader.js';
+export type { IFileReader } from './src/file-reader.js';
 export * from './src/types.js';
 export * from './src/ILogParser.js';
 

@@ -1,5 +1,7 @@
 export * from './parser';
 export { readFileContent } from './parser';
+export { FileReader } from './file-reader';
+export type { IFileReader } from './file-reader';
 export * from './types';
 export * from './ILogParser';
 export { DefaultStrategy } from './strategies/default-strategy';
