@@ -20,6 +20,10 @@ interface Props {
 export default function ErrorTable({ errors }: Props) {
   const [expanded, setExpanded] = React.useState<string | null>(null);
 
+  const selectedError = React.useMemo(() => {
+    return expanded !== null ? errors[Number(expanded)] : undefined;
+  }, [expanded, errors]);
+
   const columns = React.useMemo<ColumnDef<LogError>[]>(
     () => [
       {
@@ -67,9 +71,9 @@ export default function ErrorTable({ errors }: Props) {
       initialSort={{ key: 'lineNumber', desc: false }}
       filterKeys={['type', 'message']}
     >
-      {expanded !== null && errors[Number(expanded)]?.stack && (
+      {selectedError?.stack && (
         <pre className="mt-4 max-h-64 overflow-auto rounded bg-muted p-4 text-sm">
-          {errors[Number(expanded)].stack}
+          {selectedError.stack}
         </pre>
       )}
     </TableContainer>

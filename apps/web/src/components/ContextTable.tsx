@@ -2,6 +2,7 @@
 
 import { Card } from '@testlog-inspector/ui-components';
 import { TestContext } from '@testlog-inspector/log-parser';
+import { useMemo } from 'react';
 
 interface Props {
   context: TestContext;
@@ -16,7 +17,10 @@ interface Props {
  * ✔️ Pas de logique d’état : pur composant d’affichage (SRP).
  */
 export default function ContextTable({ context }: Props) {
-  const entries = Object.entries(context).filter(([, v]) => v);
+  const entries = useMemo(
+    () => Object.entries(context).filter(([, v]) => v),
+    [context],
+  );
 
   if (!entries.length) return null;
 
