@@ -3,6 +3,7 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { FileValidationService } from '../services/file-validation.service';
+import { getLogs } from '../../../../tests/helpers/api';
 
 import { LogAnalysisModule } from '../log-analysis.module';
 import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
@@ -45,7 +46,7 @@ describe('UploadController (e2e)', () => {
       .attach('files', Buffer.from('Scenario: login_flow'), 'sample.log')
       .expect(200);
 
-    expect(res.body).toEqual([parsedStub]);
+    expect(getLogs(res)).toEqual([parsedStub]);
     expect(mockService.analyze).toHaveBeenCalledTimes(1);
     expect(mockService.analyze).toHaveBeenCalledWith(
       expect.objectContaining({ originalname: 'sample.log' }),

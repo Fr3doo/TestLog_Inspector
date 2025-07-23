@@ -4,6 +4,12 @@ import request from 'supertest';
 import { join } from 'node:path';
 import { writeFileSync } from 'node:fs';
 import { tempDir } from './helpers/tempDir';
+import {
+  getLogs,
+  getSummary,
+  getContext,
+  getErrorMessage,
+} from './helpers/api';
 
 import { AppModule } from '../apps/api/src/app.module';
 import { ConfigService } from '../apps/api/src/common/config.service';
@@ -44,10 +50,11 @@ describe('Upload log file (e2e)', () => {
       .attach('files', logPath)
       .expect(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0]).toHaveProperty('summary');
-    expect(res.body[0]).toHaveProperty('context');
+    const logs = getLogs(res);
+    expect(Array.isArray(logs)).toBe(true);
+    expect(logs).toHaveLength(1);
+    expect(getSummary(res)).toBeDefined();
+    expect(getContext(res)).toBeDefined();
   });
 
   it('POST /analyze should enforce MAX_UPLOAD_SIZE', async () => {
@@ -60,6 +67,6 @@ describe('Upload log file (e2e)', () => {
       .expect(400);
 
     const mb = Math.ceil(config.maxUploadSize / (1024 * 1024));
-    expect(res.body.message).toBe(ERR_FILE_TOO_LARGE(mb));
+    expect(getErrorMessage(res)).toBe(ERR_FILE_TOO_LARGE(mb));
   });
 });
