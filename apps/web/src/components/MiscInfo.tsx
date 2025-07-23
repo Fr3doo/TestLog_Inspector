@@ -17,6 +17,7 @@ interface Props {
  */
 export default function MiscInfo({ misc }: Props) {
   const { versions, apiEndpoints, testCases, folderIds } = misc;
+  const versionEntries = Object.entries(versions);
 
   const hasVersions = Object.keys(versions).length > 0;
   const hasEndpoints = apiEndpoints.length > 0;
@@ -33,7 +34,7 @@ export default function MiscInfo({ misc }: Props) {
         <section>
           <h3 className="font-medium mb-2">Versions</h3>
           <div className="flex flex-wrap gap-2">
-            {Object.entries(versions).map(([name, ver]) => (
+            {versionEntries.map(([name, ver]) => (
               <Badge key={name} variant="secondary">
                 {name}: {ver}
               </Badge>
