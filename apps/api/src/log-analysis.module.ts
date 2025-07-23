@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
 import { LogAnalysisController } from './controllers/log-analysis.controller';
@@ -6,6 +6,10 @@ import { UploadController } from './controllers/upload.controller';
 import { LogAnalysisService } from './services/log-analysis.service';
 import { FileValidator } from './services/file-validator.service';
 import { FileValidationService } from './services/file-validation.service';
+import {
+  createFileValidationMiddleware,
+  composeValidators,
+} from './middlewares/file-validation.middleware';
 import {
   LogParser,
   JsonStrategy,
@@ -44,4 +48,15 @@ import {
     'IFileReader',
   ],
 })
-export class LogAnalysisModule {}
+export class LogAnalysisModule implements NestModule {
+  constructor(private readonly validationService: FileValidationService) {}
+
+  configure(consumer: MiddlewareConsumer) {
+    const validate = composeValidators((file) =>
+      this.validationService.validate(file),
+    );
+    consumer
+      .apply(createFileValidationMiddleware(validate))
+      .forRoutes(LogAnalysisController, UploadController);
+  }
+}

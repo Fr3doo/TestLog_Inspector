@@ -63,6 +63,7 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 | `LogParser`             | Parseur de fichiers (librairie)                                    | `packages/log-parser/src/parser.ts`                    | `path` fichier         | `ParsedLog`           |
 | `FileValidationService` | Coordonne la validation du fichier                                 | `apps/api/src/log-analysis/file-validation.service.ts` | `Express.Multer.File`  | `void` ou erreur      |
 | `FileValidator`         | Vérifie l'extension et la taille                                   | `apps/api/src/log-analysis/file-validator.service.ts`  | `Express.Multer.File`  | `void` ou erreur      |
+| `validateFiles`         | Middleware de validation des uploads                    | `apps/api/src/middlewares/file-validation.middleware.ts` | `Request`             | `next()` ou erreur    |
 | `LoggerInterceptor`     | Journalisation globale des requêtes                                | `apps/api/src/common/logger.interceptor.ts`            | `Request/Response`     | `Observable`          |
 | `JsPdfGenerator`        | Génère et télécharge un rapport PDF                                | `apps/web/src/lib/JsPdfGenerator.ts`                   | `ParsedLog`            | Fichier téléchargé    |
 | `usePdfGenerator`       | Renvoie la fonction `generatePdf`                 | `apps/web/src/hooks/usePdfGenerator.ts`               | `ParsedLog`            | Appelle `IPdfGenerator.generate` |
@@ -126,6 +127,14 @@ Types autorisés : `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - **Entrées** : `Express.Multer.File`.
 - **Sorties** : exception en cas d'erreur.
 - **Tests** : (à compléter).
+
+### `validateFiles`
+
+- **Rôle** : middleware de validation des fichiers uploadés.
+- **Entrées** : `Request` avec `files`.
+- **Sorties** : appel `next()` ou exception.
+- **Dépendances** : `FileValidationService`.
+- **Tests** : `apps/api/src/middlewares/file-validation.middleware.spec.ts`.
 
 ### `LoggerInterceptor`
 
