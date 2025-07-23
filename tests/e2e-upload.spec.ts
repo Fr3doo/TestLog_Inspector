@@ -6,7 +6,7 @@ import { writeFileSync } from 'node:fs';
 import { tempDir } from './helpers/tempDir';
 
 import { AppModule } from '../apps/api/src/app.module';
-import { MAX_UPLOAD_SIZE } from '../apps/api/src/common/constants';
+import { ConfigService } from '../apps/api/src/common/config.service';
 import { ERR_FILE_TOO_LARGE } from '../apps/api/src/common/error-messages';
 
 describe('Upload log file (e2e)', () => {
@@ -51,14 +51,15 @@ describe('Upload log file (e2e)', () => {
   });
 
   it('POST /analyze should enforce MAX_UPLOAD_SIZE', async () => {
-    const oversized = Buffer.alloc(MAX_UPLOAD_SIZE + 1, '.');
+    const config = new ConfigService();
+    const oversized = Buffer.alloc(config.maxUploadSize + 1, '.');
 
     const res = await request(app.getHttpServer())
       .post('/analyze')
       .attach('files', oversized, 'big.log')
       .expect(400);
 
-    const mb = Math.ceil(MAX_UPLOAD_SIZE / (1024 * 1024));
+    const mb = Math.ceil(config.maxUploadSize / (1024 * 1024));
     expect(res.body.message).toBe(ERR_FILE_TOO_LARGE(mb));
   });
 });

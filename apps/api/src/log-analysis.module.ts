@@ -6,6 +6,7 @@ import { UploadController } from './controllers/upload.controller';
 import { LogAnalysisService } from './services/log-analysis.service';
 import { FileValidator } from './services/file-validator.service';
 import { FileValidationService } from './services/file-validation.service';
+import { ConfigModule } from './common/config.module';
 import {
   createFileValidationMiddleware,
   composeValidators,
@@ -27,6 +28,7 @@ import {
   imports: [
     // Local Multer module (inherits the global 50MB limit)
     MulterModule,
+    ConfigModule,
   ],
   controllers: [LogAnalysisController, UploadController],
   providers: [
