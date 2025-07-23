@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
+import { FileValidationService } from '../services/file-validation.service';
 
 import { LogAnalysisModule } from '../log-analysis.module';
 import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
@@ -26,6 +27,8 @@ describe('LogAnalysisController (e2e)', () => {
     })
       .overrideProvider('ILogAnalysisService')
       .useValue(mockService)
+      .overrideProvider(FileValidationService)
+      .useValue({ validate: jest.fn() })
       .compile();
 
     app = module.createNestApplication();
