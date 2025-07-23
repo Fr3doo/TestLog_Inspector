@@ -260,6 +260,16 @@ Pour lister rapidement les commandes utiles :
 pnpm run help
 ```
 
+## 📦 Scripts communs
+
+Chaque `package.json` définit les commandes suivantes :
+
+- `dev` – démarre le mode développement
+- `build` – produit les fichiers compilés
+- `start` – exécute la version compilée
+- `lint` – lance ESLint
+- `test` – exécute la suite de tests
+
 ## 🛠️ Fichiers de configuration
 
 - `package.json` : scripts communs (`dev`, `build`, `start`, `lint`, `test`).
