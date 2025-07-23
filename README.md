@@ -196,6 +196,12 @@ const parser = new LogParser();
 parser.registerStrategy(new XmlStrategy());
 ```
 
+> ℹ️ **À noter :** inutile de créer à l'avance des dossiers ou fichiers pour
+> d'hypothétiques stratégies. Quand un nouveau format de log devra être pris en
+> charge, créez simplement un fichier dans
+> `packages/log-parser/src/strategies` qui étend `BaseStrategy`, puis
+> enregistrez-la via `parser.registerStrategy()` comme illustré ci-dessus.
+
 ## ❗ Gestion des erreurs
 
 ```ts
