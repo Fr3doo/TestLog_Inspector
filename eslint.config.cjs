@@ -83,6 +83,19 @@ module.exports = [
     },
   },
 
+  // Règles spécifiques API : exiger l'extension .js pour les imports ESM
+  {
+    files: ['apps/api/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
+    rules: {
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        { js: 'always', jsx: 'always', ts: 'never', tsx: 'never' }
+      ],
+    },
+  },
+
   // 4️⃣ Prettier en dernier
   prettier,
 ];
