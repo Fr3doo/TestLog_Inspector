@@ -25,7 +25,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@testlog-inspector/*": ["packages/*/src"]
+      "@testlog-inspector/*": ["packages/*/dist"]
     }
   },
   "exclude": ["node_modules", "dist", "coverage"]
