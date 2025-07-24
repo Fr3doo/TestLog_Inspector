@@ -14,9 +14,9 @@ export function matchRegex(
 ): RegexMatchWithPos[] {
   return lines.flatMap((line, i) =>
     [...line.matchAll(regex)].map(
-      (m) =>
+      (m: RegExpMatchArray) =>
         ({
-          ...(m as RegExpMatchArray),
+          ...m,
           index: m.index ?? 0,
           lineNumber: i + 1,
         }) as RegexMatchWithPos,
