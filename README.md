@@ -200,6 +200,13 @@ npx tl-inspect path/to/file.log
 
 La sortie correspond au `ParsedLog` au format JSON.
 
+Un second script `validate-log` vérifie simplement qu’un fichier est valide.
+Il renvoie un code d’erreur non nul si le parsing échoue.
+
+```bash
+npx validate-log path/to/file.log
+```
+
 ## 🔌 Injection de dépendances
 
 ```ts
