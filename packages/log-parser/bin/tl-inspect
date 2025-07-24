@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-const { LogParser } = require('../dist/index.js');
-
 async function main() {
+  const { LogParser } = await import('../dist/index.js');
   const file = process.argv[2];
   if (!file) {
     console.error('Usage: tl-inspect <file.log>');
