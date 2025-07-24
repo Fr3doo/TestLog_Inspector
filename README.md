@@ -304,6 +304,7 @@ Chaque `package.json` définit les commandes suivantes :
 - `playwright.config.ts` et `vitest.workspace.config.ts` pour les tests.
 - `.editorconfig` : indentation, fin de ligne et encodage unifiés.
 - Voir également [ENVIRONMENT.md](ENVIRONMENT.md) pour les variables.
+- Les imports locaux doivent inclure l’extension `.js` car `moduleResolution` est réglé sur `NodeNext` ([docs](https://www.typescriptlang.org/docs/handbook/esm-node.html)).
 
 ## 🧪 Tests
 
