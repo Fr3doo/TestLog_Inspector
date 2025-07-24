@@ -57,6 +57,28 @@ describe('Upload log file (e2e)', () => {
     expect(getContext(res)).toBeDefined();
   });
 
+  it('should keep memory usage stable during multiple uploads', async () => {
+    const logPath = join(tmp.dir, 'mem.log');
+    writeFileSync(logPath, 'Scenario: mem_check');
+
+    const before = process.memoryUsage().heapUsed;
+
+    for (let i = 0; i < 3; i++) {
+      await request(app.getHttpServer())
+        .post('/analyze')
+        .attach('files', logPath)
+        .expect(200);
+    }
+
+    global.gc?.();
+    const after = process.memoryUsage().heapUsed;
+    const diffMb = (after - before) / (1024 * 1024);
+    if (diffMb > 20) {
+      console.warn(`Potential memory leak detected: +${diffMb.toFixed(2)} MB`);
+    }
+    expect(diffMb).toBeLessThan(20);
+  });
+
   it('POST /analyze should enforce MAX_UPLOAD_SIZE', async () => {
     const config = new ConfigService();
     const oversized = Buffer.alloc(config.maxUploadSize + 1, '.');
