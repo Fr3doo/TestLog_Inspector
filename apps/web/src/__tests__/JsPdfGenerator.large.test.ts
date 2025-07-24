@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
+import parsedLogFixture from '../../../../tests/fixtures/parsedLog.js';
 
 const fakeDoc = {
   setFontSize: vi.fn().mockReturnThis(),

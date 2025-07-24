@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import type { Express } from 'express';
-import { FileValidator } from './file-validator.service';
-import { ERR_FILE_REQUIRED } from '../common/error-messages';
+import { FileValidator } from './file-validator.service.js';
+import { ERR_FILE_REQUIRED } from '../common/error-messages.js';
 
 /**
  * Coordinates all checks on the uploaded file before parsing.

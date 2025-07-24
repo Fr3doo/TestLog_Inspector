@@ -16,9 +16,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Express } from 'express';
 
-import { ILogAnalysisService } from '../services/ILogAnalysisService';
+import { ILogAnalysisService } from '../services/ILogAnalysisService.js';
 import { ParsedLog } from '@testlog-inspector/log-parser';
-import { ERR_NO_FILES } from '../common/error-messages';
+import { ERR_NO_FILES } from '../common/error-messages.js';
 
 /**
  * POST /upload

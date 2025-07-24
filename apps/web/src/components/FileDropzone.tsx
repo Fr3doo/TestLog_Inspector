@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useUpload } from '../hooks/useUpload';
+import { useUpload } from '../hooks/useUpload.js';
 import { ParsedLog } from '@testlog-inspector/log-parser';
 import { Card } from '@testlog-inspector/ui-components';
-import { ALLOWED_EXT } from '../../../api/src/common/file.constants';
+import { ALLOWED_EXT } from '../../../api/src/common/file.constants.js';
 
 const classes = {
   base: 'p-8 border-2 border-dashed',

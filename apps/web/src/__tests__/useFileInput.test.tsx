@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useFileInput } from '../hooks/useFileInput';
+import { useFileInput } from '../hooks/useFileInput.js';
 
 describe('useFileInput', () => {
   it('returns selected files via callback', () => {

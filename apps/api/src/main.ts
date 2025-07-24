@@ -3,8 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { json, urlencoded } from 'express';
 import helmet from 'helmet';
 
-import { AppModule } from './app.module';
-import { ConfigService } from './common/config.service';
+import { AppModule } from './app.module.js';
+import { ConfigService } from './common/config.service.js';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');

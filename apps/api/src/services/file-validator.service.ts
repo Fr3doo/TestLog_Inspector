@@ -2,12 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { extname } from 'node:path';
 import type { Express } from 'express';
 import type { FileFilterCallback } from 'multer';
-import { ConfigService } from '../common/config.service';
-import { ALLOWED_EXT } from '../common/file.constants';
+import { ConfigService } from '../common/config.service.js';
+import { ALLOWED_EXT } from '../common/file.constants.js';
 import {
   ERR_FILE_TOO_LARGE,
   ERR_INVALID_FILETYPE,
-} from '../common/error-messages';
+} from '../common/error-messages.js';
 
 /**
  * Service responsible for validating uploaded files.

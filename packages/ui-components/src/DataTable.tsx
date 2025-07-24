@@ -1,1 +1,1 @@
-export { SortableTable as DataTable } from './SortableTable';
+export { SortableTable as DataTable } from './SortableTable.js';

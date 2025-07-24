@@ -8,9 +8,9 @@ import {
 } from '@nestjs/common';
 import type { Express } from 'express';
 import { ParsedLog, ILogParser } from '@testlog-inspector/log-parser';
-import { FileValidationService } from './file-validation.service';
-import { ILogAnalysisService } from './ILogAnalysisService';
-import { ERR_PARSING_TIMEOUT } from '../common/error-messages';
+import { FileValidationService } from './file-validation.service.js';
+import { ILogAnalysisService } from './ILogAnalysisService.js';
+import { ERR_PARSING_TIMEOUT } from '../common/error-messages.js';
 
 @Injectable()
 export class LogAnalysisService implements ILogAnalysisService {

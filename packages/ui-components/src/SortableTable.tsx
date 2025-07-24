@@ -5,8 +5,8 @@ import {
   TableHeader,
   TableRow,
   TableCell,
-} from './shadcn/Table';
-import { Input } from './shadcn/Input';
+} from './shadcn/Table.js';
+import { Input } from './shadcn/Input.js';
 
 export interface ColumnDef<TData> {
   accessorKey?: keyof TData;

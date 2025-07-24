@@ -4,7 +4,7 @@ import * as React from 'react';
 import { LogError } from '@testlog-inspector/log-parser';
 
 import { Button, type ColumnDef } from '@testlog-inspector/ui-components';
-import TableContainer from './TableContainer';
+import TableContainer from './TableContainer.js';
 
 interface Props {
   errors: LogError[];

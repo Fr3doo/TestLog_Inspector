@@ -3,17 +3,17 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { join } from 'node:path';
 import { writeFileSync } from 'node:fs';
-import { tempDir } from './helpers/tempDir';
+import { tempDir } from './helpers/tempDir.js';
 import {
   getLogs,
   getSummary,
   getContext,
   getErrorMessage,
-} from './helpers/api';
+} from './helpers/api.js';
 
-import { AppModule } from '../apps/api/src/app.module';
-import { ConfigService } from '../apps/api/src/common/config.service';
-import { ERR_FILE_TOO_LARGE } from '../apps/api/src/common/error-messages';
+import { AppModule } from '../apps/api/src/app.module.js';
+import { ConfigService } from '../apps/api/src/common/config.service.js';
+import { ERR_FILE_TOO_LARGE } from '../apps/api/src/common/error-messages.js';
 
 describe('Upload log file (e2e)', () => {
   let app: INestApplication;

@@ -1,16 +1,16 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 
-import { LogAnalysisController } from './controllers/log-analysis.controller';
-import { UploadController } from './controllers/upload.controller';
-import { LogAnalysisService } from './services/log-analysis.service';
-import { FileValidator } from './services/file-validator.service';
-import { FileValidationService } from './services/file-validation.service';
-import { ConfigModule } from './common/config.module';
+import { LogAnalysisController } from './controllers/log-analysis.controller.js';
+import { UploadController } from './controllers/upload.controller.js';
+import { LogAnalysisService } from './services/log-analysis.service.js';
+import { FileValidator } from './services/file-validator.service.js';
+import { FileValidationService } from './services/file-validation.service.js';
+import { ConfigModule } from './common/config.module.js';
 import {
   createFileValidationMiddleware,
   composeValidators,
-} from './middlewares/file-validation.middleware';
+} from './middlewares/file-validation.middleware.js';
 import {
   LogParser,
   JsonStrategy,

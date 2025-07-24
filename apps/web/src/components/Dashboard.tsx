@@ -2,10 +2,10 @@
 
 import { ParsedLog } from '@testlog-inspector/log-parser';
 
-import SummaryCard from './SummaryCard';
-import ContextTable from './ContextTable';
-import ErrorTable from './ErrorTable';
-import MiscInfo from './MiscInfo';
+import SummaryCard from './SummaryCard.js';
+import ContextTable from './ContextTable.js';
+import ErrorTable from './ErrorTable.js';
+import MiscInfo from './MiscInfo.js';
 
 interface DashboardProps {
   data: ParsedLog;
