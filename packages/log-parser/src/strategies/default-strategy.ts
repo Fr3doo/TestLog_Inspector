@@ -47,7 +47,7 @@ export const DefaultStrategy: IParsingStrategy = {
     };
 
     /* 3. Erreurs/Exceptions ------------------------------------- */
-    const errorMatches = matchRegex(lines, /(ERROR|Exception)\s*[:-]\s*(.+)/);
+    const errorMatches = matchRegex(lines, /(ERROR|Exception)\s*[:-]\s*(.+)/g);
     const errors: LogError[] = errorMatches.map((m: RegexMatchWithPos) => {
       const idx = m.index;
       return {
@@ -61,19 +61,19 @@ export const DefaultStrategy: IParsingStrategy = {
 
     /* 4. Infos diverses ----------------------------------------- */
     const versions = Object.fromEntries(
-      matchRegex(lines, /(\w+) v?(\d+\.\d+\.\d+)/).map(
+      matchRegex(lines, /(\w+) v?(\d+\.\d+\.\d+)/g).map(
         (m: RegexMatchWithPos) => [m[1], m[2]],
       ),
     );
     const misc: MiscInfo = {
       versions,
-      apiEndpoints: matchRegex(lines, /(https?:\/\/[^\s]+)/).map(
+      apiEndpoints: matchRegex(lines, /(https?:\/\/[^\s]+)/g).map(
         (m: RegexMatchWithPos) => m[1],
       ),
-      testCases: matchRegex(lines, /TestCase:\s*(\w+)/).map(
+      testCases: matchRegex(lines, /TestCase:\s*(\w+)/g).map(
         (m: RegexMatchWithPos) => m[1],
       ),
-      folderIds: matchRegex(lines, /FolderID:\s*(\w+)/).map(
+      folderIds: matchRegex(lines, /FolderID:\s*(\w+)/g).map(
         (m: RegexMatchWithPos) => m[1],
       ),
     };
