@@ -5,6 +5,9 @@
     "rootDir": "src",
     "rootDirs": ["src", "../../packages/log-parser/src"],
     "outDir": "dist",
+    "paths": {
+      "@testlog-inspector/*": ["packages/*/src"]
+    },
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "emitDecoratorMetadata": true,

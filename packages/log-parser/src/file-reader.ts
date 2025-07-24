@@ -1,4 +1,4 @@
-import { readFile } from './file-utils.js';
+import { readFile } from './file-utils';
 
 export interface IFileReader {
   read(path: string): Promise<string>;

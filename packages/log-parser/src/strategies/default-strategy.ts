@@ -5,12 +5,12 @@ import {
   LogError,
   MiscInfo,
   IParsingStrategy,
-} from '../types.js';
+} from '../types';
 import {
   execSummaryFrom,
   matchRegex,
   RegexMatchWithPos,
-} from './strategy-helpers.js';
+} from './strategy-helpers';
 
 function extractSingle(r: RegExp, lines: string[]): string {
   const m = lines.find((l) => r.test(l));
