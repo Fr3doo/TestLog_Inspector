@@ -1,4 +1,4 @@
-import { ParsedLog } from '../../packages/log-parser/src/types';
+import { ParsedLog } from '../../packages/log-parser/src/types.js';
 
 /** Minimal ParsedLog reused across tests */
 export const parsedLogFixture: ParsedLog = {

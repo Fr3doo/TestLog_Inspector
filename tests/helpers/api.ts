@@ -1,4 +1,4 @@
-import type { ParsedLog } from '../../packages/log-parser/src/types';
+import type { ParsedLog } from '../../packages/log-parser/src/types.js';
 
 interface ApiResponse {
   body: unknown;
