@@ -20,12 +20,16 @@ module.exports = {
       extensionsToTreatAsEsm: ['.ts'],
       moduleNameMapper: {
         '^@testlog-inspector/(.*)$': '<rootDir>/../../packages/$1/src',
-        '^\./file-validation.middleware.js$': '<rootDir>/src/middlewares/file-validation.middleware.ts',
+        '^\\./middlewares/file-validation.middleware.js$':
+          '<rootDir>/src/middlewares/file-validation.middleware.ts',
         '^\./config.js$': '<rootDir>/src/common/config.ts',
         '^\./config.service.js$': '<rootDir>/src/common/config.service.ts',
-        '^\./file-validation.service.js$': '<rootDir>/src/services/file-validation.service.ts',
-        '^\./file-validator.service.js$': '<rootDir>/src/services/file-validator.service.ts',
-        '^\.\./(common|services|controllers|log-analysis)/(.+)\.js$': '<rootDir>/src/$1/$2.ts',
+        '^\./file-validation.service.js$':
+          '<rootDir>/src/services/file-validation.service.ts',
+        '^\./file-validator.service.js$':
+          '<rootDir>/src/services/file-validator.service.ts',
+        '^\.\./(common|services|controllers|log-analysis)/(.+)\.js$':
+          '<rootDir>/src/$1/$2.ts',
         '^\./(controllers)/(.+)\.js$': '<rootDir>/src/$1/$2.ts',
         '^\./services/(.+)\.js$': '<rootDir>/src/services/$1.ts',
         '^\./common/config.module.js$': '<rootDir>/src/common/config.module.ts',

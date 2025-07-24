@@ -2,10 +2,10 @@
  * Public façade respectant SRP (1 seule responsabilité : orchestrer).
  * OCP : ajouter une stratégie via registerStrategy() sans modifier le code.
  */
-import { IParsingStrategy, ParsedLog } from './types.js';
-import { validateParsedLog } from './parsed-log.schema.js';
-import { DefaultStrategy } from './strategies/default-strategy.js';
-import { FileReader, IFileReader } from './file-reader.js';
+import { IParsingStrategy, ParsedLog } from './types';
+import { validateParsedLog } from './parsed-log.schema';
+import { DefaultStrategy } from './strategies/default-strategy';
+import { FileReader, IFileReader } from './file-reader';
 
 /**
  * Read a file and return its content using UTF-8 encoding.
