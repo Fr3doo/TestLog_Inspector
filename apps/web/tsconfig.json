@@ -42,7 +42,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "module": "esnext"
   },
   "include": [
     "next-env.d.ts",

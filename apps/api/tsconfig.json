@@ -1,13 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
-
   "compilerOptions": {
     "rootDir": "src",
-    "rootDirs": ["src", "../../packages/log-parser/src"],
     "outDir": "dist",
-    "paths": {
-      "@testlog-inspector/*": ["packages/*/src"]
-    },
+    "paths": { "@testlog-inspector/*": ["packages/*/dist"] },
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "emitDecoratorMetadata": true,
@@ -16,8 +12,6 @@
     "noUnusedLocals": false,
     "types": ["node", "multer", "jest", "supertest"]
   },
-
   "include": ["src/**/*.ts"],
-
   "exclude": ["node_modules", "dist"]
 }

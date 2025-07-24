@@ -2,8 +2,8 @@
   "compilerOptions": {
     /* === Langage & output ====================== */
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "lib": ["ES2022", "DOM"],
     "outDir": "dist",
     "rootDir": ".",
@@ -30,3 +30,4 @@
   },
   "exclude": ["node_modules", "dist", "coverage"]
 }
+
