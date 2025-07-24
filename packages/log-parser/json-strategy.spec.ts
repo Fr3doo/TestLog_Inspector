@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { JsonStrategy } from '@parser/strategies/json-strategy';
-import type { IParsingStrategy, ParsedLog } from '@parser/types';
+import type { IParsingStrategy, ParsedLog } from './src/types.js';
 
 // Ensure class implements the interface at runtime
 const strategy: IParsingStrategy = new JsonStrategy();
