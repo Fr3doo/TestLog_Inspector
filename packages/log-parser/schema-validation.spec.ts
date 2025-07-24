@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { LogParser } from '@parser/parser';
-import type { IParsingStrategy } from '@parser/types';
+import type { IParsingStrategy } from './src/types.js';
 import { writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';

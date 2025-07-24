@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { JunitStrategy } from '@parser/strategies/junit-strategy';
-import type { IParsingStrategy, ParsedLog } from '@parser/types';
+import type { IParsingStrategy, ParsedLog } from './src/types.js';
 
 const strategy: IParsingStrategy = new JunitStrategy();
 
