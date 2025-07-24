@@ -5,8 +5,8 @@ import {
   LogError,
   MiscInfo,
   IParsingStrategy,
-} from '../types';
-import { execSummaryFrom } from './strategy-helpers';
+} from '../types.js';
+import { execSummaryFrom } from './strategy-helpers.js';
 
 /**
  * Strategy JSON Lines / JSON Array
