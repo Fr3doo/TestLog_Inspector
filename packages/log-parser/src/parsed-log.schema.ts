@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { ParsedLog } from './types';
+import type { ParsedLog } from './types.js';
 
 export const parsedLogSchema = z.object({
   summary: z.object({
