@@ -6,17 +6,15 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [
-        "dist/**",
-        ".next/**"
-      ]
+      "outputs": ["dist/**", ".next/**"]
     },
     "test": {
       "outputs": ["coverage/**", "coverage.*"]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^dev"]
     },
     "start": {
       "cache": false,
