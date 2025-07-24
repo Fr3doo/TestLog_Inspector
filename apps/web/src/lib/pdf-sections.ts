@@ -5,9 +5,9 @@ import {
   addText,
   getPageWidth,
   splitText,
-} from './pdf-tools';
+} from './pdf-tools.js';
 import type { ParsedLog } from '@testlog-inspector/log-parser';
-import { PDF_CONFIG, setHeading, setParagraph } from './pdf';
+import { PDF_CONFIG, setHeading, setParagraph } from './pdf.js';
 
 export interface SectionState {
   cursorY: number;

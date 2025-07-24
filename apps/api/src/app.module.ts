@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
-import { LogAnalysisModule } from './log-analysis.module';
-import { LoggerInterceptor } from './common/logger.interceptor';
-import { ConfigModule } from './common/config.module';
-import { ConfigService } from './common/config.service';
+import { LogAnalysisModule } from './log-analysis.module.js';
+import { LoggerInterceptor } from './common/logger.interceptor.js';
+import { ConfigModule } from './common/config.module.js';
+import { ConfigService } from './common/config.service.js';
 
 /**
  * Root module for the NestJS API.

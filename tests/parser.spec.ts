@@ -5,7 +5,7 @@ import {
 } from '@testlog-inspector/log-parser';
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { tempDir } from './helpers/tempDir';
+import { tempDir } from './helpers/tempDir.js';
 import { vi } from 'vitest';
 
 describe('LogParser', () => {

@@ -1,5 +1,5 @@
 import { ParsedLog } from '@testlog-inspector/log-parser';
-import { CONFIG } from '../config';
+import { CONFIG } from '../config.js';
 
 const API_BASE = CONFIG.apiUrl;
 

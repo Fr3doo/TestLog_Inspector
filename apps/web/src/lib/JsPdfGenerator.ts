@@ -1,9 +1,9 @@
-import { createDoc, saveDoc } from './pdf-tools';
+import { createDoc, saveDoc } from './pdf-tools.js';
 import { jsPDF } from 'jspdf';
 import type { ParsedLog } from '@testlog-inspector/log-parser';
-import type { IPdfGenerator } from './IPdfGenerator';
-import { PDF_CONFIG } from './pdf';
-import { Section, SectionState, defaultSections } from './pdf-sections';
+import type { IPdfGenerator } from './IPdfGenerator.js';
+import { PDF_CONFIG } from './pdf.js';
+import { Section, SectionState, defaultSections } from './pdf-sections.js';
 
 /**
  * Implémentation concrète de `IPdfGenerator` basée sur jsPDF.

@@ -9,7 +9,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 
-import { AppModule } from '../src/app.module';
+import { AppModule } from '../src/app.module.js';
 
 async function generate() {
   const app = await NestFactory.create(AppModule);

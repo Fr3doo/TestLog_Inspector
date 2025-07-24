@@ -1,8 +1,8 @@
-import { renderWithProviders, screen, within } from '../../../../tests/helpers/renderWithProviders';
+import { renderWithProviders, screen, within } from '../../../../tests/helpers/renderWithProviders.js';
 import userEvent from '@testing-library/user-event';
 
 import ErrorTable from '@/components/ErrorTable';
-import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
+import parsedLogFixture from '../../../../tests/fixtures/parsedLog.js';
 
 describe('<ErrorTable />', () => {
   it('renders rows in ascending order by default', () => {

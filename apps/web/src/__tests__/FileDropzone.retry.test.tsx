@@ -2,10 +2,10 @@ import {
   renderWithProviders,
   screen,
   waitFor,
-} from '../../../../tests/helpers/renderWithProviders';
+} from '../../../../tests/helpers/renderWithProviders.js';
 import userEvent from '@testing-library/user-event';
 import FileDropzone from '@/components/FileDropzone';
-import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
+import parsedLogFixture from '../../../../tests/fixtures/parsedLog.js';
 import { vi } from 'vitest';
 
 describe('<FileDropzone /> retry', () => {

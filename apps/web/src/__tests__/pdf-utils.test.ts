@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { PDF_CONFIG, setHeading, setParagraph } from '../lib/pdf';
+import { PDF_CONFIG, setHeading, setParagraph } from '../lib/pdf.js';
 
 describe('pdf utilities', () => {
   it('apply heading and paragraph styles', () => {

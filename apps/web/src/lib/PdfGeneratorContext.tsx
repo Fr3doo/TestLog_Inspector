@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext } from 'react';
-import type { IPdfGenerator } from './IPdfGenerator';
-import { JsPdfGenerator } from './JsPdfGenerator';
+import type { IPdfGenerator } from './IPdfGenerator.js';
+import { JsPdfGenerator } from './JsPdfGenerator.js';
 
 /**
  * Contexte React fournissant un `IPdfGenerator`.

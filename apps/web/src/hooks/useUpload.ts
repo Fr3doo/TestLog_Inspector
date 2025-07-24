@@ -1,9 +1,9 @@
 'use client';
 
 import { ParsedLog } from '@testlog-inspector/log-parser';
-import { useApiPost } from './useApiPost';
-import { useFileInput } from './useFileInput';
-import { CONFIG } from '../config';
+import { useApiPost } from './useApiPost.js';
+import { useFileInput } from './useFileInput.js';
+import { CONFIG } from '../config.js';
 
 const API_BASE = CONFIG.apiUrl;
 

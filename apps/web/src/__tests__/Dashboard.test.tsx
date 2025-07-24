@@ -1,7 +1,7 @@
-import { renderWithProviders, screen } from '../../../../tests/helpers/renderWithProviders';
+import { renderWithProviders, screen } from '../../../../tests/helpers/renderWithProviders.js';
 
 import Dashboard from '@/components/Dashboard';
-import parsedLogFixture from '../../../../tests/fixtures/parsedLog';
+import parsedLogFixture from '../../../../tests/fixtures/parsedLog.js';
 
 describe('<Dashboard />', () => {
   it('renders without crashing and shows key sections', () => {

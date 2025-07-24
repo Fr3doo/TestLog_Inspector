@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ApiConfig, getConfig } from './config';
+import { ApiConfig, getConfig } from './config.js';
 
 /**
  * Injectable service exposing normalized configuration values.
