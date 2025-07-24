@@ -6,7 +6,11 @@ import {
   MiscInfo,
   IParsingStrategy,
 } from '../types.js';
-import { execSummaryFrom, matchRegex } from './strategy-helpers.js';
+import {
+  execSummaryFrom,
+  matchRegex,
+  RegexMatchWithPos,
+} from './strategy-helpers.js';
 
 function extractSingle(r: RegExp, lines: string[]): string {
   const m = lines.find((l) => r.test(l));
@@ -44,7 +48,7 @@ export const DefaultStrategy: IParsingStrategy = {
 
     /* 3. Erreurs/Exceptions ------------------------------------- */
     const errorMatches = matchRegex(lines, /(ERROR|Exception)\s*[:-]\s*(.+)/);
-    const errors: LogError[] = errorMatches.map((m) => {
+    const errors: LogError[] = errorMatches.map((m: RegexMatchWithPos) => {
       const idx = m.index;
       return {
         type: m[1],
@@ -57,13 +61,21 @@ export const DefaultStrategy: IParsingStrategy = {
 
     /* 4. Infos diverses ----------------------------------------- */
     const versions = Object.fromEntries(
-      matchRegex(lines, /(\w+) v?(\d+\.\d+\.\d+)/).map((m) => [m[1], m[2]]),
+      matchRegex(lines, /(\w+) v?(\d+\.\d+\.\d+)/).map(
+        (m: RegexMatchWithPos) => [m[1], m[2]],
+      ),
     );
     const misc: MiscInfo = {
       versions,
-      apiEndpoints: matchRegex(lines, /(https?:\/\/[^\s]+)/).map((m) => m[1]),
-      testCases: matchRegex(lines, /TestCase:\s*(\w+)/).map((m) => m[1]),
-      folderIds: matchRegex(lines, /FolderID:\s*(\w+)/).map((m) => m[1]),
+      apiEndpoints: matchRegex(lines, /(https?:\/\/[^\s]+)/).map(
+        (m: RegexMatchWithPos) => m[1],
+      ),
+      testCases: matchRegex(lines, /TestCase:\s*(\w+)/).map(
+        (m: RegexMatchWithPos) => m[1],
+      ),
+      folderIds: matchRegex(lines, /FolderID:\s*(\w+)/).map(
+        (m: RegexMatchWithPos) => m[1],
+      ),
     };
 
     return { summary, context: ctx, errors, misc };
