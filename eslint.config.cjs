@@ -5,6 +5,7 @@ const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const importPlugin = require('eslint-plugin-import');
+const nodePlugin = require('eslint-plugin-n');
 const prettier = require('eslint-config-prettier');
 const nextPlugin = require('@next/eslint-plugin-next');
 
@@ -16,25 +17,28 @@ module.exports = [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        tsconfigRootDir: __dirname
+        tsconfigRootDir: __dirname,
       },
       globals: {
         ...globals.node,
-        ...globals.jest
-      }
+        ...globals.jest,
+      },
     },
     plugins: {
       '@next/next': nextPlugin,
       '@typescript-eslint': tsPlugin,
       react: reactPlugin,
       'react-hooks': reactHooks,
-      import: importPlugin
+      import: importPlugin,
     },
     rules: {
       'no-undef': 'off',
       'no-unused-vars': 'off',
       'react/react-in-jsx-scope': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
@@ -49,7 +53,7 @@ module.exports = [
       '@typescript-eslint/ban-types': 'off',
       '@typescript-eslint/no-this-alias': 'off',
       ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs['core-web-vitals']?.rules
+      ...nextPlugin.configs['core-web-vitals']?.rules,
     },
   },
 
@@ -65,20 +69,23 @@ module.exports = [
       parserOptions: { tsconfigRootDir: __dirname },
       globals: {
         ...globals.node,
-        ...globals.jest
-      }
+        ...globals.jest,
+      },
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
       react: reactPlugin,
       'react-hooks': reactHooks,
-      import: importPlugin
+      import: importPlugin,
     },
     rules: {
       'react/react-in-jsx-scope': 'off',
       'no-unused-vars': 'off',
       'no-undef': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
       /* … autres règles TS … */
     },
   },
@@ -87,12 +94,11 @@ module.exports = [
   {
     files: ['apps/api/**/*.ts'],
     ignores: ['**/*.spec.ts'],
+    plugins: {
+      n: nodePlugin,
+    },
     rules: {
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        { js: 'always', jsx: 'always', ts: 'never', tsx: 'never' }
-      ],
+      'n/file-extension-in-import': ['error', 'always'],
     },
   },
 
