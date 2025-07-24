@@ -3,6 +3,7 @@
 
   "compilerOptions": {
     "rootDir": "src",
+    "rootDirs": ["src", "../../packages/log-parser/src"],
     "outDir": "dist",
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
