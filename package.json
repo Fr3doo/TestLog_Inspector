@@ -10,8 +10,10 @@
     "tests"
   ],
   "scripts": {
-    "dev": "turbo run build --filter @testlog-inspector/log-parser && turbo run dev --parallel",
-    "dev:all": "turbo run build --filter @testlog-inspector/log-parser && turbo run dev --parallel",
+    "predev": "pnpm --filter @testlog-inspector/log-parser build",
+    "dev": "turbo run dev --parallel",
+    "predev:all": "pnpm --filter @testlog-inspector/log-parser build",
+    "dev:all": "turbo run dev --parallel",
     "build": "turbo run build",
     "start": "turbo run start --parallel",
     "start:prod": "concurrently -n api,web -c green,blue \"pnpm --filter @testlog-inspector/api start:prod\" \"pnpm --filter @testlog-inspector/web start\"",
