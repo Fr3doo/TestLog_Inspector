@@ -17,8 +17,8 @@ import {
   LogError,
   MiscInfo,
   IParsingStrategy,
-} from '../types';
-import { execSummaryFrom } from './strategy-helpers';
+} from '../types.js';
+import { execSummaryFrom } from './strategy-helpers.js';
 
 export class JunitStrategy implements IParsingStrategy {
   canHandle(lines: string[]): boolean {

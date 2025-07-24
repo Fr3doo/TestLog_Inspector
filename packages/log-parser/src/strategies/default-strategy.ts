@@ -5,8 +5,8 @@ import {
   LogError,
   MiscInfo,
   IParsingStrategy,
-} from '../types';
-import { execSummaryFrom, matchRegex } from './strategy-helpers';
+} from '../types.js';
+import { execSummaryFrom, matchRegex } from './strategy-helpers.js';
 
 function extractSingle(r: RegExp, lines: string[]): string {
   const m = lines.find((l) => r.test(l));
